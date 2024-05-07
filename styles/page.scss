@@ -1,0 +1,23 @@
+@import "../styles/globals.scss";
+
+body {
+  @include flexCenter(row);
+  font-weight: fontWeight("regular");
+  height: 100vh;
+
+  @include mobile {
+    flex-direction: column;
+  }
+
+  main {
+    h1 {
+      font-family: fontName("galada");
+      color: color("skyBlue");
+    }
+  }
+}
+
+h1 {
+  font-family: fontName("galada");
+  color: color("white");
+}

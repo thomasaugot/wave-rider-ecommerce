@@ -1,0 +1,27 @@
+@use "sass:map";
+@import "./variables.scss";
+
+// functions that will enable mapping through my variable objects in ./variables.scss
+@function color($color) {
+  @return map-get($colors, $color);
+}
+
+@function fontName($font-name) {
+  @return map-get($font-names, $font-name);
+}
+
+@function fontSrc($font-src) {
+  @return map-get($font-src, $font-src);
+}
+
+@function fontSize($font-size) {
+  @return map-get($font-sizes, $font-size);
+}
+
+@function fontWeight($weight-name) {
+  @return map-get($font-weights, $weight-name);
+}
+
+@function breakpoint($breakpoint) {
+  @return map-get($breakpoints, $breakpoint);
+}

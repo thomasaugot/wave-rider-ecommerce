@@ -1,7 +1,6 @@
-@use "sass:map";
 @import "./variables.scss";
 
-// functions that will enable mapping through my variable objects in ./variables.scss
+// Functions that will enable mapping through my variable objects in ./variables.scss
 @function color($color) {
   @return map-get($colors, $color);
 }

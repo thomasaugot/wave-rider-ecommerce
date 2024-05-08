@@ -2,7 +2,7 @@
 @import "./resets.scss";
 @import "./functions.scss";
 
-// create mixins to avoid code repetitions, we pass the argument direction so that we can adjust later in the code
+// create mixins to avoid code repetitions, we pass the argument $direction so that we can adjust later in the code
 @mixin flexCenter($direction) {
   display: flex;
   justify-content: center;

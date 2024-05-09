@@ -1,0 +1,98 @@
+@import "../../styles/globals.scss";
+
+.navbar {
+  @include flexCenter(column);
+  position: relative;
+  background: color("white");
+  color: color("white");
+  z-index: 10;
+  width: 100%;
+  overflow: hidden;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  &__logo {
+    padding: 0.2rem 2rem;
+    z-index: 50;
+  }
+
+  .promotion_banner {
+    @include flexCenter(row);
+    background-color: color("darkGrey");
+    width: 100%;
+    padding: 0.5rem;
+    z-index: 60;
+    font-family: fontName("decalotype"), sans-serif;
+  }
+
+  ul {
+    @include flexCenter(row);
+    gap: 1rem;
+    list-style: none;
+    z-index: 50;
+    width: auto;
+
+    .menu-links {
+      margin-top: 7px;
+    }
+
+    li a {
+      @include flexCenter(row);
+      font-family: fontName("galada"), sans-serif;
+      color: color("darkOrange");
+      text-decoration: none;
+      font-size: fontSize("md");
+      font-weight: fontWeight("slim");
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.waves {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  height: 70%;
+  margin-bottom: -7px;
+  z-index: 10;
+  background: color("white");
+}
+
+/* Animation */
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+
+/* Keyframes */
+@keyframes move-forever {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
+}

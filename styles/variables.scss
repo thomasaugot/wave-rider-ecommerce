@@ -1,21 +1,27 @@
-@import url("https://fonts.googleapis.com/css2?family=Galada&display=swap");
-
 // Color Variables
 $colors: (
   "skyBlue": rgba(0, 172, 193, 1),
   "purpleBlue": rgba(84, 58, 183, 1),
   "darkGrey": #3b3b3b,
   "white": #fff,
+  "warning": #ff0000,
+  "darkOrange": #803202,
 );
 
 // Font Variables
+@font-face {
+  font-family: "Galada-Regular";
+  src: url(../public/assets/fonts/Galada-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Decalotype-Regular";
+  src: url(../public/assets/fonts/Decalotype-Regular.ttf) format("truetype");
+}
+
 $font-names: (
   "galada": "Galada-Regular",
-);
-
-$font-src: (
-  "Galada-Regular": url(../../public/assets/fonts/Galada-Regular.ttf)
-    format("ttf"),
+  "decalotype": "Decalotype-Regular",
 );
 
 $font-sizes: (
@@ -26,6 +32,7 @@ $font-sizes: (
 );
 
 $font-weights: (
+  "slim": 200,
   "regular": 400,
   "medium": 500,
   "bold": 700,

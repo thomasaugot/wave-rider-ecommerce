@@ -1,23 +1,22 @@
 @import "../styles/globals.scss";
 
 body {
-  @include flexCenter(row);
-  font-weight: fontWeight("regular");
-  height: 100vh;
-
   @include mobile {
     flex-direction: column;
   }
 
-  main {
+  .homepage {
+    position: relative;
+
     h1 {
-      font-family: fontName("galada");
+      font-family: map-get($font-names, "galada"), sans-serif;
       color: color("skyBlue");
+      z-index: 20;
+
+      &:hover {
+        cursor: pointer;
+        color: color("warning");
+      }
     }
   }
-}
-
-h1 {
-  font-family: fontName("galada");
-  color: color("white");
 }

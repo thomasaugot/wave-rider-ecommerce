@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import "../styles/page.scss";
 import { getProducts } from "@/services/apiCalls";
+import { Carousel } from "@/components/Carousel/Carousel";
 
 export default function Home() {
   useEffect(() => {
@@ -10,8 +11,8 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
-      <h1>hello</h1>
+    <main className="homepage">
+      <Carousel />
     </main>
   );
 }

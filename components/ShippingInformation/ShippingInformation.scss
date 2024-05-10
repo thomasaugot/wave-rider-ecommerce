@@ -1,0 +1,73 @@
+@import "../../styles/globals.scss";
+
+.shipping-info-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 4rem;
+  z-index: 20;
+  height: 100vh;
+
+  .shipping-info-bg-img-first {
+    position: absolute;
+    z-index: 10;
+    opacity: 0.3;
+    width: 30vw;
+    height: auto;
+    top: 11rem;
+    left: 5rem;
+  }
+
+  .shipping-info-bg-img-sec {
+    position: absolute;
+    z-index: 10;
+    opacity: 0.3;
+    width: 12vw;
+    height: auto;
+    top: 0;
+    left: 21rem;
+  }
+
+  &__item {
+    @include flexCenter(column);
+    flex-basis: calc(30% - 20px);
+    background-color: color("white");
+    padding: 20px;
+    border-radius: 15px;
+    -webkit-box-shadow: 10px 10px 24px -8px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 24px -8px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 24px -8px rgba(0, 0, 0, 0.75);
+    cursor: default;
+    z-index: 10;
+    max-height: 30vh;
+
+    &:hover {
+      -webkit-box-shadow: 10px 10px 24px 5px rgba(0, 0, 0, 0.75);
+      -moz-box-shadow: 10px 10px 24px 5px rgba(0, 0, 0, 0.75);
+      box-shadow: 10px 10px 24px 5px rgba(0, 0, 0, 0.75);
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-right: 10px;
+        font-size: 24px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 18px;
+      }
+    }
+
+    p {
+      margin-top: 10px;
+      font-size: 16px;
+      text-align: center;
+    }
+  }
+}

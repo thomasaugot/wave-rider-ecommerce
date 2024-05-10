@@ -2,12 +2,21 @@
 
 .navbar {
   @include flexCenter(column);
-  position: relative;
+  position: fixed;
   background: color("white");
   color: color("white");
-  z-index: 10;
+  z-index: 40;
   width: 100%;
   overflow: hidden;
+
+  .promotion_banner {
+    @include flexCenter(row);
+    background-color: color("darkGrey");
+    width: 100%;
+    padding: 0.5rem;
+    z-index: 60;
+    font-family: fontName("decalotype"), sans-serif;
+  }
 
   &__content {
     display: flex;
@@ -19,15 +28,6 @@
   &__logo {
     padding: 0.2rem 2rem;
     z-index: 50;
-  }
-
-  .promotion_banner {
-    @include flexCenter(row);
-    background-color: color("darkGrey");
-    width: 100%;
-    padding: 0.5rem;
-    z-index: 60;
-    font-family: fontName("decalotype"), sans-serif;
   }
 
   ul {

@@ -1,13 +1,11 @@
 @import "../../styles/globals.scss";
 
 .navbar {
-  @include flexCenter(column);
   position: fixed;
-  background: color("white");
-  color: color("white");
-  z-index: 40;
-  width: 100%;
-  overflow: hidden;
+  width: 100vw;
+  color: white;
+  z-index: 100;
+  height: 18vh;
 
   .promotion_banner {
     @include flexCenter(row);
@@ -18,51 +16,175 @@
     font-family: fontName("decalotype"), sans-serif;
   }
 
-  &__content {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
+  .logo {
+    height: 90% !important;
+    width: auto !important;
   }
 
-  &__logo {
-    padding: 0.2rem 2rem;
-    z-index: 50;
-  }
-
-  ul {
+  input[type="checkbox"],
+  .hamburger-lines {
     @include flexCenter(row);
-    gap: 1rem;
-    list-style: none;
-    z-index: 50;
-    width: auto;
+    display: none;
+  }
 
-    .menu-links {
-      margin-top: 7px;
+  .navbar-container {
+    @include flexCenter(row);
+    justify-content: space-around;
+    position: relative;
+    width: 100%;
+    height: 18vh;
+    z-index: 40;
+
+    .menu-items {
+      display: flex;
+      justify-content: space-around;
+      ul {
+        position: relative;
+        display: flex !important;
+        justify-content: space-around;
+        list-style: none;
+        gap: 1rem;
+
+        li a {
+          @include flexCenter(row);
+          font-family: fontName("galada"), sans-serif;
+          color: color("darkOrange");
+          text-decoration: none;
+          font-size: fontSize("md");
+          font-weight: fontWeight("slim");
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 992px) {
+    height: 20vh;
+
+    .navbar-container {
+      display: block;
+      position: absolute;
+      background-color: transparent;
+      align-items: center;
+      height: 10vh;
+
+      .logo {
+        height: 90%;
+        width: auto;
+      }
+
+      input[type="checkbox"] {
+        position: absolute;
+        display: block;
+        height: 32px;
+        width: 30px;
+        top: 20px;
+        right: 20px;
+        z-index: 300;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .hamburger-lines {
+        display: block;
+        height: 28px;
+        width: 35px;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        z-index: 200;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 0;
+
+        .line {
+          display: block;
+          height: 4px;
+          width: 100%;
+          border-radius: 10px;
+          background-color: color("darkGrey");
+        }
+
+        .line1 {
+          transform-origin: 0% 0%;
+          transition: transform 0.3s ease-in-out;
+        }
+
+        .line2 {
+          transition: transform 0.2s ease-in-out;
+        }
+
+        .line3 {
+          transform-origin: 0% 100%;
+          transition: transform 0.3s ease-in-out;
+        }
+      }
+
+      .menu-items {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translate(100%);
+        display: flex;
+        height: 100vh;
+        display: flex;
+        flex-direction: column-reverse;
+        transition: transform 0.5s ease-in-out;
+        overflow-y: hidden;
+        text-align: left;
+
+        ul {
+          @include flexCenter(column);
+
+          &:last-child {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: space-around;
+            align-items: center;
+          }
+
+          li a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s ease color;
+            cursor: pointer;
+            color: color("darkGrey");
+          }
+        }
+      }
     }
 
-    li a {
-      @include flexCenter(row);
-      font-family: fontName("galada"), sans-serif;
-      color: color("darkOrange");
-      text-decoration: none;
-      font-size: fontSize("md");
-      font-weight: fontWeight("slim");
+    input[type="checkbox"]:checked ~ .hamburger-lines .line1 {
+      transform: rotate(45deg);
+    }
 
-      &:hover {
-        text-decoration: underline;
-      }
+    input[type="checkbox"]:checked ~ .hamburger-lines .line2 {
+      transform: scaleY(0);
+    }
+
+    input[type="checkbox"]:checked ~ .hamburger-lines .line3 {
+      transform: rotate(-45deg);
+    }
+  }
+
+  &.open {
+    .menu-items {
+      transform: translate(0%);
     }
   }
 }
 
+// styles for the waves animation
+
 .waves {
   position: absolute;
   bottom: 0;
-  width: 100vw;
-  height: 70%;
-  margin-bottom: -7px;
-  z-index: 10;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
   background: color("white");
 }
 

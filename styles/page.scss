@@ -6,7 +6,11 @@ body {
 
     .carousel-container {
       position: relative;
-      height: 100vh;
+      height: 70vh;
+
+      @include smallDesktops {
+        height: 82vh;
+      }
     }
 
     h1 {

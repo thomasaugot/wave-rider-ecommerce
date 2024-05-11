@@ -3,7 +3,7 @@
 .navbar {
   position: relative;
   width: 100vw;
-  color: white;
+  color: color("white");
   z-index: 100;
   height: 18vh;
 
@@ -12,16 +12,26 @@
     background-color: color("darkGrey");
     width: 100%;
     padding: 0.5rem;
-    z-index: 60;
+    z-index: 40;
     font-family: fontName("decalotype"), sans-serif;
   }
 
   .logo {
     position: absolute;
-    height: auto;
+    height: 200%;
     width: auto;
-    top: 0.2rem;
+    top: 70%;
+    transform: translateY(-50%);
     left: 2rem;
+  }
+
+  &:last-child {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 3rem;
+    align-items: center;
   }
 
   input[type="checkbox"],
@@ -32,31 +42,42 @@
 
   .navbar-container {
     @include flexCenter(row);
+    @include boxShadow;
     justify-content: space-around;
     position: relative;
-    width: 100%;
+    width: 100vw;
     height: 18vh;
     z-index: 40;
-    -webkit-box-shadow: 10px 10px 24px -8px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 10px 10px 24px -8px rgba(0, 0, 0, 0.75);
-    box-shadow: 10px 10px 24px -8px rgba(0, 0, 0, 0.75);
 
     .menu-items {
       display: flex;
       justify-content: space-around;
+      width: auto;
+
       ul {
         position: relative;
-        display: flex !important;
-        justify-content: space-around;
+        display: flex;
+        justify-content: space-between;
         list-style: none;
         gap: 1rem;
+        padding-left: 0;
+
+        &:last-child {
+          display: flex;
+          flex-direction: row;
+          width: auto;
+          justify-content: center;
+          gap: 1rem;
+          align-items: center;
+          padding-left: 3rem;
+        }
 
         li a {
           @include flexCenter(row);
           font-family: fontName("galada"), sans-serif;
           color: color("darkOrange");
           text-decoration: none;
-          font-size: fontSize("md");
+          font-size: fontSize("sm");
           font-weight: fontWeight("slim");
 
           &:hover {
@@ -67,7 +88,7 @@
     }
   }
 
-  @media (max-width: 992px) {
+  @include mobile {
     height: 10vh;
 
     .navbar-container {
@@ -79,7 +100,7 @@
 
       .logo {
         height: 90%;
-        width: auto;
+        top: 50%;
       }
 
       input[type="checkbox"] {
@@ -95,24 +116,25 @@
       }
 
       .hamburger-lines {
-        display: block;
+        display: flex;
         height: 28px;
         width: 35px;
         position: absolute;
-        top: 15px;
-        right: 20px;
+        right: 2rem;
         z-index: 200;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         margin: 0;
+        top: 50%;
+        transform: translateY(-50%);
 
         .line {
           display: block;
           height: 4px;
           width: 100%;
           border-radius: 10px;
-          background-color: color("darkGrey");
+          background-color: color("darkOrange");
         }
 
         .line1 {
@@ -130,6 +152,24 @@
         }
       }
 
+      .mobile-topbar {
+        display: flex;
+        list-style: none;
+
+        li a {
+          @include flexCenter(row);
+          font-family: fontName("galada"), sans-serif;
+          color: color("darkOrange");
+          text-decoration: none;
+          font-size: fontSize("md");
+          font-weight: fontWeight("slim");
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
       .menu-items {
         background: rgba(255, 255, 255, 0.9);
         transform: translate(100%);
@@ -138,18 +178,37 @@
         display: flex;
         flex-direction: column-reverse;
         transition: transform 0.5s ease-in-out;
-        overflow-y: hidden;
-        text-align: left;
+        overflow: hidden;
+        justify-content: flex-end;
+        padding-top: 15vh;
 
         ul {
-          @include flexCenter(column);
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: repeat(3, 1fr);
+          grid-column-gap: 20px;
+          grid-row-gap: 20px;
+          justify-items: center;
+          align-items: center;
+          padding-left: 0;
+
+          &:first-child {
+            margin-top: 2rem;
+
+            li:nth-child(even) {
+              margin-right: auto; /* Pushes the first column to the right */
+            }
+
+            li:nth-child(odd) {
+              margin-left: auto; /* Pushes the second column to the left */
+            }
+          }
 
           &:last-child {
-            display: flex;
-            flex-direction: row;
             width: 100%;
-            justify-content: space-around;
-            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            padding-left: 0;
           }
 
           li a {

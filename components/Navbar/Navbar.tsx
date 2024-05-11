@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.scss";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,10 +14,24 @@ import { FaHome } from "react-icons/fa";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    handleResize(); // Call once to set the initial value
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <nav className={`navbar ${menuOpen ? "open" : ""}`}>
@@ -82,9 +96,7 @@ const Navbar = () => {
         <div className="menu-items">
           <ul>
             <li>
-              <Link href="/">
-                <FaHome />
-              </Link>
+              <Link href="/">Home</Link>
             </li>
             <li>
               <Link href="/products" className="menu-links">
@@ -112,8 +124,14 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
+              <Link href="/products" className="menu-links">
+                Accessories
+              </Link>
+            </li>
+            <li>
               <Link href="/categories" className="menu-links">
-                All Categories <FaChevronDown />
+                All Categories
+                {/* {!isMobile && <FaChevronDown />} */}
               </Link>
             </li>
           </ul>

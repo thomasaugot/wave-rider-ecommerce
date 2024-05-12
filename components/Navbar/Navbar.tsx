@@ -9,12 +9,12 @@ import { FaSearch } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
-import { FaChevronDown } from "react-icons/fa";
-import { FaHome } from "react-icons/fa";
+// import { FaChevronDown } from "react-icons/fa";
+// import { FaHome } from "react-icons/fa";
 
-const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+export const Navbar: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -87,6 +87,18 @@ const Navbar = () => {
         <a href="#">
           <Image src={logo} alt="logo" className="logo" />
         </a>
+        <div className="mobile-top-icons">
+          {isMobile && (
+            <Link href="#">
+              <FaSearch />
+            </Link>
+          )}
+          {isMobile && (
+            <Link href="#">
+              <FaShoppingCart />
+            </Link>
+          )}
+        </div>
         <input type="checkbox" checked={menuOpen} onChange={handleMenuToggle} />
         <label htmlFor="menu-toggle" className="hamburger-lines">
           <span className="line line1"></span>
@@ -95,9 +107,6 @@ const Navbar = () => {
         </label>
         <div className="menu-items">
           <ul>
-            <li>
-              <Link href="/">Home</Link>
-            </li>
             <li>
               <Link href="/products" className="menu-links">
                 Surf
@@ -125,6 +134,11 @@ const Navbar = () => {
             </li>
             <li>
               <Link href="/products" className="menu-links">
+                Wetsuits
+              </Link>
+            </li>
+            <li>
+              <Link href="/products" className="menu-links">
                 Accessories
               </Link>
             </li>
@@ -136,11 +150,13 @@ const Navbar = () => {
             </li>
           </ul>
           <ul>
-            <li>
-              <Link href="#">
-                <FaSearch />
-              </Link>
-            </li>
+            {!isMobile && (
+              <li>
+                <Link href="#">
+                  <FaSearch />
+                </Link>
+              </li>
+            )}
             <li>
               <Link href="#">
                 <IoPerson />
@@ -151,16 +167,16 @@ const Navbar = () => {
                 <FaHeart />
               </Link>
             </li>
-            <li>
-              <Link href="#">
-                <FaShoppingCart />
-              </Link>
-            </li>
+            {!isMobile && (
+              <li>
+                <Link href="#">
+                  <FaShoppingCart />
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
     </nav>
   );
 };
-
-export default Navbar;

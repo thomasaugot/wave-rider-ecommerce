@@ -18,7 +18,7 @@
 
   .logo {
     position: absolute;
-    height: 200%;
+    height: 190%;
     width: auto;
     top: 70%;
     transform: translateY(-50%);
@@ -26,12 +26,9 @@
   }
 
   &:last-child {
-    display: flex;
-    flex-direction: row;
+    @include flexCenter(row);
     width: 100%;
-    justify-content: center;
     gap: 3rem;
-    align-items: center;
   }
 
   input[type="checkbox"],
@@ -103,6 +100,18 @@
         top: 50%;
       }
 
+      .mobile-top-icons {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-35%);
+        right: 20%;
+        > a {
+          @include brandTextandIconStyle;
+          font-size: fontSize("lg");
+          margin-right: 1.5rem;
+        }
+      }
+
       input[type="checkbox"] {
         position: absolute;
         display: block;
@@ -158,11 +167,7 @@
 
         li a {
           @include flexCenter(row);
-          font-family: fontName("galada"), sans-serif;
-          color: color("darkOrange");
-          text-decoration: none;
-          font-size: fontSize("md");
-          font-weight: fontWeight("slim");
+          @include brandTextandIconStyle;
 
           &:hover {
             text-decoration: underline;
@@ -172,12 +177,12 @@
 
       .menu-items {
         background: rgba(255, 255, 255, 0.9);
-        transform: translate(100%);
+        visibility: hidden;
+        opacity: 0;
         display: flex;
         height: 100vh;
-        display: flex;
         flex-direction: column-reverse;
-        transition: transform 0.5s ease-in-out;
+        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
         overflow: hidden;
         justify-content: flex-end;
         padding-top: 15vh;
@@ -196,11 +201,11 @@
             margin-top: 2rem;
 
             li:nth-child(even) {
-              margin-right: auto; /* Pushes the first column to the right */
+              margin-right: auto;
             }
 
             li:nth-child(odd) {
-              margin-left: auto; /* Pushes the second column to the left */
+              margin-left: auto;
             }
           }
 
@@ -213,7 +218,6 @@
 
           li a {
             text-decoration: none;
-            color: inherit;
             transition: 0.3s ease color;
             cursor: pointer;
             color: color("darkGrey");
@@ -237,6 +241,8 @@
 
   &.open {
     .menu-items {
+      visibility: visible;
+      opacity: 1;
       transform: translate(0%);
     }
   }

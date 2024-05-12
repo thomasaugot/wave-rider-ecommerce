@@ -40,3 +40,11 @@
   -moz-box-shadow: 10px 10px 24px -8px rgba(0, 0, 0, 0.75);
   box-shadow: 10px 10px 24px -8px rgba(0, 0, 0, 0.75);
 }
+
+@mixin brandTextandIconStyle {
+  font-family: fontName("galada"), sans-serif;
+  color: color("darkOrange");
+  text-decoration: none;
+  font-size: fontSize("md");
+  font-weight: fontWeight("slim");
+}

@@ -9,8 +9,6 @@ import Image from "next/image";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-AOS.init();
-
 const shippingInfoItems = [
   {
     title: "Returns & Exchange",
@@ -31,6 +29,8 @@ export const ShippingInformation: React.FC = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
+    AOS.init();
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);
     };
@@ -42,6 +42,7 @@ export const ShippingInformation: React.FC = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   return (
     <>
       <div className="shipping-info">

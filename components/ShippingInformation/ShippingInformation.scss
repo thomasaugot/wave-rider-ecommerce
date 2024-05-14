@@ -1,73 +1,172 @@
 @import "../../styles/globals.scss";
 
-.shipping-info-container {
+.shipping-info {
   position: relative;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: space-around;
   flex-wrap: wrap;
-  gap: 20px;
-  padding: 4rem;
-  z-index: 20;
+  gap: 4rem;
+  padding: 5rem 3rem 2.5rem 3rem;
+  z-index: 10;
   height: 100vh;
+  background-color: color("darkGrey");
 
-  .shipping-info-bg-img-first {
-    position: absolute;
-    z-index: 10;
-    opacity: 0.3;
-    width: 30vw;
-    height: auto;
-    top: 11rem;
-    left: 5rem;
+  @include tablet {
+    padding: 12rem 3rem 5rem 3rem;
   }
 
-  .shipping-info-bg-img-sec {
-    position: absolute;
-    z-index: 10;
-    opacity: 0.3;
-    width: 12vw;
+  @include smallDesktops {
+    padding: 10rem 3rem 7rem 3rem;
+    flex-direction: row;
+    gap: 0;
     height: auto;
-    top: 0;
-    left: 21rem;
+  }
+
+  @include largeDesktops {
+    padding: 15rem 3rem 1rem 3rem;
   }
 
   &__item {
+    position: relative;
     @include flexCenter(column);
-    flex-basis: calc(30% - 20px);
-    background-color: color("white");
-    padding: 20px;
-    border-radius: 15px;
-    -webkit-box-shadow: 10px 10px 24px -8px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 10px 10px 24px -8px rgba(0, 0, 0, 0.75);
-    box-shadow: 10px 10px 24px -8px rgba(0, 0, 0, 0.75);
+    width: 100%;
     cursor: default;
     z-index: 10;
-    max-height: 30vh;
 
-    &:hover {
-      -webkit-box-shadow: 10px 10px 24px 5px rgba(0, 0, 0, 0.75);
-      -moz-box-shadow: 10px 10px 24px 5px rgba(0, 0, 0, 0.75);
-      box-shadow: 10px 10px 24px 5px rgba(0, 0, 0, 0.75);
+    @include smallDesktops {
+      flex-basis: calc(30% - 20px);
     }
 
-    div {
-      display: flex;
-      align-items: center;
+    .wooden-signal {
+      position: absolute;
+      width: 120%;
+      height: auto;
+      z-index: 0;
 
-      svg {
-        margin-right: 10px;
-        font-size: 24px;
+      &__secondchild {
+        transform: scaleX(-1) translateY(0);
+      }
+
+      @include tablet {
+        width: 70%;
+      }
+
+      @include smallDesktops {
+        width: 130%;
+      }
+    }
+
+    &__content {
+      position: static;
+      text-align: center;
+      margin-top: -15%;
+      z-index: 20;
+
+      @include tablet {
+        margin-top: -10%;
+      }
+
+      @include largeDesktops {
+        margin-top: -15%;
       }
 
       h2 {
-        margin: 0;
-        font-size: 18px;
+        font-family: fontName("galada"), sans-serif;
+        font-size: fontSize("sm");
+        text-align: center;
+
+        @include tablet {
+          font-size: fontSize("lg");
+        }
+
+        @include smallDesktops {
+          font-size: fontSize("md");
+        }
+
+        @include largeDesktops {
+          font-size: fontSize("lg");
+        }
+      }
+
+      p {
+        text-align: center;
+        font-weight: fontWeight("bold");
+        margin-top: 18%;
+        max-width: 70%;
+        margin-left: 10%;
+
+        @include tablet {
+          font-size: fontSize("sm");
+          max-width: 60%;
+          margin-top: 14%;
+          margin-left: 17%;
+        }
+
+        @include smallDesktops {
+          font-size: fontSize("xs");
+          margin-top: 12%;
+        }
+
+        @include largeDesktops {
+          margin-top: 14%;
+          font-size: fontSize("sm");
+        }
       }
     }
 
-    p {
-      margin-top: 10px;
-      font-size: 16px;
-      text-align: center;
+    .tropical-leaf {
+      position: absolute;
+      bottom: 0;
+      right: -2rem;
+      width: 60vw;
+      height: auto;
+      z-index: -2;
+      opacity: 0.7;
+
+      @include tablet {
+        bottom: -4rem;
+      }
+
+      @include smallDesktops {
+        width: 30vw;
+      }
+    }
+
+    &:nth-child(2) {
+      .shipping-info__item__content p {
+        margin-left: 15%;
+
+        @include tablet {
+          margin-left: 20%;
+        }
+      }
+
+      .tropical-leaf {
+        left: -2rem;
+        transform: scaleX(-1) translateY(0);
+      }
     }
   }
+}
+
+.custom-shape-divider-bottom-1715701048 {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  background-color: color("darkGrey");
+}
+
+.custom-shape-divider-bottom-1715701048 svg {
+  position: relative;
+  display: block;
+  width: calc(179% + 1.3px);
+  height: 20vh;
+}
+
+.custom-shape-divider-bottom-1715701048 .shape-fill {
+  fill: #ffbd59;
 }

@@ -1,0 +1,19 @@
+@import "../../styles/globals.scss";
+
+.latest-articles__container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background-color: color("white");
+  z-index: 100;
+
+  img {
+    position: absolute;
+    width: 30vw;
+    height: auto;
+    top: -5rem;
+    right: 3rem;
+    z-index: 50;
+    transform: rotate(25deg);
+  }
+}

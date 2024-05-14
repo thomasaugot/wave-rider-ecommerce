@@ -6,31 +6,43 @@
   flex-direction: column;
   justify-content: space-around;
   flex-wrap: wrap;
-  gap: 4rem;
-  padding: 5rem 3rem 2.5rem 3rem;
+  gap: 8vh;
+  padding: 5rem 3rem 0 3rem;
   z-index: 10;
-  height: 100vh;
-  background-color: color("darkGrey");
+  height: auto;
 
-  @include tablet {
-    padding: 12rem 3rem 5rem 3rem;
+  .background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: color("skyBlue");
+  }
+
+  .texture {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 180%;
+    opacity: 0.2;
   }
 
   @include smallDesktops {
-    padding: 10rem 3rem 7rem 3rem;
+    padding: 5rem 7rem 0rem 7rem;
     flex-direction: row;
     gap: 0;
     height: auto;
   }
 
   @include largeDesktops {
-    padding: 15rem 3rem 1rem 3rem;
+    padding: 10rem 3rem 0 3rem;
   }
 
   &__item {
     position: relative;
     @include flexCenter(column);
     width: 100%;
+    height: auto;
     cursor: default;
     z-index: 10;
 
@@ -39,17 +51,14 @@
     }
 
     .wooden-signal {
+      @include dropShadow;
       position: absolute;
-      width: 120%;
+      width: 180%;
       height: auto;
       z-index: 0;
 
-      &__secondchild {
-        transform: scaleX(-1) translateY(0);
-      }
-
       @include tablet {
-        width: 70%;
+        width: 130%;
       }
 
       @include smallDesktops {
@@ -60,15 +69,20 @@
     &__content {
       position: static;
       text-align: center;
-      margin-top: -15%;
+      margin-top: 5%;
       z-index: 20;
+      color: color("darkOrange");
 
       @include tablet {
-        margin-top: -10%;
+        margin-top: 4%;
+      }
+
+      @include smallDesktops {
+        margin-top: -11%;
       }
 
       @include largeDesktops {
-        margin-top: -15%;
+        margin-top: -16%;
       }
 
       h2 {
@@ -93,58 +107,27 @@
         text-align: center;
         font-weight: fontWeight("bold");
         margin-top: 18%;
-        max-width: 70%;
+        max-width: 75%;
         margin-left: 10%;
 
         @include tablet {
-          font-size: fontSize("sm");
+          font-size: fontSize("md");
           max-width: 60%;
-          margin-top: 14%;
+          margin-top: 20%;
           margin-left: 17%;
         }
 
         @include smallDesktops {
           font-size: fontSize("xs");
-          margin-top: 12%;
+          margin-top: 7%;
+          max-width: 75%;
+          margin-left: 7%;
         }
 
         @include largeDesktops {
           margin-top: 14%;
           font-size: fontSize("sm");
         }
-      }
-    }
-
-    .tropical-leaf {
-      position: absolute;
-      bottom: 0;
-      right: -2rem;
-      width: 60vw;
-      height: auto;
-      z-index: -2;
-      opacity: 0.7;
-
-      @include tablet {
-        bottom: -4rem;
-      }
-
-      @include smallDesktops {
-        width: 30vw;
-      }
-    }
-
-    &:nth-child(2) {
-      .shipping-info__item__content p {
-        margin-left: 15%;
-
-        @include tablet {
-          margin-left: 20%;
-        }
-      }
-
-      .tropical-leaf {
-        left: -2rem;
-        transform: scaleX(-1) translateY(0);
       }
     }
   }
@@ -157,14 +140,18 @@
   width: 100%;
   overflow: hidden;
   line-height: 0;
-  background-color: color("darkGrey");
+  background-color: color("skyBlue");
 }
 
 .custom-shape-divider-bottom-1715701048 svg {
   position: relative;
   display: block;
   width: calc(179% + 1.3px);
-  height: 20vh;
+  height: 10vh;
+
+  @include smallDesktops {
+    height: 20vh;
+  }
 }
 
 .custom-shape-divider-bottom-1715701048 .shape-fill {

@@ -40,6 +40,10 @@
   box-shadow: 10px 10px 24px -8px rgba(0, 0, 0, 0.75);
 }
 
+@mixin dropShadow {
+  filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.75));
+}
+
 @mixin brandTextandIconStyle {
   font-family: fontName("galada"), sans-serif;
   color: color("darkOrange");

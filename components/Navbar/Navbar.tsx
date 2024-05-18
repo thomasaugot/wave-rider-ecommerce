@@ -9,8 +9,6 @@ import { FaSearch } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
-// import { FaChevronDown } from "react-icons/fa";
-// import { FaHome } from "react-icons/fa";
 
 export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -25,7 +23,7 @@ export const Navbar: React.FC = () => {
       setIsMobile(window.innerWidth < 1024);
     };
 
-    handleResize(); // Call once to set the initial value
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => {

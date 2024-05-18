@@ -1,11 +1,40 @@
 @import "../../styles/globals.scss";
 
 .navbar {
+  height: 10vh;
   position: relative;
   width: 100vw;
   color: color("white");
   z-index: 100;
-  height: 18vh;
+
+  @include smallDesktops {
+    height: 18vh;
+
+    &:last-child {
+      @include flexCenter(row);
+      width: 100%;
+      gap: 3rem;
+    }
+  }
+
+  input[type="checkbox"] {
+    position: absolute;
+    display: block;
+    height: 32px;
+    width: 30px;
+    top: 20px;
+    right: 20px;
+    z-index: 300;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  @include smallDesktops {
+    input[type="checkbox"],
+    .hamburger-lines {
+      display: none;
+    }
+  }
 
   .promotion_banner {
     @include flexCenter(row);
@@ -16,213 +45,61 @@
     font-family: fontName("decalotype"), sans-serif;
   }
 
-  .logo {
-    position: absolute;
-    height: 130%;
-    width: auto;
-    top: 70%;
-    transform: translateY(-50%);
-    left: 2rem;
-  }
-
-  &:last-child {
-    @include flexCenter(row);
-    width: 100%;
-    gap: 3rem;
-  }
-
-  input[type="checkbox"],
-  .hamburger-lines {
-    @include flexCenter(row);
-    display: none;
-  }
-
   .navbar-container {
-    @include flexCenter(row);
-    @include boxShadow;
-    justify-content: space-around;
-    position: relative;
-    width: 100vw;
-    height: 18vh;
-    z-index: 40;
-
-    .menu-items {
-      display: flex;
-      justify-content: space-around;
-      width: auto;
-
-      ul {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        list-style: none;
-        gap: 1rem;
-        padding-left: 0;
-
-        &:last-child {
-          display: flex;
-          flex-direction: row;
-          width: auto;
-          justify-content: center;
-          gap: 1rem;
-          align-items: center;
-          padding-left: 3rem;
-        }
-
-        li a {
-          @include flexCenter(row);
-          font-family: fontName("galada"), sans-serif;
-          color: color("darkOrange");
-          text-decoration: none;
-          font-size: fontSize("sm");
-          font-weight: fontWeight("slim");
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-    }
-  }
-
-  @include mobile {
+    display: block;
+    position: absolute;
+    background-color: transparent;
+    align-items: center;
     height: 10vh;
+    width: 100vw;
 
-    .navbar-container {
-      display: block;
+    @include smallDesktops {
+      @include flexCenter(row);
+      @include boxShadow;
+      justify-content: space-around;
+      position: relative;
+      height: 18vh;
+      z-index: 40;
+    }
+
+    .hamburger-lines {
+      display: flex;
+      height: 28px;
+      width: 35px;
       position: absolute;
-      background-color: transparent;
-      align-items: center;
-      height: 10vh;
+      right: 2rem;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin: 0;
+      top: 50%;
+      transform: translateY(-50%);
 
-      .logo {
-        height: 90%;
-        top: 50%;
-      }
-
-      .mobile-top-icons {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-35%);
-        right: 20%;
-        > a {
-          @include brandTextandIconStyle;
-          font-size: fontSize("lg");
-          margin-right: 1.5rem;
-        }
-      }
-
-      input[type="checkbox"] {
-        position: absolute;
+      .line {
         display: block;
-        height: 32px;
-        width: 30px;
-        top: 20px;
-        right: 20px;
-        z-index: 300;
-        opacity: 0;
-        cursor: pointer;
+        height: 4px;
+        width: 100%;
+        border-radius: 10px;
+        background-color: color("darkOrange");
       }
 
-      .hamburger-lines {
-        display: flex;
-        height: 28px;
-        width: 35px;
-        position: absolute;
-        right: 2rem;
-        z-index: 200;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin: 0;
-        top: 50%;
-        transform: translateY(-50%);
-
-        .line {
-          display: block;
-          height: 4px;
-          width: 100%;
-          border-radius: 10px;
-          background-color: color("darkOrange");
-        }
-
-        .line1 {
-          transform-origin: 0% 0%;
-          transition: transform 0.3s ease-in-out;
-        }
-
-        .line2 {
-          transition: transform 0.2s ease-in-out;
-        }
-
-        .line3 {
-          transform-origin: 0% 100%;
-          transition: transform 0.3s ease-in-out;
-        }
+      .line1 {
+        transform-origin: 0% 0%;
+        transition: transform 0.3s ease-in-out;
       }
 
-      .mobile-topbar {
-        display: flex;
-        list-style: none;
-
-        li a {
-          @include flexCenter(row);
-          @include brandTextandIconStyle;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
+      .line2 {
+        transition: transform 0.2s ease-in-out;
       }
 
-      .menu-items {
-        background: rgba(255, 255, 255, 0.9);
-        visibility: hidden;
-        opacity: 0;
-        display: flex;
-        height: 100vh;
-        flex-direction: column-reverse;
-        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-        overflow: hidden;
-        justify-content: flex-end;
-        padding-top: 15vh;
+      .line3 {
+        transform-origin: 0% 100%;
+        transition: transform 0.3s ease-in-out;
+      }
 
-        ul {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          grid-template-rows: repeat(3, 1fr);
-          grid-column-gap: 20px;
-          grid-row-gap: 20px;
-          justify-items: center;
-          align-items: center;
-          padding-left: 0;
-
-          &:first-child {
-            margin-top: 2rem;
-
-            li:nth-child(even) {
-              margin-right: auto;
-            }
-
-            li:nth-child(odd) {
-              margin-left: auto;
-            }
-          }
-
-          &:last-child {
-            width: 100%;
-            justify-content: center;
-            gap: 3rem;
-            padding-left: 0;
-          }
-
-          li a {
-            text-decoration: none;
-            transition: 0.3s ease color;
-            cursor: pointer;
-            color: color("darkGrey");
-          }
-        }
+      @include smallDesktops {
+        display: none;
       }
     }
 
@@ -236,6 +113,139 @@
 
     input[type="checkbox"]:checked ~ .hamburger-lines .line3 {
       transform: rotate(-45deg);
+    }
+
+    .logo {
+      position: absolute;
+      height: 120%;
+      top: 70%;
+      transform: translateY(-50%);
+      left: 0.5rem;
+      width: auto;
+
+      @include smallDesktops {
+        height: 130%;
+        left: 1rem;
+      }
+    }
+
+    .mobile-top-icons {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-35%);
+      right: 18%;
+      > a {
+        @include brandTextandIconStyle;
+        font-size: fontSize("lg");
+        margin-right: 1.5rem;
+      }
+    }
+
+    .mobile-topbar {
+      display: flex;
+      list-style: none;
+
+      li a {
+        @include flexCenter(row);
+        @include brandTextandIconStyle;
+      }
+    }
+
+    .menu-items {
+      background: rgba(255, 255, 255, 0.9);
+      visibility: hidden;
+      opacity: 0;
+      display: flex;
+      height: 100vh;
+      flex-direction: column-reverse;
+      transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+      overflow: hidden;
+      justify-content: flex-end;
+      padding-top: 15vh;
+
+      @include smallDesktops {
+        visibility: visible;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: auto;
+        opacity: 1;
+        background: transparent;
+        height: 100%;
+        padding-top: 0;
+      }
+    }
+
+    ul {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      grid-column-gap: 20px;
+      grid-row-gap: 20px;
+      justify-items: center;
+      align-items: center;
+      padding-left: 0;
+
+      @include smallDesktops {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        list-style: none;
+        gap: 1rem;
+        padding-left: 0;
+      }
+
+      &:first-child {
+        margin-top: 2rem;
+
+        @include smallDesktops {
+          margin-top: 22px !important;
+        }
+
+        li:nth-child(even) {
+          margin-right: auto;
+        }
+
+        li:nth-child(odd) {
+          margin-left: auto;
+        }
+      }
+
+      &:last-child {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        gap: 3rem;
+        padding-left: 0;
+
+        @include smallDesktops {
+          width: auto;
+          gap: 1rem;
+          align-items: center;
+          padding-left: 3rem;
+        }
+      }
+
+      li a {
+        @include flexCenter(row);
+        font-family: fontName("galada"), sans-serif;
+        text-decoration: none;
+        transition: 0.3s ease color;
+        cursor: pointer;
+        color: color("darkGrey");
+        font-size: fontSize("sm");
+        font-weight: fontWeight("slim");
+
+        @include smallDesktops {
+          color: color("darkOrange");
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
     }
   }
 

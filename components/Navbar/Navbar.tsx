@@ -20,7 +20,7 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024);
+      setIsMobile(window.innerWidth < 1200);
     };
 
     handleResize();
@@ -135,15 +135,16 @@ export const Navbar: React.FC = () => {
                 Wetsuits
               </Link>
             </li>
-            <li>
-              <Link href="/products" className="menu-links">
-                Accessories
-              </Link>
-            </li>
+            {isMobile && (
+              <li>
+                <Link href="/products" className="menu-links">
+                  Accessories
+                </Link>
+              </li>
+            )}
             <li>
               <Link href="/categories" className="menu-links">
                 All Categories
-                {/* {!isMobile && <FaChevronDown />} */}
               </Link>
             </li>
           </ul>

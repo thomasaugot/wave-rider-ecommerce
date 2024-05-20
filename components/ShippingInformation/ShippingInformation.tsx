@@ -6,8 +6,6 @@ import mobileWoodenSignal from "../../public/assets/img/mobile-wooden-signal.web
 import beachBg from "../../public/assets/img/beach-bg.webp";
 import "./ShippingInformation.scss";
 import Image from "next/image";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 const shippingInfoItems = [
   {
@@ -29,8 +27,6 @@ export const ShippingInformation: React.FC = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
-    AOS.init();
-
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);
     };
@@ -49,14 +45,7 @@ export const ShippingInformation: React.FC = () => {
         <div className="background"></div>
         <Image src={beachBg} alt="Texture" className="texture" />
         {shippingInfoItems.map((item, index) => (
-          <div
-            className="shipping-info__item"
-            key={index}
-            data-aos="fade-down"
-            data-aos-easing="ease-in"
-            data-aos-duration="500"
-            data-aos-once="true"
-          >
+          <div className="shipping-info__item" key={index}>
             {isMobile ? (
               <Image
                 src={mobileWoodenSignal}

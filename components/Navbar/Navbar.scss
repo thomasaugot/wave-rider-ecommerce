@@ -7,7 +7,7 @@
   color: color("white");
   z-index: 100;
 
-  @include smallDesktops {
+  @include largeDesktops {
     height: 18vh;
 
     &:last-child {
@@ -20,16 +20,20 @@
   input[type="checkbox"] {
     position: absolute;
     display: block;
-    height: 32px;
+    height: 100%;
     width: 30px;
-    top: 20px;
     right: 20px;
     z-index: 300;
     opacity: 0;
     cursor: pointer;
+
+    @include tablet {
+      width: 55px;
+      right: 40px;
+    }
   }
 
-  @include smallDesktops {
+  @include largeDesktops {
     input[type="checkbox"],
     .hamburger-lines {
       display: none;
@@ -53,10 +57,10 @@
     height: 10vh;
     width: 100vw;
 
-    @include smallDesktops {
+    @include largeDesktops {
       @include flexCenter(row);
       @include boxShadow;
-      justify-content: space-around;
+      justify-content: flex-start;
       position: relative;
       height: 18vh;
       z-index: 40;
@@ -67,7 +71,7 @@
       height: 28px;
       width: 35px;
       position: absolute;
-      right: 2rem;
+      right: 1.5rem;
       z-index: 200;
       display: flex;
       flex-direction: column;
@@ -75,6 +79,12 @@
       margin: 0;
       top: 50%;
       transform: translateY(-50%);
+
+      @include tablet {
+        right: 2.8rem;
+        height: 38px;
+        width: 45px;
+      }
 
       .line {
         display: block;
@@ -96,9 +106,13 @@
       .line3 {
         transform-origin: 0% 100%;
         transition: transform 0.3s ease-in-out;
+
+        @include tablet {
+          transform-origin: -7% 100%;
+        }
       }
 
-      @include smallDesktops {
+      @include largeDesktops {
         display: none;
       }
     }
@@ -123,9 +137,11 @@
       left: 0.5rem;
       width: auto;
 
-      @include smallDesktops {
-        height: 130%;
-        left: 1rem;
+      @include largeDesktops {
+        position: relative;
+        height: auto;
+        margin-inline: 1rem;
+        transform: unset;
       }
     }
 
@@ -133,11 +149,19 @@
       position: absolute;
       top: 50%;
       transform: translateY(-35%);
-      right: 18%;
+      right: 16%;
       > a {
         @include brandTextandIconStyle;
         font-size: fontSize("lg");
         margin-right: 1.5rem;
+
+        @include tablet {
+          font-size: fontSize("xl");
+        }
+      }
+
+      @include tablet {
+        right: 12%;
       }
     }
 
@@ -163,7 +187,7 @@
       justify-content: flex-end;
       padding-top: 15vh;
 
-      @include smallDesktops {
+      @include largeDesktops {
         visibility: visible;
         display: flex;
         flex-direction: row;
@@ -186,8 +210,14 @@
       justify-items: center;
       align-items: center;
       padding-left: 0;
+      list-style: none;
 
-      @include smallDesktops {
+      @include tablet {
+        grid-column-gap: 30px;
+        grid-row-gap: 30px;
+      }
+
+      @include largeDesktops {
         position: relative;
         display: flex;
         justify-content: space-between;
@@ -199,7 +229,7 @@
       &:first-child {
         margin-top: 2rem;
 
-        @include smallDesktops {
+        @include largeDesktops {
           margin-top: 22px !important;
         }
 
@@ -220,7 +250,7 @@
         gap: 3rem;
         padding-left: 0;
 
-        @include smallDesktops {
+        @include largeDesktops {
           width: auto;
           gap: 1rem;
           align-items: center;
@@ -238,8 +268,13 @@
         font-size: fontSize("sm");
         font-weight: fontWeight("slim");
 
-        @include smallDesktops {
+        @include tablet {
+          font-size: fontSize("md");
+        }
+
+        @include largeDesktops {
           color: color("darkOrange");
+          font-size: fontSize("sm");
 
           &:hover {
             text-decoration: underline;

@@ -60,7 +60,7 @@
     @include largeDesktops {
       @include flexCenter(row);
       @include boxShadow;
-      justify-content: flex-start;
+      justify-content: space-evenly;
       position: relative;
       height: 18vh;
       z-index: 40;
@@ -137,11 +137,15 @@
       left: 0.5rem;
       width: auto;
 
+      @include tablet {
+        height: 12rem;
+        margin-left: 2%;
+        transform: translateY(-40%);
+      }
+
       @include largeDesktops {
         position: relative;
-        height: auto;
-        margin-inline: 1rem;
-        transform: unset;
+        transform: translateY(10%);
       }
     }
 
@@ -186,6 +190,7 @@
       overflow: hidden;
       justify-content: flex-end;
       padding-top: 15vh;
+      flex: 1;
 
       @include largeDesktops {
         visibility: visible;
@@ -198,6 +203,7 @@
         background: transparent;
         height: 100%;
         padding-top: 0;
+        margin-right: 2rem;
       }
     }
 

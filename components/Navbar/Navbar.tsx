@@ -20,7 +20,7 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 1200);
+      setIsMobile(window.innerWidth < 1025);
     };
 
     handleResize();

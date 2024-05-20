@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Wave Riders | Surf Shop",
+  title: "Wave Rider | Surf Shop",
   description: "Your online surf shop",
 };
 

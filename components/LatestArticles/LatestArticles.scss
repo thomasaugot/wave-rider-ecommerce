@@ -1,6 +1,6 @@
 @import "../../styles/globals.scss";
 
-.latest-articles__container {
+.latest-articles {
   width: 100vw;
   height: 100vh;
   position: relative;
@@ -9,9 +9,9 @@
 
   img {
     position: absolute;
-    width: 30vw;
+    width: 20vw;
     height: auto;
-    top: -5rem;
+    top: -7rem;
     right: 3rem;
     z-index: 50;
     transform: rotate(25deg);

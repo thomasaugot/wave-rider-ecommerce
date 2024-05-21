@@ -10,6 +10,7 @@
   padding: 3rem 3rem 0 3rem;
   height: auto;
   overflow: hidden;
+  z-index: 10;
 
   .background {
     position: absolute;
@@ -138,11 +139,14 @@
 #wave {
   transform: rotate(180deg);
   transition: 0.3s;
+  z-index: 10;
 
   .path1 {
     transform: translate(0, -30px);
     opacity: 1;
     width: 100%;
+    z-index: 10;
+    @include dropShadow;
 
     @include smallDesktops {
       transform: translate(0, 0px);
@@ -153,6 +157,8 @@
     transform: translate(0, 20px);
     opacity: 0.9;
     width: 100%;
+    z-index: 10;
+    @include dropShadow;
 
     @include smallDesktops {
       transform: translate(0, 50px);

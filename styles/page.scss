@@ -12,16 +12,5 @@ body {
         height: 90vh;
       }
     }
-
-    h1 {
-      font-family: map-get($font-names, "galada"), sans-serif;
-      color: color("skyBlue");
-      z-index: 20;
-
-      &:hover {
-        cursor: pointer;
-        color: color("warning");
-      }
-    }
   }
 }

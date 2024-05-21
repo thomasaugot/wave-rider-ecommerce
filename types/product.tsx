@@ -6,6 +6,7 @@ interface Product {
   description: string;
   images: string[];
   category: string;
+  created_at: string;
 }
 
 export type { Product };

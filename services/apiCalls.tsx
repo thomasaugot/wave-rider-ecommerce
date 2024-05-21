@@ -1,3 +1,4 @@
+import { Product } from "@/types";
 import { supabase } from "./supabase";
 
 // From here I centralize all my API call functions
@@ -137,14 +138,14 @@ export const deleteUser = async (userId: any) => {
 };
 
 // function to fetch all the products
-export const getProducts = async () => {
+export const getProducts = async (): Promise<Product[]> => {
   try {
     let { data: products, error } = await supabase.from("products").select("*");
 
     // If there's no error, return all products
     if (!error) {
       console.log("my products: ", products);
-      return products;
+      return products || [];
     } else {
       throw new Error("Error fetching all products: " + error.message);
     }

@@ -1,19 +1,52 @@
 @import "../../styles/globals.scss";
 
 .latest-articles {
-  width: 100vw;
-  height: 100vh;
   position: relative;
-  background-color: color("white");
-  z-index: 100;
+  overflow: hidden;
+  margin-top: -30px;
+  padding: 1rem 0.5rem;
 
-  img {
-    position: absolute;
-    width: 20vw;
-    height: auto;
-    top: -7rem;
-    right: 3rem;
-    z-index: 50;
-    transform: rotate(25deg);
+  h1 {
+    font-family: fontName("galada"), sans-serif;
+    color: color("skyBlue");
+    margin-inline: 10vw;
+    font-size: fontSize("xl");
+  }
+
+  .mySwiper {
+    padding-block: 2rem;
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      color: color("white");
+      background-color: color("skyBlue");
+      padding: 1rem;
+      border-radius: 50%;
+      height: 0.7rem;
+      width: 0.7rem;
+      opacity: 0.5;
+      transition: all 500ms;
+
+      &::after {
+        font-size: fontSize("sm");
+        font-weight: fontWeight("bold");
+        line-height: 0;
+      }
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .article-card {
+      width: 100%;
+      max-width: 300px;
+    }
   }
 }

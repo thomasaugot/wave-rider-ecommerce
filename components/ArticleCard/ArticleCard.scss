@@ -1,87 +1,122 @@
 @import "../../styles/globals.scss";
 
 .article-card {
+  position: relative;
   @include boxShadow;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 1rem;
   overflow: hidden;
-  transition: box-shadow 0.3s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
   width: 300px;
-  height: 550px;
+  height: 450px;
   display: flex;
   flex-direction: column;
+  background-color: color("skyBlue");
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+
+    .image-container {
+      height: 30%;
+
+      .details-button {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .content {
+      height: 70%;
+
+      .description {
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
 
   .image-container {
-    height: 40%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
+    height: 70%;
     overflow: hidden;
+    transition: height 0.3s ease-in-out;
 
-    img {
-      max-height: 100%;
-      max-width: 100%;
-      object-fit: contain;
+    .article-image {
+      transition: transform 0.3s ease-in-out;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .details-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      text-wrap: nowrap;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      background-color: rgba(84, 58, 183, 0.9);
+      color: white;
+      font-family: fontName("galada");
+      font-size: fontSize("sm");
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      line-height: auto;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+      &:hover {
+        background-color: rgba(84, 58, 183, 1);
+      }
     }
   }
 
   .content {
-    padding: 1rem 0.5rem;
-    flex-grow: 1;
+    padding: 0.5rem 1rem;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    transition: height 0.3s ease-in-out;
+    background-image: url(../../public/assets/img/wavy-card-bg.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: 1rem;
 
     h2 {
       font-size: 1.5em;
-      margin: 0 0 8px;
-      color: #333;
-      margin: 0 0 16px;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      text-overflow: ellipsis;
-      margin: 0 0 8px;
-      line-height: 1.4;
-      font-family: fontName("galada");
-      color: color("darkOrange");
-    }
-
-    p {
-      font-size: 1em;
-      color: #666;
-      margin: 0 0 16px;
-      overflow: hidden;
+      margin: 0.5rem;
+      font-family: fontName("decalotype");
+      color: color("white");
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       text-overflow: ellipsis;
-      margin: 0 0 8px;
-      line-height: 1.4;
+      overflow: hidden;
+      height: 3.6rem;
     }
 
     .price {
-      font-size: 1.2em;
-      color: #333;
-      margin-bottom: 16px;
+      font-size: fontSize("sm");
+      color: color("white");
+      margin-block: 0.5rem;
+      font-family: fontName("galada");
     }
 
-    .button-container {
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    button {
-      background-color: #0070f3;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #005bb5;
-      }
+    .description {
+      display: none;
+      font-size: fontSize("xs");
+      color: color("white");
+      line-height: 1.4;
+      font-family: fontName("decalotype");
+      transition: display 0.3s ease-in-out;
     }
   }
 }

@@ -6,6 +6,10 @@ import { Navigation } from "swiper/modules";
 import ArticleCard from "../ArticleCard/ArticleCard";
 import { Product } from "@/types/product";
 import "./LatestArticles.scss";
+import Image from "next/image";
+import flamingoFloat from "@/public/assets/img/flamingo.png";
+import starfish from "@/public/assets/img/starfish.png";
+import Link from "next/link";
 
 interface LatestArticlesProps {
   products: Product[];
@@ -42,7 +46,15 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
 
   return (
     <div className="latest-articles">
-      <h1>Latest Additions</h1>
+      <div className="title-container">
+        <h1>Latest Products</h1>
+        <Image
+          src={flamingoFloat}
+          alt="flamingo float"
+          className="flamingo-img"
+        />
+        <Image src={starfish} alt="starfish" className="starfish-img" />
+      </div>
       <Swiper
         slidesPerView={1}
         spaceBetween={10}
@@ -73,12 +85,15 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
               name={product.name}
               description={product.description}
               price={product.price}
-              buttonLabel="Read More"
+              buttonLabel="More Details"
               onButtonClick={() => alert(`Clicked on ${product.name}`)}
             />
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className="link-container">
+        <Link href="#">View All Products</Link>
+      </div>
     </div>
   );
 };

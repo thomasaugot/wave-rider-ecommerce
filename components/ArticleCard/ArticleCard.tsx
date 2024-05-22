@@ -21,20 +21,22 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
 }) => {
   return (
     <div className="article-card">
-      <Image
-        src={imageUrl}
-        alt={name}
-        width={300}
-        height={300}
-        layout="fixed"
-      />
+      <div className="image-container">
+        <Image
+          src={imageUrl}
+          alt={name}
+          layout="fill"
+          objectFit="cover"
+          className="article-image"
+        />
+        <button className="details-button" onClick={onButtonClick}>
+          {buttonLabel}
+        </button>
+      </div>
       <div className="content">
         <h2>{name}</h2>
-        <p>{description}</p>
-        <p>{price}</p>
-        <div className="button-container">
-          <button onClick={onButtonClick}>{buttonLabel}</button>
-        </div>
+        <p className="price">€ {price.toFixed(2)}</p>
+        <p className="description">{description}</p>
       </div>
     </div>
   );

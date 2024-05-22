@@ -1,0 +1,19 @@
+.wave-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background: none;
+  #wave {
+    position: absolute;
+    transform: rotate(180deg);
+    transition: 0.3s;
+    z-index: 0;
+  }
+
+  .path1,
+  .path2 {
+    opacity: 1;
+    width: 100%;
+    z-index: 0;
+  }
+}

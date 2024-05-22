@@ -82,7 +82,7 @@ export const Navbar: React.FC = () => {
             />
           </g>
         </svg>
-        <a href="#">
+        <a href="/">
           <Image src={logo} alt="logo" className="logo" />
         </a>
         <div className="mobile-top-icons">

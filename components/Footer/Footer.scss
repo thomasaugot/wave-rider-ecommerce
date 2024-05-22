@@ -1,6 +1,86 @@
 @import "../../styles/globals.scss";
 
 .footer {
-  height: 100vh;
-  background-color: color("white");
+  background-color: color("darkGrey");
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+
+      .col-md-3 {
+        width: 100%;
+        margin-bottom: 30px;
+        text-align: center;
+
+        @media (min-width: 768px) {
+          width: calc(25% - 30px);
+          margin-right: 30px;
+        }
+
+        h4 {
+          font-size: fontSize("md");
+          font-weight: fontWeight("bold");
+          font-family: fontName("galada");
+          color: color("white");
+          margin-bottom: 20px;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            margin-bottom: 10px;
+
+            a {
+              color: color("white");
+              text-decoration: none;
+              transition: color 0.3s;
+              font-family: fontName("decalotype");
+
+              &:hover {
+                color: color("purpleBlue");
+              }
+            }
+          }
+          .social-media-icons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+
+            .icon {
+              font-size: fontSize("md");
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    background-color: color("skyBlue");
+    padding: 15px 0;
+    color: color("white");
+    text-align: center;
+    font-size: 14px;
+
+    .container {
+      display: flex;
+      justify-content: center;
+
+      p {
+        margin: 0;
+        font-family: fontName("galada");
+        color: color("darkGrey");
+        font-size: fontSize("sm");
+      }
+    }
+  }
 }

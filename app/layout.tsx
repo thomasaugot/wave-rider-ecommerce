@@ -4,6 +4,7 @@ import "../styles/globals.scss";
 import { Navbar } from "@/components/Navbar/Navbar";
 import "swiper/swiper-bundle.css";
 import "swiper/css/pagination";
+import Footer from "@/components/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

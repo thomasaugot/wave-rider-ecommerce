@@ -6,7 +6,7 @@ import "swiper/scss/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
 import slide1 from "../../public/assets/img/surfboard.webp";
-import slide2 from "../../public/assets/img/surfboards.jpg";
+import slide2 from "../../public/assets/img/flag-beach.webp";
 
 import "./Carousel.scss";
 

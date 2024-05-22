@@ -48,11 +48,11 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
     <div className="latest-articles">
       <div className="title-container">
         <h1>Latest Products</h1>
-        <Image
+        {/* <Image
           src={flamingoFloat}
           alt="flamingo float"
           className="flamingo-img"
-        />
+        /> */}
         <Image src={starfish} alt="starfish" className="starfish-img" />
       </div>
       <Swiper

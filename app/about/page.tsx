@@ -1,8 +1,8 @@
 import React from "react";
-import "./about.scss";
-import Link from "next/link";
 
-export default function About() {
+import "./about.scss";
+
+export default function AboutPage() {
   return (
     <div className="about">
       <div className="about__header">

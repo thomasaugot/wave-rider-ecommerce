@@ -4,12 +4,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { ProductCard } from "../ProductCard/ProductCard";
-import { Product } from "@/types/product";
-import "./LatestArticles.scss";
-import Image from "next/image";
-import starfish from "@/public/assets/img/starfish.png";
 import Link from "next/link";
+import Image from "next/image";
+
+import { Product } from "@/types/product";
+
+import { ProductCard } from "@/components/ProductCard/ProductCard";
+
+import starfish from "@/public/assets/img/starfish.png";
+
+import "./LatestArticles.scss";
 
 interface LatestArticlesProps {
   products: Product[];

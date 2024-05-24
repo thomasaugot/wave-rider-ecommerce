@@ -1,14 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import "./Navbar.scss";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../public/assets/img/logo.webp";
+
 import { FaSearch } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
+
+import logo from "../../public/assets/img/logo.webp";
+
+import "./Navbar.scss";
 
 export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);

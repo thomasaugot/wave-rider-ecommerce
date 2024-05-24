@@ -1,13 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import "../styles/page.scss";
+
 import { getProducts } from "@/services/apiCalls";
+import { Product } from "@/types/product";
+
 import { Carousel } from "@/components/Carousel/Carousel";
 import { ShippingInformation } from "@/components/ShippingInformation/ShippingInformation";
-import { Product } from "@/types/product";
 import { LatestArticles } from "@/components/LatestArticles/LatestArticles";
 import Loading from "@/components/Loading/Loading";
+
+import "@/styles/page.scss";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[] | null>(null);

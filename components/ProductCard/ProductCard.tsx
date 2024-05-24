@@ -1,7 +1,8 @@
 import React from "react";
-import "./ProductCard.scss";
 import Image from "next/image";
 import Link from "next/link";
+
+import "./ProductCard.scss";
 
 interface ProductCardProps {
   id: string;

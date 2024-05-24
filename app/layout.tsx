@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "../styles/globals.scss";
-import { Navbar } from "@/components/Navbar/Navbar";
 import "swiper/swiper-bundle.css";
 import "swiper/css/pagination";
+
+import StoreProvider from "@/lib/storeProvider";
+
+import { Navbar } from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
+
+import "@/styles/globals.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +23,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <Navbar />
-        {children}
-        <Footer />
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="en">
+        <body>
+          <Navbar />
+          {children}
+          <Footer />
+        </body>
+      </html>
+    </StoreProvider>
   );
 }

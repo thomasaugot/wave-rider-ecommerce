@@ -1,7 +1,8 @@
 import React from "react";
+
 import "./WavyPattern.scss";
 
-export const WavyPattern = () => (
+export const WavyPattern: React.FC = () => (
   <div className="wave-container">
     <svg
       id="wave"

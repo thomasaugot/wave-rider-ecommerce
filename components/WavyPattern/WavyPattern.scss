@@ -1,8 +1,11 @@
+@import "@/styles/globals.scss";
+
 .wave-container {
   position: relative;
   width: 100%;
   height: auto;
   background: none;
+
   #wave {
     position: absolute;
     transform: rotate(180deg);

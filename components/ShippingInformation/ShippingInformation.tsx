@@ -1,12 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
+
+import { WavyPattern } from "../WavyPattern/WavyPattern";
+
 import woodenSignal from "../../public/assets/img/wooden-sign.webp";
 import mobileWoodenSignal from "../../public/assets/img/mobile-wooden-signal.webp";
 import beachBg from "../../public/assets/img/beach-bg.webp";
+
 import "./ShippingInformation.scss";
-import Image from "next/image";
-import { WavyPattern } from "../WavyPattern/WavyPattern";
 
 const shippingInfoItems = [
   {

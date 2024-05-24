@@ -1,11 +1,19 @@
-import { Product } from "../../types/product";
-import { ProductItem } from "../ProductItem/ProductItem";
+import { Product } from "@/types/product";
+import { ProductCard } from "@/components/ProductCard/ProductCard";
 
 const ProductList = ({ products }: { products: Product[] }) => {
   return (
     <div>
       {products.map((product) => (
-        <ProductItem key={product.id} product={product} />
+        <ProductCard
+          key={product.id}
+          id={""}
+          images={[]}
+          name={""}
+          description={""}
+          price={0}
+          addToCartButton={undefined}
+        />
       ))}
     </div>
   );

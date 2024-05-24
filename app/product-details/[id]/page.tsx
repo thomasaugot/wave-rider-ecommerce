@@ -4,6 +4,8 @@ import React from "react";
 import { useParams } from "next/navigation";
 import { useSelector } from "react-redux";
 
+import "./product-details.scss";
+
 export default function ProductDetailsPage() {
   const { productId } = useParams(); // Get product ID from URL
   const products = useSelector((state: any) => state?.products?.products); // Access products from store

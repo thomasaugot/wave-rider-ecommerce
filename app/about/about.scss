@@ -1,10 +1,9 @@
 @import "@/styles/globals.scss";
 
-.about {
+.about-us {
   width: 100vw;
-  min-height: 100vh;
   margin: 0 auto;
-  padding: 20px;
+  padding: 4rem 0;
   @include flexCenter(column);
   position: relative;
   overflow: hidden;
@@ -27,10 +26,17 @@
   &__header {
     text-align: center;
     z-index: 1;
+  }
 
-    h1 {
-      color: color("darkOrange");
-      font-family: fontName("galada"), cursive;
-    }
+  h1,
+  h2 {
+    color: color("darkOrange");
+    font-family: fontName("galada"), cursive;
+  }
+
+  p,
+  li {
+    font-family: fontName("decalotype"), sans-serif;
+    max-width: 80vw;
   }
 }

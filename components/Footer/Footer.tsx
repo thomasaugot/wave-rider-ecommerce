@@ -48,10 +48,10 @@ const Footer: React.FC = () => {
             <h4>Legal</h4>
             <ul>
               <li>
-                <Link href="/privacy">Privacy Policy</Link>
+                <Link href="/privacy-policy">Privacy Policy</Link>
               </li>
               <li>
-                <Link href="/terms">Terms of Service</Link>
+                <Link href="/terms-of-service">Terms of Service</Link>
               </li>
             </ul>
           </div>

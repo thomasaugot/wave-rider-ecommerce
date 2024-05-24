@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./terms.scss";
 
 export default function TermsOfService() {
@@ -13,16 +12,17 @@ export default function TermsOfService() {
         <p>
           These Terms of Service constitute a legally binding agreement made
           between you, whether personally or on behalf of an entity
-          (&ldquo;you&rdquo;) and Wave Rider Surf Shop (&ldquo;we,&rdquo;
-          &ldquo;us&rdquo; or &ldquo;our&rdquo;), concerning your access to and
-          use of the https://wave-riders-ecommerce.vercel.app/ website as well
-          as any other media form, media channel, mobile website or mobile
-          application related, linked, or otherwise connected thereto
-          (collectively, the &ldquo;Site&rdquo;). You agree that by accessing
-          the Site, you have read, understood, and agreed to be bound by all of
-          these Terms of Service. IF YOU DO NOT AGREE WITH ALL OF THESE TERMS OF
-          SERVICE, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SITE AND YOU
-          MUST DISCONTINUE USE IMMEDIATELY.
+          (&amp;ldquo;you&amp;rdquo;) and Wave Rider Surf Shop
+          (&amp;ldquo;we,&amp;rdquo; &amp;ldquo;us&amp;rdquo; or
+          &amp;ldquo;our&amp;rdquo;), concerning your access to and use of the
+          https://wave-riders-ecommerce.vercel.app/ website as well as any other
+          media form, media channel, mobile website or mobile application
+          related, linked, or otherwise connected thereto (collectively, the
+          &amp;ldquo;Site&amp;rdquo;). You agree that by accessing the Site, you
+          have read, understood, and agreed to be bound by all of these Terms of
+          Service. IF YOU DO NOT AGREE WITH ALL OF THESE TERMS OF SERVICE, THEN
+          YOU ARE EXPRESSLY PROHIBITED FROM USING THE SITE AND YOU MUST
+          DISCONTINUE USE IMMEDIATELY.
         </p>
         <h2>Intellectual Property Rights</h2>
         <p>
@@ -32,7 +32,7 @@ export default function TermsOfService() {
           development and do not have any commercial purpose. All source code,
           databases, functionality, software, website designs, audio, video,
           text, photographs, and graphics on the Site (collectively, the
-          &ldquo;Content&rdquo;) are used under fair use for educational
+          &amp;ldquo;Content&amp;rdquo;) are used under fair use for educational
           purposes. The Site and its contents are based in Spain and comply with
           applicable local and international laws regarding intellectual
           property.
@@ -67,7 +67,7 @@ export default function TermsOfService() {
           materials to us or on the Site, including but not limited to text,
           writings, video, audio, photographs, graphics, comments, suggestions,
           or personal information or other material (collectively,
-          "Contributions").
+          &ldquo;Contributions&rdquo;).
         </p>
         <h2>Site Management</h2>
         <p>

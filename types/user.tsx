@@ -1,4 +1,4 @@
-interface User {
+interface UserType {
   id: string;
   created_at: string;
   firstname: string;
@@ -9,4 +9,4 @@ interface User {
   address: string;
 }
 
-export type { User };
+export type { UserType };

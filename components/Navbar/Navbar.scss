@@ -146,6 +146,8 @@
       @include largeDesktops {
         position: relative;
         transform: translateY(10%);
+        height: 100%;
+        width: 25vw;
       }
     }
 

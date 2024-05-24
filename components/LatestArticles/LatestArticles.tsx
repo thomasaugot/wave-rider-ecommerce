@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import ArticleCard from "../ArticleCard/ArticleCard";
+import { ProductCard } from "../ProductCard/ProductCard";
 import { Product } from "@/types/product";
 import "./LatestArticles.scss";
 import Image from "next/image";
-import flamingoFloat from "@/public/assets/img/flamingo.png";
 import starfish from "@/public/assets/img/starfish.png";
 import Link from "next/link";
 
@@ -17,6 +17,7 @@ interface LatestArticlesProps {
 
 export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
+  const router = useRouter();
 
   const filterLatestProducts = (products: Product[]) => {
     const now = new Date();
@@ -48,11 +49,6 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
     <div className="latest-articles">
       <div className="title-container">
         <h1>Latest Products</h1>
-        {/* <Image
-          src={flamingoFloat}
-          alt="flamingo float"
-          className="flamingo-img"
-        /> */}
         <Image src={starfish} alt="starfish" className="starfish-img" />
       </div>
       <Swiper
@@ -60,18 +56,9 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
         spaceBetween={10}
         navigation
         breakpoints={{
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-          },
-          1024: {
-            slidesPerView: 4,
-            spaceBetween: 40,
-          },
+          640: { slidesPerView: 2, spaceBetween: 20 },
+          768: { slidesPerView: 3, spaceBetween: 30 },
+          1024: { slidesPerView: 4, spaceBetween: 40 },
         }}
         modules={[Navigation]}
         className="mySwiper"
@@ -80,14 +67,7 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
       >
         {latestProducts.map((product) => (
           <SwiperSlide key={product.id}>
-            <ArticleCard
-              imageUrl={product.images[0]}
-              name={product.name}
-              description={product.description}
-              price={product.price}
-              buttonLabel="More Details"
-              onButtonClick={() => alert(`Clicked on ${product.name}`)}
-            />
+            <ProductCard addToCartButton={undefined} {...product} />
           </SwiperSlide>
         ))}
       </Swiper>

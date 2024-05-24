@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./admin-portal.scss";
+import "./authentication.scss";
 
 export default function AuthenticationPage() {
   return <div className="authentication"></div>;

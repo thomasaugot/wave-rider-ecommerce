@@ -1,14 +1,14 @@
 import React from "react";
 
-import "./privacy-policy.scss";
+import "@/styles/shared-styles.scss";
 
 export default function PrivacyPolicy() {
   return (
-    <div className="privacy-policy">
-      <div className="privacy-policy__header">
+    <div className="container">
+      <div className="container__header">
         <h1>Privacy Policy</h1>
       </div>
-      <div className="privacy-policy__content">
+      <div className="container__content">
         <p>
           Welcome to Wave Rider, your water sports equipment e-store! This
           Privacy Policy explains how we collect, use, disclose, and safeguard

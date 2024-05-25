@@ -1,14 +1,15 @@
 import React from "react";
-import "./faq.scss";
 
-const FAQ = () => {
+import "@/styles/shared-styles.scss";
+
+export default function FAQ() {
   return (
-    <div className="faq">
-      <div className="faq__header">
+    <div className="container">
+      <div className="container__header">
         <h1>Frequently Asked Questions</h1>
       </div>
-      <div className="faq__content">
-        <div className="faq__item">
+      <div className="container__content">
+        <div className="container__item">
           <h2>What is Wave Rider Surf Shop?</h2>
           <p>
             Wave Rider Surf Shop is a personal project created for training and
@@ -17,7 +18,7 @@ const FAQ = () => {
             Redux.
           </p>
         </div>
-        <div className="faq__item">
+        <div className="container__item">
           <h2>Is this a real store?</h2>
           <p>
             No, this is not a real store. It is a fake e-commerce site designed
@@ -25,7 +26,7 @@ const FAQ = () => {
             sales take place on this site.
           </p>
         </div>
-        <div className="faq__item">
+        <div className="container__item">
           <h2>What technologies are used in this project?</h2>
           <p>
             This project is built using NextJS, TypeScript, SCSS, and Redux.
@@ -33,7 +34,7 @@ const FAQ = () => {
             interactive web application.
           </p>
         </div>
-        <div className="faq__item">
+        <div className="container__item">
           <h2>Can I buy products from this site?</h2>
           <p>
             No, you cannot buy products from this site. It is a demo site for
@@ -42,7 +43,7 @@ const FAQ = () => {
             sale.
           </p>
         </div>
-        <div className="faq__item">
+        <div className="container__item">
           <h2>Is my data safe on this site?</h2>
           <p>
             Since this is a training project, data security is a simulated
@@ -51,7 +52,7 @@ const FAQ = () => {
             personal or sensitive information.
           </p>
         </div>
-        <div className="faq__item">
+        <div className="container__item">
           <h2>How can I contact the developer?</h2>
           <p>
             If you have any questions or comments about this project, you can
@@ -61,6 +62,4 @@ const FAQ = () => {
       </div>
     </div>
   );
-};
-
-export default FAQ;
+}

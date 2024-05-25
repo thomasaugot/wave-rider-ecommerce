@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "swiper/swiper-bundle.css";
 import "swiper/css/pagination";
 
-import StoreProvider from "@/lib/storeProvider";
+import StoreProvider from "./StoreProvider";
 
 import { Navbar } from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";

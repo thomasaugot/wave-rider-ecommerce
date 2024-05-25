@@ -1,14 +1,14 @@
 import React from "react";
 
-import "./about.scss";
+import "@/styles/shared-styles.scss";
 
 export default function AboutPage() {
   return (
-    <div className="about-us">
-      <div className="about-us__header">
+    <div className="container">
+      <div className="container__header">
         <h1>About Us</h1>
       </div>
-      <div className="about-us__content">
+      <div className="container__content">
         <h2>Welcome to Wave Rider Surf Shop!</h2>
         <p>
           Wave Rider Surf Shop is a personal project created for training and

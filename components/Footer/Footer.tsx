@@ -14,7 +14,7 @@ import "./Footer.scss";
 const Footer: React.FC = () => {
   return (
     <footer className="footer">
-      <div className="container">
+      <div className="footer__container">
         <div className="row">
           <div className="col-md-3">
             <h4>Company</h4>
@@ -103,7 +103,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <div className="container">
+        <div className="footer-bottom__container">
           <div className="row">
             <div className="col-md-12">
               <p>

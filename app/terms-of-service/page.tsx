@@ -1,28 +1,27 @@
 import React from "react";
-import "./terms.scss";
+
+import "@/styles/shared-styles.scss";
 
 export default function TermsOfService() {
   return (
-    <div className="terms">
-      <div className="terms__header">
+    <div className="container">
+      <div className="container__header">
         <h1>Terms of Service</h1>
       </div>
-      <div className="terms__content">
+      <div className="container__content">
         <h2>Agreement to Terms</h2>
         <p>
           These Terms of Service constitute a legally binding agreement made
-          between you, whether personally or on behalf of an entity
-          (&amp;ldquo;you&amp;rdquo;) and Wave Rider Surf Shop
-          (&amp;ldquo;we,&amp;rdquo; &amp;ldquo;us&amp;rdquo; or
-          &amp;ldquo;our&amp;rdquo;), concerning your access to and use of the
+          between you, whether personally or on behalf of an entity and Wave
+          Rider Surf Shop, concerning your access to and use of the
           https://wave-riders-ecommerce.vercel.app/ website as well as any other
           media form, media channel, mobile website or mobile application
           related, linked, or otherwise connected thereto (collectively, the
-          &amp;ldquo;Site&amp;rdquo;). You agree that by accessing the Site, you
-          have read, understood, and agreed to be bound by all of these Terms of
-          Service. IF YOU DO NOT AGREE WITH ALL OF THESE TERMS OF SERVICE, THEN
-          YOU ARE EXPRESSLY PROHIBITED FROM USING THE SITE AND YOU MUST
-          DISCONTINUE USE IMMEDIATELY.
+          Site). You agree that by accessing the Site, you have read,
+          understood, and agreed to be bound by all of these Terms of Service.
+          IF YOU DO NOT AGREE WITH ALL OF THESE TERMS OF SERVICE, THEN YOU ARE
+          EXPRESSLY PROHIBITED FROM USING THE SITE AND YOU MUST DISCONTINUE USE
+          IMMEDIATELY.
         </p>
         <h2>Intellectual Property Rights</h2>
         <p>

@@ -19,7 +19,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    background-image: url(../../public/assets/img/tropical-wooden-bg.jpg);
+    background-image: url(../../public/assets/img/tropical-wooden-bg.webp);
     @include bgImageStyle;
     opacity: 0.5;
     z-index: -1;
@@ -40,7 +40,6 @@
 
     .cart-item {
       display: flex;
-      border-bottom: 1px solid #ccc;
       background-color: rgba(color("white"), 0.7);
       border-radius: 1rem;
       padding: 1rem;
@@ -69,8 +68,7 @@
         }
 
         &__quantity {
-          font-size: 0.9rem;
-          color: #999;
+          font-size: fontSize("lg");
         }
 
         &__controls {

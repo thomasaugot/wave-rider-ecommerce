@@ -1,1 +1,24 @@
 @import "@/styles/globals.scss";
+
+.brands {
+  background-color: color("white");
+  @include flexCenter(column);
+  padding-block: 2rem;
+
+  h2 {
+    font-family: fontName("galada");
+    color: color("darkOrange");
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+
+    img {
+      width: auto;
+      height: 6rem;
+    }
+  }
+}

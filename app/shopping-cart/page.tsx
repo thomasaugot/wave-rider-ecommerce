@@ -75,7 +75,7 @@ export default function ShoppingCartPage() {
             />
             <div className="cart-item__details">
               <h2 className="cart-item__name">{item.name}</h2>
-              <p className="cart-item__price">${item.price.toFixed(2)}</p>
+              <p className="cart-item__price">€ {item.price.toFixed(2)}</p>
               <p className="cart-item__quantity">Quantity: {item.quantity}</p>
               <div className="cart-item__controls">
                 <button

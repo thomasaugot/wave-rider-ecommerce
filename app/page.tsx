@@ -11,6 +11,7 @@ import { LatestArticles } from "@/components/LatestArticles/LatestArticles";
 import Loading from "@/components/Loading/Loading";
 
 import "@/styles/page.scss";
+import { Brands } from "@/components/Brands/Brands";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[] | null>(null);
@@ -41,9 +42,11 @@ export default function Home() {
           <section className="latest-articles">
             {products && <LatestArticles products={products} />}
           </section>
-          {/* <section className="brands"></section>
-          <section className="clients-opinions"></section>
-          <section>
+          <section className="brands">
+            <Brands />
+          </section>
+          {/* <section className="clients-opinions"></section> */}
+          {/* <section>
             Surf Rider Surf Shop - The specialist Le spécialiste en matériel &
             accessoires de sports de glisse
           </section>

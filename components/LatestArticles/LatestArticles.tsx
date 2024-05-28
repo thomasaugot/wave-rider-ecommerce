@@ -4,7 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import Link from "next/link";
 import Image from "next/image";
 
 import { Product } from "@/types/product";
@@ -29,9 +28,11 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
     const sevenDaysAgo = new Date(now);
     sevenDaysAgo.setDate(now.getDate() - 7);
 
-    return products.filter(
-      (product) => new Date(product.created_at) >= sevenDaysAgo
-    );
+    // return products.filter(
+    //   (product) => new Date(product.created_at) >= sevenDaysAgo
+    // );
+
+    return products;
   };
 
   const latestProducts = filterLatestProducts(products);

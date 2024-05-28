@@ -64,6 +64,7 @@
     }
 
     .details-button {
+      @include dropShadow;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -98,9 +99,7 @@
     text-align: center;
     transition: height 0.3s ease-in-out;
     background-image: url(../../public/assets/img/wavy-card-bg.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    @include bgImageStyle;
     background-position-y: 1rem;
 
     h2 {

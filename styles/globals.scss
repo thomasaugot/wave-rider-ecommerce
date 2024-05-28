@@ -57,3 +57,9 @@
   font-size: fontSize("md");
   font-weight: fontWeight("slim");
 }
+
+@mixin bgImageStyle {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

@@ -67,6 +67,7 @@
     }
 
     .hamburger-lines {
+      @include dropShadow;
       display: flex;
       height: 28px;
       width: 35px;
@@ -136,6 +137,7 @@
       transform: translateY(-50%);
       left: 0.5rem;
       width: auto;
+      @include dropShadow;
 
       @include tablet {
         height: 10rem;
@@ -152,8 +154,11 @@
     }
 
     .mobile-top-icons {
+      @include dropShadow;
       position: absolute;
-      top: 50%;
+      display: flex;
+      align-items: flex-start; // Adjusted align-items property
+      top: 55%;
       transform: translateY(-35%);
       right: 16%;
       > a {
@@ -288,6 +293,16 @@
             text-decoration: underline;
           }
         }
+
+        .nav-icon {
+          font-size: fontSize("md");
+
+          &:hover {
+            transform: scale(1.1);
+            transition: all 0.3s ease-in-out;
+            @include dropShadow;
+          }
+        }
       }
     }
   }
@@ -297,6 +312,31 @@
       visibility: visible;
       opacity: 1;
       transform: translate(0%);
+    }
+  }
+
+  .cart-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: fontSize("lg");
+
+    @include tablet {
+      font-size: fontSize("xl");
+    }
+
+    @include smallDesktops {
+      font-size: fontSize("lg");
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -0.7rem;
+      right: -0.3rem;
+      color: color("warning");
+      font-size: fontSize("sm");
+      font-weight: bold;
     }
   }
 }

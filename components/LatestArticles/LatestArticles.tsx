@@ -14,6 +14,7 @@ import { ProductCard } from "@/components/ProductCard/ProductCard";
 import starfish from "@/public/assets/img/starfish.png";
 
 import "./LatestArticles.scss";
+import CustomButton from "../CustomButton/CustomButton";
 
 interface LatestArticlesProps {
   products: Product[];
@@ -76,7 +77,13 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
         ))}
       </Swiper>
       <div className="link-container">
-        <Link href="#">View All Products</Link>
+        {/* <Link href="#">View All Products</Link> */}
+        <CustomButton
+          text={"View All Products"}
+          onClick={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
       </div>
     </div>
   );

@@ -41,8 +41,16 @@ export default function Home() {
           <section className="latest-articles">
             {products && <LatestArticles products={products} />}
           </section>
-          <section className="brands"></section>
+          {/* <section className="brands"></section>
           <section className="clients-opinions"></section>
+          <section>
+            Surf Rider Surf Shop - The specialist Le spécialiste en matériel &
+            accessoires de sports de glisse
+          </section>
+          <section>
+            Subscribe and be the first to know about our new products,
+            promotions
+          </section> */}
         </>
       )}
     </main>

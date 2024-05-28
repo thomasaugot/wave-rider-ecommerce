@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import { FaSearch } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
-import { FaHeart } from "react-icons/fa6";
+import { FaHeart } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 
 import logo from "../../public/assets/img/logo.webp";
@@ -16,6 +16,7 @@ import "./Navbar.scss";
 export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [cartCount, setCartCount] = useState<number>(2); // Example cart count
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -95,8 +96,11 @@ export const Navbar: React.FC = () => {
             </Link>
           )}
           {isMobile && (
-            <Link href="#">
-              <FaShoppingCart />
+            <Link href={"/shopping-cart"}>
+              <div className="cart-icon">
+                <FaShoppingCart />
+                <span className="cart-count">{cartCount}</span>
+              </div>
             </Link>
           )}
         </div>
@@ -155,24 +159,22 @@ export const Navbar: React.FC = () => {
             {!isMobile && (
               <li>
                 <Link href="#">
-                  <FaSearch />
+                  <FaSearch className="nav-icon" />
                 </Link>
               </li>
             )}
             <li>
               <Link href="#">
-                <IoPerson />
-              </Link>
-            </li>
-            <li>
-              <Link href="#">
-                <FaHeart />
+                <IoPerson className="nav-icon" />
               </Link>
             </li>
             {!isMobile && (
               <li>
-                <Link href="#">
-                  <FaShoppingCart />
+                <Link href={"/shopping-cart"}>
+                  <div className="cart-icon">
+                    <FaShoppingCart className="nav-icon" />
+                    <span className="cart-count">{cartCount}</span>
+                  </div>
                 </Link>
               </li>
             )}

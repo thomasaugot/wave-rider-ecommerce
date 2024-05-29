@@ -9,7 +9,7 @@ import { LatestArticles } from "@/components/LatestArticles/LatestArticles";
 import Loading from "@/components/Loading/Loading";
 import "@/styles/page.scss";
 import { Brands } from "@/components/Brands/Brands";
-import Presentation from "@/components/Presentation/Presentation";
+import { Presentation } from "@/components/Presentation/Presentation";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[] | null>(null);

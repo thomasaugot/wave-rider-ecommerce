@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import "./Footer.scss";
-import { WavesAnimation } from "../WavesAnimation/WavesAnimation";
+import { WavyAnimation } from "../WavyAnimation/WavyAnimation";
 
 const Footer: React.FC = () => {
   return (
@@ -102,7 +102,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <WavesAnimation />
+        <WavyAnimation />
         <p>
           &copy; {new Date().getFullYear()} Wave Rider Surf Shop. All rights
           reserved

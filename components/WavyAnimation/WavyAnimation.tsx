@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
-import "./WavesAnimation.scss";
+import "./WavyAnimation.scss";
 
-export const WavesAnimation: React.FC = () => {
+export const WavyAnimation: React.FC = () => {
   const svgContent = useMemo(
     () => (
       <svg

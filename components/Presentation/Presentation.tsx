@@ -3,7 +3,7 @@ import "./Presentation.scss";
 import { useFramerMotion } from "@/hooks/useFramerMotion";
 import CustomButton from "../CustomButton/CustomButton";
 
-const Presentation: React.FC = () => {
+export const Presentation: React.FC = () => {
   const variants = {
     hidden: { opacity: 0, y: 20 },
     show: {
@@ -39,5 +39,3 @@ const Presentation: React.FC = () => {
     </div>
   );
 };
-
-export default Presentation;

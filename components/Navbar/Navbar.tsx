@@ -10,7 +10,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { Product } from "@/types";
 import logo from "../../public/assets/img/logo.webp";
 import "./Navbar.scss";
-import { WavesAnimation } from "../WavesAnimation/WavesAnimation";
+import { WavyAnimation } from "../WavyAnimation/WavyAnimation";
 
 export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -118,7 +118,7 @@ export const Navbar: React.FC = () => {
         Free shipping for orders over a 60€*
       </div>
       <div className="navbar-container">
-        <WavesAnimation />
+        <WavyAnimation />
         <a href="/">
           <Image src={logo} alt="logo" className="logo" />
         </a>

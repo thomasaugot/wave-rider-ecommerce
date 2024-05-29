@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-
 import {
   FaFacebook,
   FaInstagram,
@@ -8,9 +7,8 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-
 import "./Footer.scss";
-import { WavesAnimation } from "../wavesAnimation/wavesAnimation";
+import { WavesAnimation } from "../WavesAnimation/WavesAnimation";
 
 const Footer: React.FC = () => {
   return (

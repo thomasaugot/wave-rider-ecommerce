@@ -46,8 +46,6 @@ export const ShippingInformation: React.FC = () => {
   return (
     <>
       <div className="shipping-info">
-        <div className="background"></div>
-        <Image src={beachBg} alt="Texture" className="texture" />
         {shippingInfoItems.map((item, index) => (
           <div className="shipping-info__item" key={index}>
             {isMobile ? (
@@ -70,7 +68,6 @@ export const ShippingInformation: React.FC = () => {
           </div>
         ))}
       </div>
-      <WavyPattern />
     </>
   );
 };

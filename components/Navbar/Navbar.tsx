@@ -269,7 +269,7 @@ export const Navbar: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={handleSearchQueryChange}
-              placeholder="Search products..."
+              placeholder="Search a product, a brand, a sport..."
             />
             <button className="search-button" onClick={handleSearchButtonClick}>
               <FaSearch />

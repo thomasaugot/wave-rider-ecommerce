@@ -132,24 +132,23 @@
 
     .logo {
       position: absolute;
-      height: 120%;
-      top: 70%;
+      height: 110%;
+      top: 50%;
       transform: translateY(-50%);
       left: 0.5rem;
       width: auto;
       @include dropShadow;
 
       @include tablet {
-        height: 10rem;
         margin-left: 2%;
-        transform: translateY(-40%);
+        transform: translateY(-50%);
       }
 
       @include largeDesktops {
         position: relative;
-        transform: translateY(10%);
-        height: 100%;
-        width: 25vw;
+        transform: translateY(2%);
+        height: 8rem;
+        width: auto;
       }
     }
 
@@ -325,20 +324,25 @@
     @include flexCenter(row);
     @include boxShadow;
     z-index: 40;
+    width: 60vw;
 
     .search-input-container {
-      width: 100%;
+      position: relative;
+      width: 100%; // Changed from auto to 100%
+      text-align: center;
 
       input {
-        padding: 10px 40px 10px 10px;
+        padding: 10px;
         border: 1px solid #ccc;
         border-radius: 0.5rem;
+        width: calc(100% - 0.5rem);
       }
 
       .search-button {
         position: absolute;
         right: 10px;
-        top: 30%;
+        top: 50%;
+        transform: translateY(-50%);
         background: none;
         border: none;
         cursor: pointer;

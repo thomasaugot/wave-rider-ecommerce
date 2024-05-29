@@ -1,61 +1,60 @@
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
+import { Product } from "@/types/product";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import Image from "next/image";
-
-import { Product } from "@/types/product";
-
 import { ProductCard } from "@/components/ProductCard/ProductCard";
-
-import starfish from "@/public/assets/img/starfish.png";
-
-import "./LatestArticles.scss";
 import CustomButton from "../CustomButton/CustomButton";
+import starfish from "@/public/assets/img/starfish.png";
+import "./LatestArticles.scss";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 interface LatestArticlesProps {
   products: Product[];
 }
 
 export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
-  const [swiperInstance, setSwiperInstance] = useState<any>(null);
-  const router = useRouter();
+  const [isVisible, setIsVisible] = useState(false);
+  const { ref, inView } = useInView({
+    threshold: 0.2,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      setIsVisible(true);
+    }
+  }, [inView]);
 
   const filterLatestProducts = (products: Product[]) => {
-    const now = new Date();
-    const sevenDaysAgo = new Date(now);
-    sevenDaysAgo.setDate(now.getDate() - 7);
-
-    // return products.filter(
-    //   (product) => new Date(product.created_at) >= sevenDaysAgo
-    // );
-
+    // Filter logic here
     return products;
   };
 
   const latestProducts = filterLatestProducts(products);
 
-  const handleSwiper = (swiper: any) => {
-    setSwiperInstance(swiper);
-    updateNavigationVisibility(swiper);
-  };
-
-  const updateNavigationVisibility = (swiper: any) => {
-    if (!swiper) return;
-    const { isBeginning, isEnd } = swiper;
-    const prevButton = swiper.navigation.prevEl;
-    const nextButton = swiper.navigation.nextEl;
-    if (prevButton) prevButton.style.display = isBeginning ? "none" : "block";
-    if (nextButton) nextButton.style.display = isEnd ? "none" : "block";
+  const variants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        duration: 2,
+        yoyo: Infinity,
+      },
+    },
   };
 
   return (
-    <div className="latest-articles">
+    <div className="latest-articles" ref={ref}>
       <div className="title-container">
         <h1>Latest Products</h1>
-        <Image src={starfish} alt="starfish" className="starfish-img" />
+        {isVisible && (
+          <motion.div variants={variants} initial="hidden" whileInView="show">
+            <Image src={starfish} alt="starfish" className="starfish-img" />
+          </motion.div>
+        )}
       </div>
       <Swiper
         slidesPerView={1}
@@ -68,8 +67,6 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
         }}
         modules={[Navigation]}
         className="mySwiper"
-        onSwiper={handleSwiper}
-        onSlideChange={(swiper) => updateNavigationVisibility(swiper)}
       >
         {latestProducts.map((product) => (
           <SwiperSlide key={product.id}>
@@ -78,11 +75,10 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
         ))}
       </Swiper>
       <div className="link-container">
-        {/* <Link href="#">View All Products</Link> */}
         <CustomButton
           text={"View All Products"}
-          onClick={function (): void {
-            throw new Error("Function not implemented.");
+          onClick={() => {
+            // Handle button click
           }}
         />
       </div>

@@ -1,5 +1,4 @@
 import "./Brands.scss";
-
 import React from "react";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
@@ -49,14 +48,7 @@ export const Brands: React.FC = () => {
   return (
     <div className="brands">
       <h2>More than 50 brands in store !</h2>
-      <Marquee
-        speed={40}
-        autoFill={true}
-        direction={"right"}
-        gradient={true}
-        gradientColor={"white"}
-        gradientWidth={200}
-      >
+      <Marquee speed={40} autoFill={true} direction={"right"}>
         {BrandsList.map((brand, index) => (
           <div className="brand" key={index}>
             <Image src={brand.logo} alt={brand.name} className="brand__item" />

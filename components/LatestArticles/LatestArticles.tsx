@@ -11,6 +11,7 @@ import starfish from "@/public/assets/img/starfish.png";
 import "./LatestArticles.scss";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useFramerMotion } from "@/hooks/useFramerMotion";
 
 interface LatestArticlesProps {
   products: Product[];
@@ -18,9 +19,7 @@ interface LatestArticlesProps {
 
 export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const { ref, inView } = useInView({
-    threshold: 0.2,
-  });
+  const { ref, inView } = useInView({ threshold: 0.2 });
 
   useEffect(() => {
     if (inView) {
@@ -29,8 +28,7 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
   }, [inView]);
 
   const filterLatestProducts = (products: Product[]) => {
-    // Filter logic here
-    return products;
+    return products; // to be modified later
   };
 
   const latestProducts = filterLatestProducts(products);
@@ -46,15 +44,21 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
     },
   };
 
+  const content = (
+    <Image src={starfish} alt="Starfish" className="starfish-img" />
+  );
+
+  const framerMotionContent = useFramerMotion({
+    isVisible,
+    variants,
+    children: content,
+  });
+
   return (
     <div className="latest-articles" ref={ref}>
       <div className="title-container">
         <h1>Latest Products</h1>
-        {isVisible && (
-          <motion.div variants={variants} initial="hidden" whileInView="show">
-            <Image src={starfish} alt="starfish" className="starfish-img" />
-          </motion.div>
-        )}
+        {framerMotionContent}
       </div>
       <Swiper
         slidesPerView={1}
@@ -78,7 +82,7 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
         <CustomButton
           text={"View All Products"}
           onClick={() => {
-            // Handle button click
+            /* Handle button click */
           }}
         />
       </div>

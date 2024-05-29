@@ -10,7 +10,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { Product } from "@/types";
 import logo from "../../public/assets/img/logo.webp";
 import "./Navbar.scss";
-import { WavesAnimation } from "../wavesAnimation/wavesAnimation";
+import { WavesAnimation } from "../WavesAnimation/WavesAnimation";
 
 export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);

@@ -105,7 +105,7 @@ const Footer: React.FC = () => {
         <WavesAnimation />
         <p>
           &copy; {new Date().getFullYear()} Wave Rider Surf Shop. All rights
-          reserved.
+          reserved
         </p>
       </div>
     </footer>

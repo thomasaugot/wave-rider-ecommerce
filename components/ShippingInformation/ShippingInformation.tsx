@@ -2,13 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-
-import { WavyPattern } from "../WavyPattern/WavyPattern";
-
-import woodenSignal from "../../public/assets/img/wooden-sign.webp";
-import mobileWoodenSignal from "../../public/assets/img/mobile-wooden-signal.webp";
-import beachBg from "../../public/assets/img/beach-bg.webp";
-
+import woodenSignal from "../../public/assets/img/mobile-wooden-signal.webp";
 import "./ShippingInformation.scss";
 
 const shippingInfoItems = [
@@ -49,7 +43,7 @@ export const ShippingInformation: React.FC = () => {
         {shippingInfoItems.map((item, index) => (
           <div className="shipping-info__item" key={index}>
             <Image
-              src={mobileWoodenSignal}
+              src={woodenSignal}
               alt="wooden signal"
               className={`wooden-signal ${item.className}`}
             />

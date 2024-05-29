@@ -27,22 +27,12 @@
         2px 2px 0 #fff;
     }
 
-    .flamingo-img {
-      width: 17rem;
-      height: auto;
-      position: absolute;
-      left: 10vw;
-      top: -2rem;
-      z-index: 15;
-      @include dropShadow;
-    }
-
     .starfish-img {
       position: absolute;
       width: 10rem;
       height: auto;
       left: 0;
-      top: -3rem;
+      top: -5rem;
       @include dropShadow;
 
       @include tablet {

@@ -7,7 +7,7 @@
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 3vh;
-  padding: 3rem 3rem 0 3rem;
+  padding: 3rem;
   height: auto;
   overflow: hidden;
   z-index: 10;
@@ -21,7 +21,7 @@
   }
 
   @include largeDesktops {
-    padding: 3rem 3rem 0 3rem;
+    padding: 3rem;
   }
 
   &__item {
@@ -33,6 +33,12 @@
     z-index: 1;
     transform-style: preserve-3d;
     transition: transform 0.3s ease;
+
+    @include smallDesktops {
+      &:nth-child(2) {
+        transform: translateY(15%);
+      }
+    }
 
     &:hover {
       transform: rotateX(6deg) rotateY(15deg);

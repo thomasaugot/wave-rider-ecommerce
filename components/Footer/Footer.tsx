@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import "./Footer.scss";
-import { WavyAnimation } from "../WavyAnimation/WavyAnimation";
+import { WavyAnimation } from "@/components/WavyAnimation/WavyAnimation";
 
 const Footer: React.FC = () => {
   return (

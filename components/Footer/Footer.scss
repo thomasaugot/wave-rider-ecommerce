@@ -65,22 +65,18 @@
   }
 
   .footer-bottom {
-    background-color: color("skyBlue");
-    padding: 15px 0;
-    color: color("white");
+    position: absolute;
+    background-color: transparent;
+    @include flexCenter(column);
+    height: 12vh;
+    width: 100vw;
     text-align: center;
-    font-size: 14px;
 
-    &__container {
-      display: flex;
-      justify-content: center;
-
-      p {
-        margin: 0;
-        font-family: fontName("galada");
-        color: color("darkGrey");
-        font-size: fontSize("sm");
-      }
+    p {
+      margin: 0;
+      font-family: fontName("galada");
+      color: color("darkGrey");
+      font-size: fontSize("sm");
     }
   }
 }

@@ -10,6 +10,7 @@ import {
 import { MdEmail } from "react-icons/md";
 
 import "./Footer.scss";
+import { WavesAnimation } from "../wavesAnimation/wavesAnimation";
 
 const Footer: React.FC = () => {
   return (
@@ -103,16 +104,11 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <div className="footer-bottom__container">
-          <div className="row">
-            <div className="col-md-12">
-              <p>
-                &copy; {new Date().getFullYear()} Wave Rider Surf Shop. All
-                rights reserved.
-              </p>
-            </div>
-          </div>
-        </div>
+        <WavesAnimation />
+        <p>
+          &copy; {new Date().getFullYear()} Wave Rider Surf Shop. All rights
+          reserved.
+        </p>
       </div>
     </footer>
   );

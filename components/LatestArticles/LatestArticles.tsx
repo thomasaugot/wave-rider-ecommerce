@@ -20,7 +20,7 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
     return products; // to be modified later
   };
 
-  const latestProducts = filterLatestProducts(products);
+  const latestProducts: Product[] = filterLatestProducts(products);
 
   const variants = {
     hidden: { opacity: 0 },

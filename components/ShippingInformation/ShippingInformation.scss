@@ -7,10 +7,11 @@
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 3vh;
-  padding: 3rem;
+  padding: 3rem 3rem 0 3rem;
   height: auto;
   overflow: hidden;
   z-index: 10;
+  perspective: 1000px;
 
   @include smallDesktops {
     padding: 5rem 7rem;
@@ -20,7 +21,7 @@
   }
 
   @include largeDesktops {
-    padding: 3rem;
+    padding: 3rem 3rem 0 3rem;
   }
 
   &__item {
@@ -30,13 +31,15 @@
     height: auto;
     cursor: default;
     z-index: 1;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: rotateX(6deg) rotateY(15deg);
+    }
 
     @include smallDesktops {
       flex-basis: calc(30% - 20px);
-
-      &:nth-child(2) {
-        transform: translateY(15%);
-      }
     }
 
     .wooden-signal {
@@ -51,7 +54,7 @@
       }
 
       @include smallDesktops {
-        width: 130%;
+        width: 190%;
       }
     }
 
@@ -71,7 +74,7 @@
       }
 
       @include largeDesktops {
-        margin-top: -16%;
+        margin-top: 0;
       }
 
       h2 {

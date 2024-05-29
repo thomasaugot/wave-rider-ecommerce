@@ -48,19 +48,11 @@ export const ShippingInformation: React.FC = () => {
       <div className="shipping-info">
         {shippingInfoItems.map((item, index) => (
           <div className="shipping-info__item" key={index}>
-            {isMobile ? (
-              <Image
-                src={mobileWoodenSignal}
-                alt="wooden signal"
-                className={`wooden-signal ${item.className}`}
-              />
-            ) : (
-              <Image
-                src={woodenSignal}
-                alt="wooden signal"
-                className={`wooden-signal ${item.className}`}
-              />
-            )}
+            <Image
+              src={mobileWoodenSignal}
+              alt="wooden signal"
+              className={`wooden-signal ${item.className}`}
+            />
             <div className={`shipping-info__item__content ${item.className}`}>
               <h2>{item.title}</h2>
               <p>{item.description}</p>

@@ -4,9 +4,9 @@ body {
   .homepage {
     position: relative;
 
-    .carousel-container {
+    .intro-container {
       position: relative;
-      height: 70vh;
+      height: 100vh;
 
       @include smallDesktops {
         height: 90vh;
@@ -23,10 +23,14 @@ body {
       background-image: url(../public/assets/img/eee.jpg);
       background-repeat: no-repeat;
       background-attachment: fixed;
-      background-size: 130% auto;
+      background-size: 400% auto;
       background-position: bottom center;
       z-index: -1;
       opacity: 0.5;
+
+      @include smallDesktops {
+        background-size: 130% auto;
+      }
     }
   }
 }

@@ -63,3 +63,10 @@
   background-position: center;
   background-size: cover;
 }
+
+@mixin gradientText {
+  background: linear-gradient(to right, color("skyBlue"), color("purpleBlue"));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

@@ -9,6 +9,7 @@ import { LatestArticles } from "@/components/LatestArticles/LatestArticles";
 import Loading from "@/components/Loading/Loading";
 import "@/styles/page.scss";
 import { Brands } from "@/components/Brands/Brands";
+import Presentation from "@/components/Presentation/Presentation";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[] | null>(null);
@@ -30,8 +31,9 @@ export default function Home() {
         <Loading />
       ) : (
         <>
-          <section className="carousel-container">
+          <section className="intro-container">
             <Carousel />
+            <Presentation />
           </section>
           <section className="shipping-information">
             <ShippingInformation />
@@ -41,10 +43,6 @@ export default function Home() {
           </section>
           <section className="brands">
             <Brands />
-          </section>
-          <section className="presentation">
-            Surf Rider Surf Shop - The specialist Le spécialiste en matériel &
-            accessoires de sports de glisse
           </section>
         </>
       )}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { Product } from "@/types/product";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -9,8 +9,6 @@ import { ProductCard } from "@/components/ProductCard/ProductCard";
 import CustomButton from "../CustomButton/CustomButton";
 import starfish from "@/public/assets/img/starfish.png";
 import "./LatestArticles.scss";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import { useFramerMotion } from "@/hooks/useFramerMotion";
 
 interface LatestArticlesProps {
@@ -18,15 +16,6 @@ interface LatestArticlesProps {
 }
 
 export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const { ref, inView } = useInView({ threshold: 0.2 });
-
-  useEffect(() => {
-    if (inView) {
-      setIsVisible(true);
-    }
-  }, [inView]);
-
   const filterLatestProducts = (products: Product[]) => {
     return products; // to be modified later
   };
@@ -44,21 +33,16 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
     },
   };
 
-  const content = (
-    <Image src={starfish} alt="Starfish" className="starfish-img" />
-  );
-
-  const framerMotionContent = useFramerMotion({
-    isVisible,
-    variants,
-    children: content,
-  });
-
   return (
-    <div className="latest-articles" ref={ref}>
+    <div className="latest-articles">
       <div className="title-container">
         <h1>Latest Products</h1>
-        {framerMotionContent}
+        {useFramerMotion({
+          variants,
+          children: (
+            <Image src={starfish} alt="Starfish" className="starfish-img" />
+          ),
+        })}
       </div>
       <Swiper
         slidesPerView={1}

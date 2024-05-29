@@ -1,32 +1,34 @@
-// This file to avoid repeating framer motion related code
+// useFramerMotion.tsx
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 interface UseFramerMotionProps {
-  isVisible: boolean;
   variants: any;
   children: React.ReactNode;
 }
 
 export const useFramerMotion = ({
-  isVisible,
   variants,
   children,
 }: UseFramerMotionProps) => {
+  const [isVisible, setIsVisible] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.2 });
 
   useEffect(() => {
     if (inView) {
-      isVisible = true;
+      setIsVisible(true);
     }
   }, [inView]);
 
   return (
-    isVisible && (
-      <motion.div variants={variants} initial="hidden" whileInView="show">
-        {children}
-      </motion.div>
-    )
+    <motion.div
+      ref={ref}
+      variants={variants}
+      initial="hidden"
+      animate={isVisible ? "show" : "hidden"}
+    >
+      {children}
+    </motion.div>
   );
 };

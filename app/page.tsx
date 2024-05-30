@@ -44,7 +44,7 @@ export default function Home() {
           <section className="latest-articles">
             {products && <LatestArticles products={products} />}
           </section>
-          <Separator />
+          {/* <Separator /> */}
           <section className="brands">
             <Brands />
           </section>

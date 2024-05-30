@@ -1,7 +1,29 @@
 @import "@/styles/globals.scss";
 
-.thickness-block {
+.separatorf {
+  width: 100vw;
+  height: fit-content;
+  display: block;
   position: relative;
-  background-color: color("darkGrey");
-  height: 5vh;
+
+  div {
+    width: 100%;
+    position: relative;
+    @include boxShadow;
+  }
+
+  div:nth-child(1) {
+    background-color: rgba(color("skyBlue"), 1);
+    height: 3vh;
+  }
+
+  div:nth-child(2) {
+    background-color: rgba(color("skyBlue"), 0.5);
+    height: 2vh;
+  }
+
+  div:nth-child(3) {
+    background-color: rgba(color("skyBlue"), 0.2);
+    height: 2vh;
+  }
 }

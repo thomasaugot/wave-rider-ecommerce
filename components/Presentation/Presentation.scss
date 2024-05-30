@@ -3,7 +3,7 @@
 .presentation {
   position: absolute;
   @include flexCenter(column);
-  top: 55%;
+  top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 50;
@@ -12,14 +12,13 @@
   border-radius: 50% / 40%;
   color: color("white");
   max-width: 90vw;
-  gap: 0.2rem;
 
   &__title {
     font-size: fontSize("md");
     word-spacing: normal;
-    letter-spacing: 3px;
     font-family: fontName("galada");
-    @include dropShadow;
+    @include whiteDropShadow;
+    margin: 0;
 
     @include smallDesktops {
       font-size: fontSize("xl");
@@ -29,9 +28,9 @@
   &__description {
     font-family: fontName("galada");
     font-size: fontSize("xs");
-    letter-spacing: 3px;
-    @include dropShadow;
+    @include whiteDropShadow;
     margin-bottom: 3rem;
+    margin-top: 0;
 
     @include smallDesktops {
       font-size: fontSize("md");

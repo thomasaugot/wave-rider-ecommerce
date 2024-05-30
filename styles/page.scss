@@ -4,6 +4,11 @@ body {
   .homepage {
     position: relative;
 
+    .separator {
+      height: 5vh;
+      background-color: color("darkGrey");
+    }
+
     .intro-container {
       position: relative;
       height: 100vh;

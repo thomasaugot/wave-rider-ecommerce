@@ -1,0 +1,74 @@
+@import "@/styles/globals.scss";
+
+.clients-opinions {
+  background-color: rgba(color("white"), 0.2);
+  position: relative;
+  @include flexCenter(column);
+  width: 100vw;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../../public/assets/img/beach-surfers.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+  }
+
+  &__heading {
+    @include blackDropShadow;
+    font-family: fontName("galada"), sans-serif;
+    color: color("skyBlue");
+    font-size: fontSize("xl");
+    z-index: 20;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+      1px 1px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
+      2px 2px 0 #fff;
+    margin-top: 4rem;
+
+    @include tablet {
+      @include flexCenter(row);
+      gap: 1rem;
+      flex-wrap: nowrap;
+    }
+
+    span {
+      @include flexCenter(row);
+      flex-wrap: nowrap;
+      gap: 2rem;
+      height: 4rem;
+    }
+  }
+
+  &__swiper {
+    width: 85%;
+    max-width: 1520px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow: visible;
+    padding-bottom: 3rem;
+    cursor: grab;
+
+    .swiper-pagination {
+      .swiper-pagination-bullet {
+        width: 20px !important;
+        height: 7px !important;
+        background-color: color("skyBlue") !important;
+        opacity: 0.5 !important;
+        border-radius: 50px !important;
+        margin: 0 5px 0 0 !important;
+        cursor: pointer !important;
+      }
+
+      .swiper-pagination-bullet-active {
+        opacity: 1 !important;
+        background-color: color("purpleBlue") !important;
+      }
+    }
+  }
+}

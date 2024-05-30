@@ -49,7 +49,7 @@
     }
 
     .wooden-signal {
-      @include dropShadow;
+      @include blackDropShadow;
       position: relative;
       width: 180%;
       height: auto;
@@ -70,6 +70,7 @@
       margin-top: 5%;
       z-index: 2;
       color: color("darkOrange");
+      @include whiteDropShadow;
 
       @include tablet {
         margin-top: 4%;

@@ -3,14 +3,16 @@
 .brands {
   position: relative;
   text-align: center;
-  padding-bottom: 1rem;
-  height: 60vh;
+  padding-block: 2rem;
 
   h2 {
     margin-bottom: 20px;
     font-family: fontName("galada");
     font-size: fontSize("lg");
     color: color("darkOrange");
+    max-width: 80vw;
+    margin-inline: auto;
+    @include whiteDropShadow;
   }
 
   .brand {
@@ -18,7 +20,7 @@
 
     .brand__item {
       width: auto;
-      height: 6rem;
+      height: 7rem;
     }
   }
 }

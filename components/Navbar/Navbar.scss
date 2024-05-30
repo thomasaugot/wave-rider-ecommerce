@@ -67,7 +67,7 @@
     }
 
     .hamburger-lines {
-      @include dropShadow;
+      @include whiteDropShadow;
       display: flex;
       height: 28px;
       width: 35px;
@@ -137,7 +137,7 @@
       transform: translateY(-50%);
       left: 0.5rem;
       width: auto;
-      @include dropShadow;
+      @include blackDropShadow;
 
       @include tablet {
         margin-left: 5%;
@@ -153,10 +153,10 @@
     }
 
     .mobile-top-icons {
-      @include dropShadow;
+      @include whiteDropShadow;
       position: absolute;
       display: flex;
-      align-items: flex-start; // Adjusted align-items property
+      align-items: flex-start;
       top: 55%;
       transform: translateY(-35%);
       right: 16%;
@@ -182,6 +182,7 @@
       li a {
         @include flexCenter(row);
         @include brandTextandIconStyle;
+        @include whiteDropShadow;
       }
     }
 
@@ -197,6 +198,7 @@
       justify-content: flex-end;
       padding-top: 15vh;
       flex: 1;
+      @include whiteDropShadow;
 
       @include largeDesktops {
         visibility: visible;
@@ -299,7 +301,7 @@
           &:hover {
             transform: scale(1.1);
             transition: all 0.3s ease-in-out;
-            @include dropShadow;
+            @include blackDropShadow;
           }
         }
       }

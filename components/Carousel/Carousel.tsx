@@ -22,6 +22,7 @@ export const Carousel: React.FC = () => {
         delay: 3000,
       }}
       style={{ width: "100%", height: "100%" }}
+      className="carousel-swiper"
     >
       {images.map((imageUrl, index) => (
         <SwiperSlide key={index}>

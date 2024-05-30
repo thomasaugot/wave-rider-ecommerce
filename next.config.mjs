@@ -1,3 +1,3 @@
 export const images = {
-  domains: ["raw.githubusercontent.com"],
+  domains: ["raw.githubusercontent.com", "i.pravatar.cc"],
 };

@@ -1,4 +1,3 @@
-// useFramerMotion.tsx
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";

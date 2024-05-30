@@ -10,6 +10,8 @@ import Loading from "@/components/Loading/Loading";
 import "@/styles/page.scss";
 import { Brands } from "@/components/Brands/Brands";
 import { Presentation } from "@/components/Presentation/Presentation";
+import { ClientsOpinions } from "@/components/ClientsOpinions/ClientsOpinions";
+import { Separator } from "@/components/Separator/Separator";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[] | null>(null);
@@ -35,14 +37,20 @@ export default function Home() {
             <Carousel />
             <Presentation />
           </section>
+          <Separator />
           <section className="shipping-information">
             <ShippingInformation />
           </section>
           <section className="latest-articles">
             {products && <LatestArticles products={products} />}
           </section>
+          <Separator />
           <section className="brands">
             <Brands />
+          </section>
+          <Separator />
+          <section className="clients-opinions">
+            <ClientsOpinions />
           </section>
         </>
       )}

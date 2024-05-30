@@ -1,0 +1,71 @@
+@import "@/styles/globals.scss";
+
+.testimonial-card {
+  position: relative;
+  background-color: color("white");
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 300px;
+  margin: 0 auto;
+  z-index: 0;
+  overflow: visible;
+  @include whiteDropShadow;
+  background-image: url(../../public/assets/img/wavy-card-bg.svg);
+  @include bgImageStyle;
+  background-size: 500% auto;
+  background-position: bottom center;
+
+  &__image {
+    position: absolute;
+    top: -3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    background: linear-gradient(
+      to right,
+      color("skyBlue"),
+      color("purpleBlue")
+    );
+    border-radius: 100%;
+    position: relative;
+    text-align: center;
+    padding: 0.5rem;
+    box-sizing: border-box;
+
+    &::before {
+      border-radius: 100%;
+      content: "";
+      top: -10px;
+      left: -10px;
+      bottom: -10px;
+      right: -10px;
+      position: absolute;
+      z-index: -1;
+    }
+  }
+
+  &__content {
+    text-align: center;
+  }
+
+  &__name {
+    @include blackDropShadow;
+    font-family: fontName("galada"), sans-serif;
+    color: color("skyBlue");
+    font-size: fontSize("md");
+    z-index: 20;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+      1px 1px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
+      2px 2px 0 #fff;
+    margin: 0;
+  }
+
+  &__message {
+    font-family: fontName("decalotype");
+    color: color("white");
+    @include blackDropShadow;
+  }
+}

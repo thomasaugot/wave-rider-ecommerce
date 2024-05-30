@@ -14,7 +14,7 @@
     }
 
     h1 {
-      @include dropShadow;
+      @include blackDropShadow;
       position: absolute;
       top: 2rem;
       font-family: fontName("galada"), sans-serif;
@@ -33,7 +33,7 @@
       height: auto;
       left: 0;
       top: -5rem;
-      @include dropShadow;
+      @include blackDropShadow;
 
       @include tablet {
         width: 20rem;

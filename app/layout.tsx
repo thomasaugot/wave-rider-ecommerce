@@ -4,10 +4,9 @@ import "swiper/swiper-bundle.css";
 import "swiper/css/pagination";
 
 import StoreProvider from "./StoreProvider";
-
 import { Navbar } from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-
+import App from "@/components/AppLoader/AppLoader";
 import "@/styles/globals.scss";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,9 +25,11 @@ export default function RootLayout({
     <StoreProvider>
       <html lang="en">
         <body>
-          <Navbar />
-          {children}
-          <Footer />
+          <App>
+            <Navbar />
+            {children}
+            <Footer />
+          </App>
         </body>
       </html>
     </StoreProvider>

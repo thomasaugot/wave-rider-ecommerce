@@ -27,9 +27,9 @@ const Counter: React.FC<CounterProps> = ({
             animateRef.current = false;
             return 1000;
           }
-          return prevCount + 1;
+          return prevCount + 3;
         });
-      }, duration / 100);
+      }, duration / 500);
     }
 
     return () => {
@@ -42,7 +42,7 @@ const Counter: React.FC<CounterProps> = ({
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={isAnimating ? { opacity: 1 } : {}} // Animate only if animating
+      animate={isAnimating ? { opacity: 1 } : {}}
       transition={{ duration: 0.5 }}
       className="counter-container"
     >

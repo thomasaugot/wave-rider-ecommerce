@@ -1,46 +1,76 @@
 @import "@/styles/globals.scss";
 
-.wrapper {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: none;
-  overflow: hidden;
-}
-
-.spinner {
-  width: 300px;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.spinner > div {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: rgba(0, 172, 193, 0.5);
-  animation: wave 1.5s infinite ease-in-out;
-
-  &:nth-child(2) {
-    animation-delay: -0.3s;
-    background-color: rgba(0, 172, 193, 0.3);
+.loading-component {
+  .water-jar {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include gradientBackground;
+    border-radius: 100%;
+    overflow: hidden;
   }
 
-  &:nth-child(3) {
-    animation-delay: -0.6s;
-    background-color: rgba(0, 172, 193, 0.1);
+  .percentNum {
+    font-family: fontName("galada");
+    font-size: fontSize("md");
   }
-}
 
-@keyframes wave {
-  0%,
-  100% {
-    transform: translateY(0);
+  .water-filling {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 64px;
   }
-  50% {
-    transform: translateY(-20px);
+
+  .water {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    transform: translate(0, 100%);
+    background: color("skyBlue");
+  }
+
+  .water_wave {
+    width: 200%;
+    position: absolute;
+    bottom: 100%;
+  }
+
+  .water_wave_back {
+    right: 0;
+    fill: #c7eeff;
+    animation: wave-back 1.4s infinite linear;
+  }
+
+  .water_wave_front {
+    left: 0;
+    fill: color("skyBlue");
+    margin-bottom: -1px;
+    animation: wave-front 0.7s infinite linear;
+  }
+
+  @keyframes wave-front {
+    100% {
+      transform: translate(-50%, 0);
+    }
+  }
+
+  @keyframes wave-back {
+    100% {
+      transform: translate(50%, 0);
+    }
   }
 }

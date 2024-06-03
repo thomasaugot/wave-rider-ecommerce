@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Loading.scss";
 
-const Loading: React.FC = () => {
+export const Loading: React.FC = () => {
   const [percent, setPercent] = useState(0);
 
   useEffect(() => {
@@ -48,5 +48,3 @@ const Loading: React.FC = () => {
     </div>
   );
 };
-
-export default Loading;

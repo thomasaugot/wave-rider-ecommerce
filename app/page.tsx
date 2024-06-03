@@ -11,9 +11,12 @@ import { Brands } from "@/components/Brands/Brands";
 import { Presentation } from "@/components/Presentation/Presentation";
 import { ClientsOpinions } from "@/components/ClientsOpinions/ClientsOpinions";
 import { Separator } from "@/components/Separator/Separator";
+import emailjs from "@emailjs/browser";
+import { ContactForm } from "@/components/ContactForm/ContactForm";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[] | null>(null);
+  const emailJSPublicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -22,6 +25,8 @@ export default function Home() {
     };
 
     fetchProducts();
+
+    emailJSPublicKey && emailjs.init(emailJSPublicKey);
   }, []);
 
   return (
@@ -43,6 +48,9 @@ export default function Home() {
       <Separator />
       <section className="clients-opinions">
         <ClientsOpinions />
+      </section>
+      <section className="contact">
+        <ContactForm />
       </section>
     </main>
   );

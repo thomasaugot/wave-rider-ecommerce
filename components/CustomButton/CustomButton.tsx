@@ -3,12 +3,24 @@ import "./CustomButton.scss";
 
 interface CustomButtonProps {
   text: string;
-  onClick: () => void;
+  onClick: any;
+  disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({ text, onClick }) => {
+const CustomButton: React.FC<CustomButtonProps> = ({
+  text,
+  onClick,
+  disabled,
+  type,
+}) => {
   return (
-    <button className="custom-button" onClick={onClick}>
+    <button
+      className={`custom-button ${disabled ? "disabled" : ""}`}
+      onClick={onClick}
+      disabled={disabled}
+      type={type}
+    >
       {text}
     </button>
   );

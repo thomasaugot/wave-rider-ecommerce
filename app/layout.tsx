@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 import StoreProvider from "./StoreProvider";
 import { Navbar } from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import App from "@/components/AppLoader/AppLoader";
+import { AppLoader } from "@/components/AppLoader/AppLoader";
 import "@/styles/globals.scss";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,16 +22,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <StoreProvider>
-      <html lang="en">
-        <body>
-          <App>
+    <html lang="en">
+      <body>
+        <StoreProvider>
+          <AppLoader>
             <Navbar />
             {children}
             <Footer />
-          </App>
-        </body>
-      </html>
-    </StoreProvider>
+          </AppLoader>
+        </StoreProvider>
+      </body>
+    </html>
   );
 }

@@ -1,0 +1,57 @@
+@import "@/styles/globals.scss";
+
+.contact_form {
+  max-width: 90vw;
+  padding: 0;
+
+  .form_group {
+    margin-bottom: 1rem;
+
+    label {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    input,
+    textarea {
+      padding: 0.5rem;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-family: "Dosis", sans-serif;
+      &_textarea {
+        resize: none;
+      }
+    }
+
+    .button {
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      &:hover:not(:disabled) {
+        background-color: #0056b3;
+      }
+    }
+
+    .message {
+      margin-top: 0.75rem;
+      & .message_text {
+        color: black;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1rem;
+      }
+    }
+  }
+}

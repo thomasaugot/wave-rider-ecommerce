@@ -16,6 +16,7 @@ import { ContactForm } from "@/components/ContactForm/ContactForm";
 import Image from "next/image";
 import surfBoardsRack from "@/public/assets/img/surfboards-rack.webp";
 import { CategoriesBentoGrid } from "@/components/CategoriesBentoGrid/CategoriesBentoGrid";
+import { GoogleMapComponent } from "@/components/GoogleMap/GoogleMap";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[] | null>(null);
@@ -62,6 +63,9 @@ export default function Home() {
         <div className="contact_illustration-container">
           <Image src={surfBoardsRack} alt="Photo of a kite-surfer" />
         </div>
+      </section>
+      <section className="location">
+        <GoogleMapComponent />
       </section>
     </main>
   );

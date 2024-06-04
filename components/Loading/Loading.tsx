@@ -7,7 +7,7 @@ export const Loading: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setPercent((prev) => (prev < 100 ? prev + 1 : prev));
-    }, 30);
+    }, 10);
 
     return () => clearInterval(interval);
   }, []);

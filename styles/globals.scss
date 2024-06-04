@@ -78,3 +78,15 @@
 @mixin gradientBackground {
   background: linear-gradient(to right, color("skyBlue"), color("purpleBlue"));
 }
+
+@mixin blueOceanTitle {
+  @include blackDropShadow;
+  font-family: fontName("galada"), sans-serif;
+  color: color("skyBlue");
+  margin-inline: 5vw;
+  font-size: fontSize("xl");
+  z-index: 20;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+    1px 1px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
+    2px 2px 0 #fff;
+}

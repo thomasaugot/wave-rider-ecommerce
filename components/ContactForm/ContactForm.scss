@@ -1,19 +1,32 @@
 @import "@/styles/globals.scss";
 
 .contact_form {
-  max-width: 90vw;
-  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include smallDesktops {
+    width: 70%;
+    padding-left: 5vw;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    font-family: fontName("galada");
+    font-size: fontSize("lg");
+    color: color("darkOrange");
+    max-width: 80vw;
+    margin-inline: auto;
+    @include whiteDropShadow;
+  }
 
   .form_group {
     margin-bottom: 1rem;
 
-    label {
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
-
     input,
     textarea {
+      @include boxShadow;
       padding: 0.5rem;
       width: 100%;
       border: 1px solid #ccc;

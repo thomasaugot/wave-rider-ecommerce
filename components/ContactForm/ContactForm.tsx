@@ -68,6 +68,7 @@ export const ContactForm: React.FC = () => {
 
   return (
     <form className="contact_form" onSubmit={sendMessage}>
+      <h2>A team of passionate, Drop us a Message!</h2>
       <div className="form_group">
         <input type="text" ref={nameRef} placeholder="Your name" />
       </div>

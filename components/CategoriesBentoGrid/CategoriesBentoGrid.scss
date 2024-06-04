@@ -1,0 +1,60 @@
+@import "@/styles/globals.scss";
+
+.title {
+  @include blackDropShadow;
+  @include blueOceanTitle;
+}
+
+.bento-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 0 2rem 2rem 4rem;
+
+  .card {
+    border-radius: 1rem;
+    overflow: hidden;
+    position: relative;
+    flex: 1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 30vh;
+    @include boxShadow;
+    @include flexCenter(row);
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    flex-basis: 100%;
+
+    @include tablet {
+      &:nth-child(1) {
+        flex-basis: calc(50% - 10px);
+      }
+
+      &:nth-child(2) {
+        flex-basis: calc(25% - 10px);
+      }
+
+      &:nth-child(3) {
+        flex-basis: calc(33.33% - 10px);
+      }
+
+      &:nth-child(4) {
+        flex-basis: calc(35% - 10px);
+      }
+
+      &:nth-child(5) {
+        flex-basis: calc(30% - 10px);
+      }
+
+      &:nth-child(6) {
+        flex-basis: calc(20% - 10px);
+      }
+
+      &:nth-child(7) {
+        flex-basis: calc(25% - 10px);
+      }
+    }
+  }
+}

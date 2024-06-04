@@ -1,8 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import "./ProductCard.scss";
+import CustomButton from "../CustomButton/CustomButton";
 
 interface ProductCardProps {
   id: string;
@@ -21,6 +22,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   price,
   addToCartButton,
 }) => {
+  const router = useRouter();
+
   return (
     <div className="product-card" key={id}>
       <div className="image-container">
@@ -31,9 +34,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           objectFit="cover"
           className="Product-image"
         />
-        <button className="details-button">
-          <Link href={`/product-details/${id}`}>More Details</Link>
-        </button>
+        <div className="details-button">
+          <CustomButton
+            text={"More Details"}
+            disabled={undefined}
+            onClick={() => router.push(`/product-details/${id}`)}
+            type="submit"
+          />
+        </div>
       </div>
       <div className="content">
         <h2>{name.toUpperCase()}</h2>

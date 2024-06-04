@@ -2,6 +2,7 @@ import "./Brands.scss";
 import React from "react";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
+import { useFramerMotion } from "@/hooks/useFramerMotion";
 
 import aipa from "@/public/assets/img/brand-logos/aipa.webp";
 import dakine from "@/public/assets/img/brand-logos/dakine.webp";
@@ -44,17 +45,39 @@ const BrandsList: Brand[] = [
   { name: "xcel", logo: xcel },
 ];
 
+const variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1,
+    },
+  },
+};
+
 export const Brands: React.FC = () => {
   return (
     <div className="brands">
-      <h2>More than 50 brands in store !</h2>
-      <Marquee speed={40} autoFill={true} direction={"right"}>
-        {BrandsList.map((brand, index) => (
-          <div className="brand" key={index}>
-            <Image src={brand.logo} alt={brand.name} className="brand__item" />
-          </div>
-        ))}
-      </Marquee>
+      {useFramerMotion({
+        variants,
+        children: (
+          <>
+            <h2>More than 50 brands in store !</h2>
+            <Marquee speed={40} autoFill={true} direction={"right"}>
+              {BrandsList.map((brand, index) => (
+                <div className="brand" key={index}>
+                  <Image
+                    src={brand.logo}
+                    alt={brand.name}
+                    className="brand__item"
+                  />
+                </div>
+              ))}
+            </Marquee>
+          </>
+        ),
+      })}
     </div>
   );
 };

@@ -64,28 +64,12 @@
     }
 
     .details-button {
-      @include blackDropShadow;
       position: absolute;
       top: 50%;
       left: 50%;
-      text-wrap: nowrap;
       transform: translate(-50%, -50%);
       opacity: 0;
-      background-color: color("white");
-      color: color("purpleBlue");
-      font-family: fontName("galada");
-      font-size: fontSize("sm");
-      border: none;
-      padding: 0.5rem 1rem 0.4rem 1rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      line-height: auto;
       transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-
-      &:hover {
-        background-color: color("white");
-        opacity: 0.9;
-      }
     }
   }
 

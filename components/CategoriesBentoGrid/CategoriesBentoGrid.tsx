@@ -9,6 +9,7 @@ import bodyboard from "@/public/assets/img/bodyboarder.webp";
 import wingfoil from "@/public/assets/img/windfoil.webp";
 import aerialBeach from "@/public/assets/img/aerial-beach.webp";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Category {
   name: string;
@@ -62,21 +63,18 @@ export const CategoriesBentoGrid: React.FC = () => {
       <h1 className="title">Categories</h1>
       <div className="bento-grid">
         {categories.map((category, index) => (
-          <div
-            className={`card card-${index + 1}`}
-            key={index}
-            style={{
-              backgroundImage: `url(${category.imageUrl})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
+          <div className={`card card-${index + 1}`} key={index}>
+            <Image
+              src={category.imageUrl}
+              alt={category.name}
+              layout="fill"
+              objectFit="cover"
+              priority
+            />
             <CustomButton
               text={category.name}
               disabled={undefined}
-              onClick={() => {
-                router.push(category.redirectTo);
-              }}
+              onClick={() => router.push(category.redirectTo)}
               type="submit"
             />
           </div>

@@ -27,7 +27,13 @@ export const Carousel: React.FC = () => {
       {images.map((imageUrl, index) => (
         <SwiperSlide key={index}>
           <div>
-            <Image src={imageUrl} alt="image" layout="fill" objectFit="cover" />
+            <Image
+              src={imageUrl}
+              alt="image"
+              layout="fill"
+              objectFit="cover"
+              priority
+            />
           </div>
         </SwiperSlide>
       ))}

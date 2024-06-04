@@ -8,7 +8,6 @@ import { ShippingInformation } from "@/components/ShippingInformation/ShippingIn
 import { LatestArticles } from "@/components/LatestArticles/LatestArticles";
 import "@/styles/page.scss";
 import { Brands } from "@/components/Brands/Brands";
-import { Presentation } from "@/components/Presentation/Presentation";
 import { ClientsOpinions } from "@/components/ClientsOpinions/ClientsOpinions";
 import { Separator } from "@/components/Separator/Separator";
 import emailjs from "@emailjs/browser";
@@ -17,6 +16,8 @@ import Image from "next/image";
 import surfBoardsRack from "@/public/assets/img/surfboards-rack.webp";
 import { CategoriesBentoGrid } from "@/components/CategoriesBentoGrid/CategoriesBentoGrid";
 import { GoogleMapComponent } from "@/components/GoogleMap/GoogleMap";
+import { FullPresentation } from "@/components/FullPresentation/FullPresentation";
+import { Introdution } from "@/components/Introdution/Introdution";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[] | null>(null);
@@ -37,7 +38,7 @@ export default function Home() {
     <main className="homepage">
       <section className="intro-container">
         <Carousel />
-        <Presentation />
+        <Introdution />
       </section>
       <Separator />
       <section className="shipping-information">
@@ -55,6 +56,9 @@ export default function Home() {
       <Separator />
       <section className="clients-opinions">
         <ClientsOpinions />
+      </section>
+      <section className="company-presentation">
+        <FullPresentation />
       </section>
       <section className="contact">
         <div className="contact_form-container">

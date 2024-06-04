@@ -1,0 +1,39 @@
+@import "@/styles/globals.scss";
+
+.presentation {
+  position: absolute;
+  @include flexCenter(column);
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+  text-align: center;
+  width: max-content;
+  border-radius: 50% / 40%;
+  color: color("white");
+  max-width: 90vw;
+
+  &__title {
+    font-size: fontSize("md");
+    word-spacing: normal;
+    font-family: fontName("galada");
+    @include whiteDropShadow;
+    margin: 0;
+
+    @include smallDesktops {
+      font-size: fontSize("xl");
+    }
+  }
+
+  &__description {
+    font-family: fontName("galada");
+    font-size: fontSize("xs");
+    @include whiteDropShadow;
+    margin-bottom: 3rem;
+    margin-top: 0;
+
+    @include smallDesktops {
+      font-size: fontSize("md");
+    }
+  }
+}

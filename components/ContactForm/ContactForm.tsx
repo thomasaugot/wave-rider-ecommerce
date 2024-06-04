@@ -22,7 +22,7 @@ export const ContactForm: React.FC = () => {
       !emailRef.current?.value ||
       !messageRef.current?.value
     ) {
-      setStateMessage("Veuillez remplir tous les champs.");
+      setStateMessage("Some fields are empty");
       setIsSubmitting(false);
       setTimeout(() => {
         setStateMessage(null);
@@ -82,15 +82,16 @@ export const ContactForm: React.FC = () => {
           placeholder="Your message"
         ></textarea>
       </div>
-      <CustomButton
-        text={"Send"}
-        disabled={isSubmitting}
-        onClick={undefined}
-        type="submit"
-      />
-      <div className="message">
-        {stateMessage && <p className="message_text">{stateMessage}</p>}
+      <div className="button-container">
+        <CustomButton
+          text={"Send"}
+          disabled={isSubmitting}
+          onClick={undefined}
+          type="submit"
+        />
       </div>
+
+      <div className="message">{stateMessage && <p>{stateMessage}</p>}</div>
     </form>
   );
 };

@@ -3,9 +3,10 @@ import "./CustomButton.scss";
 
 interface CustomButtonProps {
   text: string;
-  onClick: any;
+  onClick: () => void;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
+  secondary?: boolean;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -13,15 +14,18 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   onClick,
   disabled,
   type,
+  secondary = false,
 }) => {
   return (
     <button
-      className={`custom-button ${disabled ? "disabled" : ""}`}
+      className={`custom-button ${disabled ? "disabled" : ""} ${
+        secondary ? "secondary" : ""
+      }`}
       onClick={onClick}
       disabled={disabled}
       type={type}
     >
-      {text}
+      <p>{text}</p>
     </button>
   );
 };

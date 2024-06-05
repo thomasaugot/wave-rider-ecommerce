@@ -20,7 +20,7 @@
     @include whiteDropShadow;
     margin: 0;
 
-    @include smallDesktops {
+    @include tablet {
       font-size: fontSize("xl");
     }
   }
@@ -32,7 +32,7 @@
     margin-bottom: 3rem;
     margin-top: 0;
 
-    @include smallDesktops {
+    @include tablet {
       font-size: fontSize("md");
     }
   }

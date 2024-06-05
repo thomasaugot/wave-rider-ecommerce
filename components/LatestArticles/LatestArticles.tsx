@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Product } from "@/types/product";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -16,6 +16,7 @@ interface LatestArticlesProps {
 }
 
 export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
+  const [swiperInstance, setSwiperInstance] = useState<any>(null);
   const filterLatestProducts = (products: Product[]) => {
     return products; // to be modified later
   };
@@ -31,6 +32,20 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
         yoyo: Infinity,
       },
     },
+  };
+
+  const handleSwiper = (swiper: any) => {
+    setSwiperInstance(swiper);
+    updateNavigationVisibility(swiper);
+  };
+
+  const updateNavigationVisibility = (swiper: any) => {
+    if (!swiper) return;
+    const { isBeginning, isEnd } = swiper;
+    const prevButton = swiper.navigation.prevEl;
+    const nextButton = swiper.navigation.nextEl;
+    if (prevButton) prevButton.style.display = isBeginning ? "none" : "block";
+    if (nextButton) nextButton.style.display = isEnd ? "none" : "block";
   };
 
   return (
@@ -55,6 +70,8 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
         }}
         modules={[Navigation]}
         className="mySwiper"
+        onSwiper={handleSwiper}
+        onSlideChange={(swiper) => updateNavigationVisibility(swiper)}
       >
         {latestProducts.map((product) => (
           <SwiperSlide key={product.id}>

@@ -45,17 +45,18 @@
     .swiper-button-next {
       color: color("white");
       background-color: color("skyBlue");
-      padding: 1rem;
       border-radius: 50%;
-      height: 0.7rem;
-      width: 0.7rem;
-      opacity: 0.5;
+      height: 2.5rem;
+      width: 2.5rem;
+      opacity: 0.7;
       transition: all 500ms;
 
       &::after {
+        position: absolute;
+        top: 11px;
+        left: 15px;
         font-size: fontSize("sm");
         font-weight: fontWeight("bold");
-        line-height: 0;
       }
 
       &:hover {

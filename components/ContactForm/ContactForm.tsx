@@ -86,8 +86,9 @@ export const ContactForm: React.FC = () => {
         <CustomButton
           text={"Send"}
           disabled={isSubmitting}
-          onClick={undefined}
           type="submit"
+          onClick={function (): void {}}
+          secondary={true}
         />
       </div>
 

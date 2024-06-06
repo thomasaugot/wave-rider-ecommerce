@@ -1,12 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./authentication.scss";
 import CustomButton from "@/components/CustomButton/CustomButton";
 
 const AuthenticationPage: React.FC = () => {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const [isSignupFormVisible, setIsSignupFormVisible] = useState(true);
+
+  useEffect(() => {
+    setIsLoginFormVisible(false);
+    setIsSignupFormVisible(true);
+  }, []);
 
   const toggleForms = () => {
     setIsLoginFormVisible(!isLoginFormVisible);
@@ -23,7 +28,7 @@ const AuthenticationPage: React.FC = () => {
             }`}
           >
             <div className="textcontent">
-              <p className="title">Don't have an account?</p>
+              <p className="title">Don&apos;t have an account?</p>
               <p>Sign up and join the tribe!</p>
               <CustomButton
                 text={"Sign Up"}

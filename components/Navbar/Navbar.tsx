@@ -197,7 +197,7 @@ export const Navbar: React.FC = () => {
               </li>
             )}
             <li>
-              <Link href="#">
+              <Link href="/authentication">
                 <IoPerson className="nav-icon" />
               </Link>
             </li>

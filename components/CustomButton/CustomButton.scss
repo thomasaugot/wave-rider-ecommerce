@@ -11,8 +11,11 @@
   @include boxShadow;
   position: relative;
   overflow: hidden;
-  min-width: 170px;
+  max-width: 170px;
+  max-height: 45px;
   text-wrap: nowrap;
+  margin-inline: auto;
+  @include flexCenter(row);
 
   p {
     margin: 0;
@@ -62,27 +65,26 @@
 
   p {
     @include gradientText;
-    color: color("white"); // Ensure the text is white by default
-    transition: color 0.3s ease; // Add transition for text color change
+    color: color("white");
+    transition: color 0.3s ease;
   }
 
   &::before {
     content: "";
     position: absolute;
-    border-radius: 50%; // Make it circular
-    top: 50%; // Position at the center vertically
-    left: 50%; // Position at the center horizontally
-    transform: translate(-50%, -50%); // Center the element
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: -2;
-    width: 0; // Start with a width of 0
-    height: 0; // Start with a height of 0
+    width: 0;
+    height: 0;
     background: radial-gradient(
       circle,
       rgba(255, 255, 255, 0.3),
-      // Lighter color
-      rgba(255, 255, 255, 0) 70% // Transparent color
+      rgba(255, 255, 255, 0) 70%
     );
-    transition: width 0.3s ease, height 0.3s ease; // Add transitions for width and height
+    transition: width 0.3s ease, height 0.3s ease;
   }
 
   &::after {
@@ -104,7 +106,7 @@
   }
 
   &:hover p {
-    color: color("white"); // Change the text color to white on hover
+    color: color("white");
     background: white;
     -webkit-background-clip: text;
     background-clip: text;
@@ -112,8 +114,8 @@
   }
 
   &:hover::before {
-    width: 200%; // Expand the width to cover the entire button
-    height: 200%; // Expand the height to cover the entire button
+    width: 200%;
+    height: 200%;
   }
 
   &::after {

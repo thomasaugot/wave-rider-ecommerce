@@ -88,7 +88,6 @@ export const ContactForm: React.FC = () => {
           disabled={isSubmitting}
           type="submit"
           onClick={function (): void {}}
-          secondary={true}
         />
       </div>
 

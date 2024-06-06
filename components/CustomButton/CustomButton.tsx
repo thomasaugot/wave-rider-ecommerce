@@ -3,7 +3,7 @@ import "./CustomButton.scss";
 
 interface CustomButtonProps {
   text: string;
-  onClick: () => void;
+  onClick: any;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   secondary?: boolean;

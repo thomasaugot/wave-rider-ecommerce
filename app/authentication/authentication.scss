@@ -107,23 +107,23 @@
     color: color("white");
     transition: all 0.8s ease-in-out;
 
-    @include tablet {
-      position: relative;
-      left: unset;
-      transform: unset;
-    }
-
-    .title {
-      font-size: fontSize("md");
-      color: color("darkGrey");
+    p {
+      font-size: fontSize("xs");
+      color: color("white");
       font-family: fontName("decalotype");
       font-weight: fontWeight("slim");
+      margin: 0.5rem 0;
 
-      > p {
-        font-size: fontSize("md");
-        color: color("darkGrey");
+      &:first-child {
+        font-family: fontName("galada");
+        font-size: fontSize("sm");
+        margin-bottom: 0.5rem;
+      }
+
+      &:nth-child(2) {
         font-family: fontName("decalotype");
-        font-weight: fontWeight("slim");
+        font-size: fontSize("xs");
+        margin-bottom: 1rem;
       }
     }
   }
@@ -134,23 +134,10 @@
     width: 100%;
     height: auto;
     font-size: fontSize("xs");
-    color: color("white");
-    font-family: fontName("decalotype");
 
     @include tablet {
       width: 50%;
       height: 100%;
-    }
-
-    .title {
-      font-size: fontSize("md");
-      color: color("white");
-      font-family: fontName("galada");
-      margin: 0;
-
-      p:first-child {
-        margin-bottom: 1rem;
-      }
     }
   }
 

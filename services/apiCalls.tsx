@@ -33,6 +33,7 @@ export const createUser = async (email: string, password: string) => {
     }
 
     // Return data if sign up successful
+    console.log("new user created! --> ", data);
     return data;
   } catch (error) {
     // Throw error if sign up fails
@@ -66,7 +67,7 @@ export const logoutUser = async () => {
     await supabase.auth.signOut();
 
     // Redirect the user to the login page
-    window.location.href = "/login"; // Replace '/login' with the actual login page URL
+    window.location.href = "/login";
 
     // Optionally, you can return a success message or perform other actions after logout
     return "User logged out successfully.";

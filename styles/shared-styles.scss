@@ -4,6 +4,7 @@
 
 .container {
   width: 100vw;
+  min-height: 80vh;
   margin: 0 auto;
   padding: 4rem 0;
   @include flexCenter(column);
@@ -26,6 +27,11 @@
   &__header {
     text-align: center;
     z-index: 1;
+  }
+
+  a {
+    font-family: fontName("decalotype"), sans-serif;
+    color: color("darkOrange");
   }
 
   ul {

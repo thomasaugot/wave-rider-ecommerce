@@ -25,6 +25,8 @@
     "react-icons": "^5.2.1",
     "react-intersection-observer": "^9.10.2",
     "react-marquee-slider": "^1.1.5",
+    "react-phone-input-2": "^2.15.1",
+    "react-phone-number-input": "^3.4.3",
     "react-redux": "^9.1.2",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
@@ -32,6 +34,7 @@
     "swiper": "^11.0.5"
   },
   "devDependencies": {
+    "@types/google-libphonenumber": "^7.4.30",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

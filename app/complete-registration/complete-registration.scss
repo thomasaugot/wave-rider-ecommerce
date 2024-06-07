@@ -53,9 +53,9 @@
         margin-bottom: 1rem;
         font-size: fontSize("xs");
         font-family: fontName("decalotype");
-        padding-left: 0.5rem;
         border-radius: 0.5rem;
         color: color("darkGrey");
+        padding-left: 0.5rem;
 
         &:focus {
           background-color: rgba(color("white"), 0.8);
@@ -65,6 +65,13 @@
         &::-webkit-calendar-picker-indicator {
           color: color("darkGrey");
           margin-right: 1rem;
+        }
+      }
+
+      &:last-child {
+        input,
+        .phone-input {
+          padding-left: 3rem;
         }
       }
     }

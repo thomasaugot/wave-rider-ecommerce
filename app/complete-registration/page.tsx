@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import { useRouter } from "next/navigation";
 import { updateUser } from "@/services/apiCalls";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import "./complete-registration.scss";
 
 export default function CompleteRegistration() {
@@ -31,11 +33,11 @@ export default function CompleteRegistration() {
         phone,
       };
 
-      if (firstName != "" || lastName != "" || dateOfBirth != "") {
+      if (firstName !== "" || lastName !== "" || dateOfBirth !== "") {
         await updateUser(userId, userData);
         router.push(`/profile/${userId}`);
       } else {
-        console.log("Mandatory field can't be empty");
+        console.log("Mandatory fields can't be empty");
       }
     } catch (error) {
       console.error("Error updating user data:", error);
@@ -48,7 +50,7 @@ export default function CompleteRegistration() {
       <form onSubmit={handleSubmit}>
         <div className="form-items-container">
           <div className="form-group">
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">First Name*</label>
             <input
               type="text"
               id="firstName"
@@ -59,7 +61,7 @@ export default function CompleteRegistration() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name*</label>
             <input
               type="text"
               id="lastName"
@@ -70,7 +72,7 @@ export default function CompleteRegistration() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="dateOfBirth">Date of Birth</label>
+            <label htmlFor="dateOfBirth">Date of Birth*</label>
             <input
               type="date"
               id="dateOfBirth"
@@ -126,13 +128,12 @@ export default function CompleteRegistration() {
           </div>
           <div className="form-group">
             <label htmlFor="phone">Phone</label>
-            <input
-              type="tel"
-              id="phone"
+            <PhoneInput
+              country={"es"}
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={setPhone}
               placeholder="Enter your phone number"
-              required
+              inputClass="phone-input"
             />
           </div>
         </div>

@@ -1,1 +1,82 @@
 @import "@/styles/globals.scss";
+
+.contact-container {
+  width: auto;
+  min-height: 80vh;
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  @include tablet {
+    min-height: 60vh;
+  }
+
+  @include smallDesktops {
+    min-height: 100vh;
+    padding: 4rem;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../../public/assets/img/flag-beach.webp);
+    @include bgImageStyle;
+    opacity: 0.3;
+    z-index: -1;
+  }
+
+  h2 {
+    margin-bottom: 2rem;
+    font-family: fontName("exodar");
+    font-size: fontSize("md");
+    color: color("darkOrange");
+    max-width: 85vw;
+    margin-inline: auto;
+    @include whiteDropShadow;
+
+    @include tablet {
+      padding-top: 3rem;
+      max-width: 60vw;
+      margin-inline: unset;
+      margin-right: auto;
+    }
+  }
+
+  p {
+    font-family: fontName("roboto"), sans-serif;
+    color: color("darkGrey");
+    font-weight: fontWeight("bold");
+    margin-bottom: 2rem;
+
+    @include smallDesktops {
+      max-width: 50vw;
+      margin-inline: unset;
+      margin-right: auto;
+    }
+  }
+
+  .icon {
+    font-size: fontSize("md");
+  }
+
+  a {
+    color: color("darkGrey");
+    text-decoration: none;
+    transition: color 0.3s;
+    font-family: fontName("roboto"), sans-serif;
+    font-weight: fontWeight("bold");
+    width: fit-content;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+
+    &:hover {
+      color: black;
+    }
+  }
+}

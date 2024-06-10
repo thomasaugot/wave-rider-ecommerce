@@ -13,7 +13,7 @@ import { Separator } from "@/components/Separator/Separator";
 import emailjs from "@emailjs/browser";
 import { ContactForm } from "@/components/ContactForm/ContactForm";
 import Image from "next/image";
-import surfBoardsRack from "@/public/assets/img/surfboards-rack.webp";
+import gradientSurfBoard from "@/public/assets/img//gradient-surfboard.png";
 import { CategoriesBentoGrid } from "@/components/CategoriesBentoGrid/CategoriesBentoGrid";
 import { GoogleMapComponent } from "@/components/GoogleMap/GoogleMap";
 import { FullPresentation } from "@/components/FullPresentation/FullPresentation";
@@ -61,12 +61,8 @@ export default function Home() {
         <FullPresentation />
       </section>
       <section className="contact">
-        <div className="contact_form-container">
-          <ContactForm />
-        </div>
-        <div className="contact_illustration-container">
-          <Image src={surfBoardsRack} alt="Photo of a kite-surfer" />
-        </div>
+        <h2>A team of passionate, Drop us a Message!</h2>
+        <ContactForm />
       </section>
       <section className="location">
         <GoogleMapComponent />

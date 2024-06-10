@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import CustomButton from "@/components/CustomButton/CustomButton";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import CustomButton from "@/components/CustomButton/CustomButton";
 import { updateUser } from "@/services/apiCalls";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -10,8 +10,9 @@ import "./complete-registration.scss";
 
 export default function CompleteRegistration() {
   const router = useRouter();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [userId, setUserId] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [address, setAddress] = useState("");
   const [zipCode, setZipCode] = useState("");
@@ -19,12 +20,21 @@ export default function CompleteRegistration() {
   const [country, setCountry] = useState("");
   const [phone, setPhone] = useState("");
 
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      console.log("the user I get from localstorage ---->", user);
+      setUserId(user.id);
+    } else {
+      router.push("/authentication");
+    }
+  }, [router]);
+
   const handleSubmit = async () => {
     try {
-      const userId = "user_id_placeholder";
       const userData = {
-        firstName,
-        lastName,
+        firstname,
+        lastname,
         dateOfBirth,
         address,
         zipCode,
@@ -33,9 +43,9 @@ export default function CompleteRegistration() {
         phone,
       };
 
-      if (firstName !== "" || lastName !== "" || dateOfBirth !== "") {
+      if (firstname !== "" || lastname !== "" || dateOfBirth !== "") {
         await updateUser(userId, userData);
-        router.push(`/profile/${userId}`);
+        router.push(`/`);
       } else {
         console.log("Mandatory fields can't be empty");
       }
@@ -50,23 +60,23 @@ export default function CompleteRegistration() {
       <form onSubmit={handleSubmit}>
         <div className="form-items-container">
           <div className="form-group">
-            <label htmlFor="firstName">First Name*</label>
+            <label htmlFor="firstname">First Name*</label>
             <input
               type="text"
-              id="firstName"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              id="firstname"
+              value={firstname}
+              onChange={(e) => setFirstname(e.target.value)}
               placeholder="Enter your first name"
               required
             />
           </div>
           <div className="form-group">
-            <label htmlFor="lastName">Last Name*</label>
+            <label htmlFor="lastname">Last Name*</label>
             <input
               type="text"
-              id="lastName"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              id="lastname"
+              value={lastname}
+              onChange={(e) => setLastname(e.target.value)}
               placeholder="Enter your last name"
               required
             />

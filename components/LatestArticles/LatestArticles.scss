@@ -7,7 +7,6 @@
   .title-container {
     display: flex;
     position: relative;
-    margin-top: 5rem;
 
     h1 {
       @include blueOceanTitle;
@@ -88,7 +87,7 @@
 
     a {
       color: color("purpleBlue");
-      font-family: fontName("galada");
+      font-family: fontName("exodar");
       font-size: fontSize("md");
 
       &:hover {

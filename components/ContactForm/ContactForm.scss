@@ -1,59 +1,80 @@
 @import "@/styles/globals.scss";
 
-.contact_form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.form-container {
+  position: relative;
+  width: auto;
+  @include flexCenter(row);
 
-  @include smallDesktops {
-    width: 70%;
-    padding-left: 5vw;
-  }
+  .contact_form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin-right: auto;
+    z-index: 30;
 
-  h2 {
-    margin-bottom: 20px;
-    font-family: fontName("galada");
-    font-size: fontSize("lg");
-    color: color("darkOrange");
-    max-width: 80vw;
-    margin-inline: auto;
-    @include whiteDropShadow;
-  }
+    @include smallDesktops {
+      width: 70%;
+      margin-right: 10vw;
+      text-align: center;
+    }
 
-  .form_group {
-    margin-bottom: 1rem;
+    .form_group {
+      margin-bottom: 1rem;
 
-    input,
-    textarea {
-      @include boxShadow;
-      padding: 0.5rem;
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1rem;
-      font-family: fontName("decalotype");
-      &_textarea {
-        resize: none;
+      input,
+      textarea {
+        @include boxShadow;
+        padding: 0.5rem;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-family: fontName("roboto");
+        &_textarea {
+          resize: none;
+        }
+      }
+    }
+
+    .button-container {
+      text-align: center;
+    }
+
+    .message {
+      margin-top: 0.5rem;
+      height: 0.75rem;
+
+      > p {
+        height: 0.75rem;
+        color: color("darkOrange");
+        font-family: fontName("exodar");
+        text-align: center;
+        font-weight: bold;
+        font-size: fontSize("sm");
       }
     }
   }
 
-  .button-container {
-    text-align: center;
-  }
+  img {
+    @include blackDropShadow;
+    position: absolute;
+    width: 50vw;
+    height: auto;
+    right: -5vw;
+    top: -12vh;
+    z-index: -1;
 
-  .message {
-    margin-top: 0.5rem;
-    height: 0.75rem;
+    @include tablet {
+      width: 25vw;
+      right: 0;
+      top: -7vh;
+    }
 
-    > p {
-      height: 0.75rem;
-      color: color("darkOrange");
-      font-family: fontName("galada");
-      text-align: center;
-      font-weight: bold;
-      font-size: fontSize("sm");
+    @include smallDesktops {
+      width: 18vw;
+      right: 5vw;
+      top: -35vh;
+      z-index: 20;
     }
   }
 }

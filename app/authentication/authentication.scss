@@ -110,18 +110,18 @@
     p {
       font-size: fontSize("xs");
       color: color("white");
-      font-family: fontName("decalotype");
+      font-family: fontName("roboto");
       font-weight: fontWeight("slim");
       margin: 0.5rem 0;
 
       &:first-child {
-        font-family: fontName("galada");
+        font-family: fontName("exodar");
         font-size: fontSize("sm");
         margin-bottom: 0.5rem;
       }
 
       &:nth-child(2) {
-        font-family: fontName("decalotype");
+        font-family: fontName("roboto");
         font-size: fontSize("xs");
         margin-bottom: 1rem;
       }
@@ -161,7 +161,7 @@
     h2 {
       font-size: fontSize("lg");
       color: color("darkOrange");
-      font-family: fontName("galada");
+      font-family: fontName("exodar");
       margin: 0;
     }
 
@@ -176,7 +176,7 @@
         border: solid 1px color("darkOrange");
         margin-bottom: 1rem;
         font-size: fontSize("xs");
-        font-family: fontName("decalotype");
+        font-family: fontName("roboto");
         padding-left: 0.5rem;
         border-radius: 0.5rem;
 
@@ -189,7 +189,7 @@
     .lost-password-link {
       font-size: fontSize("xs");
       color: color("darkOrange");
-      font-family: fontName("decalotype");
+      font-family: fontName("roboto");
       font-weight: fontWeight("slim");
     }
   }

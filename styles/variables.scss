@@ -9,19 +9,20 @@ $colors: (
 );
 
 // Font Variables
+
 @font-face {
-  font-family: "Galada-Regular";
-  src: url(../public/assets/fonts/Galada-Regular.ttf) format("truetype");
+  font-family: "Roboto-light";
+  src: url(../public/assets/fonts/Roboto-Light.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: "Decalotype-Regular";
-  src: url(../public/assets/fonts/Decalotype-Regular.ttf) format("truetype");
+  font-family: "Exodar";
+  src: url(../public/assets/fonts/Exodar.woff) format("truetype");
 }
 
 $font-names: (
-  "galada": "Galada-Regular",
-  "decalotype": "Decalotype-Regular",
+  "roboto": "Roboto-light",
+  "exodar": "Exodar",
 );
 
 $font-sizes: (
@@ -37,6 +38,7 @@ $font-weights: (
   "regular": 400,
   "medium": 500,
   "bold": 700,
+  "extra": 900,
 );
 
 // Media queries variables

@@ -26,7 +26,7 @@
         h4 {
           font-size: fontSize("md");
           font-weight: fontWeight("bold");
-          font-family: fontName("galada");
+          font-family: fontName("exodar");
           color: color("white");
           margin-bottom: 20px;
         }
@@ -43,7 +43,7 @@
               color: color("white");
               text-decoration: none;
               transition: color 0.3s;
-              font-family: fontName("decalotype");
+              font-family: fontName("roboto");
 
               &:hover {
                 color: color("skyBlue");
@@ -74,7 +74,7 @@
 
     p {
       margin: 0;
-      font-family: fontName("galada");
+      font-family: fontName("exodar");
       color: color("darkGrey");
       font-size: fontSize("sm");
     }

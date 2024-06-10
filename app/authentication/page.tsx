@@ -27,11 +27,12 @@ export default function Authentication() {
 
   const handleSignup = async () => {
     try {
-      await createUser(signupEmail, signupPassword);
+      const user = await createUser(signupEmail, signupPassword);
+      console.log("authenticated user --->", user);
+      localStorage.setItem("user", JSON.stringify(user));
       router.push("/complete-registration");
     } catch (error) {
       console.error("Error signing up:", error);
-      console.log("error signing up");
     }
   };
 

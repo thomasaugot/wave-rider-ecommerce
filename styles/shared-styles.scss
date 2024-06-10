@@ -3,7 +3,7 @@
 @import "@/styles/globals.scss";
 
 .container {
-  width: 100vw;
+  width: auto;
   min-height: 80vh;
   margin: 0 auto;
   padding: 4rem 0;
@@ -30,7 +30,7 @@
   }
 
   a {
-    font-family: fontName("decalotype"), sans-serif;
+    font-family: fontName("roboto"), sans-serif;
     color: color("darkOrange");
   }
 
@@ -41,12 +41,12 @@
   h1,
   h2 {
     color: color("darkOrange");
-    font-family: fontName("galada"), cursive;
+    font-family: fontName("exodar"), cursive;
   }
 
   p,
   li {
-    font-family: fontName("decalotype"), sans-serif;
+    font-family: fontName("roboto"), sans-serif;
     max-width: 80vw;
   }
 }

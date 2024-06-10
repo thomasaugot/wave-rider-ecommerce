@@ -8,7 +8,7 @@ import { FaSearch } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
 import { Product } from "@/types";
-import logo from "../../public/assets/img/logo.webp";
+import logo from "../../public/assets/img/logo.png";
 import "./Navbar.scss";
 import { WavyAnimation } from "@/components/WavyAnimation/WavyAnimation";
 
@@ -165,11 +165,6 @@ export const Navbar: React.FC = () => {
             <li>
               <Link href="/products" className="menu-links">
                 Windsurf
-              </Link>
-            </li>
-            <li>
-              <Link href="/products" className="menu-links">
-                Wetsuits
               </Link>
             </li>
             {isMobile && (

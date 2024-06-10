@@ -4,12 +4,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import Image from "next/image";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 import CustomButton from "../CustomButton/CustomButton";
-import starfish from "@/public/assets/img/starfish.png";
 import "./LatestArticles.scss";
-import { useFramerMotion } from "@/hooks/useFramerMotion";
 
 interface LatestArticlesProps {
   products: Product[];
@@ -52,12 +49,6 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
     <div className="latest-articles">
       <div className="title-container">
         <h1>Latest Products</h1>
-        {useFramerMotion({
-          variants,
-          children: (
-            <Image src={starfish} alt="Starfish" className="starfish-img" />
-          ),
-        })}
       </div>
       <Swiper
         slidesPerView={1}

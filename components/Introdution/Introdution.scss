@@ -16,9 +16,9 @@
   &__title {
     font-size: fontSize("md");
     word-spacing: normal;
-    font-family: fontName("galada");
+    font-family: fontName("exodar");
     @include whiteDropShadow;
-    margin: 0;
+    margin-bottom: 1rem;
 
     @include tablet {
       font-size: fontSize("xl");
@@ -26,7 +26,7 @@
   }
 
   &__description {
-    font-family: fontName("galada");
+    font-family: fontName("roboto");
     font-size: fontSize("xs");
     @include whiteDropShadow;
     margin-bottom: 3rem;

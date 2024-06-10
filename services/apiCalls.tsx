@@ -96,20 +96,30 @@ export const getUserData = async (userId: any) => {
   }
 };
 
-// function to update user data
-export const updateUser = async (userId: any, newData: any) => {
+export const updateUser = async (
+  userId: string,
+  newData: {
+    firstname: string;
+    lastname: string;
+    dateOfBirth: string;
+    address: string;
+    zipCode: string;
+    city: string;
+    country: string;
+    phone: string;
+  }
+) => {
   try {
     const { data, error } = await supabase
       .from("users")
       .update(newData)
-      .eq("id", userId)
-      .single();
+      .eq("id", userId);
 
-    if (!error) {
-      return data;
-    } else {
+    if (error) {
       throw new Error("Error updating user data: " + error.message);
     }
+
+    return data;
   } catch (error) {
     throw error;
   }

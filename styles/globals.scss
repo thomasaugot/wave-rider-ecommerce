@@ -55,7 +55,7 @@
 }
 
 @mixin brandTextandIconStyle {
-  font-family: fontName("galada"), sans-serif;
+  font-family: fontName("exodar"), sans-serif;
   color: color("darkOrange");
   text-decoration: none;
   font-size: fontSize("md");
@@ -81,7 +81,7 @@
 
 @mixin blueOceanTitle {
   @include blackDropShadow;
-  font-family: fontName("galada"), sans-serif;
+  font-family: fontName("exodar"), sans-serif;
   color: color("skyBlue");
   margin-inline: 5vw;
   font-size: fontSize("xl");

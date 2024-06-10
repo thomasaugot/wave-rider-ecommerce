@@ -2,8 +2,10 @@
 
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
+import gradientSurfBoard from "@/public/assets/img//gradient-surfboard.png";
 import "./ContactForm.scss";
 import CustomButton from "../CustomButton/CustomButton";
+import Image from "next/image";
 
 export const ContactForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -67,31 +69,33 @@ export const ContactForm: React.FC = () => {
   };
 
   return (
-    <form className="contact_form" onSubmit={sendMessage}>
-      <h2>A team of passionate, Drop us a Message!</h2>
-      <div className="form_group">
-        <input type="text" ref={nameRef} placeholder="Your name" />
-      </div>
-      <div className="form_group">
-        <input type="email" ref={emailRef} placeholder="Your email" />
-      </div>
-      <div className="form_group">
-        <textarea
-          ref={messageRef}
-          rows={6}
-          placeholder="Your message"
-        ></textarea>
-      </div>
-      <div className="button-container">
-        <CustomButton
-          text={"Send"}
-          disabled={isSubmitting}
-          type="submit"
-          onClick={function (): void {}}
-        />
-      </div>
+    <div className="form-container">
+      <form className="contact_form" onSubmit={sendMessage}>
+        <div className="form_group">
+          <input type="text" ref={nameRef} placeholder="Your name" />
+        </div>
+        <div className="form_group">
+          <input type="email" ref={emailRef} placeholder="Your email" />
+        </div>
+        <div className="form_group">
+          <textarea
+            ref={messageRef}
+            rows={6}
+            placeholder="Your message"
+          ></textarea>
+        </div>
+        <div className="button-container">
+          <CustomButton
+            text={"Send"}
+            disabled={isSubmitting}
+            type="submit"
+            onClick={function (): void {}}
+          />
+        </div>
 
-      <div className="message">{stateMessage && <p>{stateMessage}</p>}</div>
-    </form>
+        <div className="message">{stateMessage && <p>{stateMessage}</p>}</div>
+      </form>
+      <Image src={gradientSurfBoard} alt="Gradient surf board illustration" />
+    </div>
   );
 };

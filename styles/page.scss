@@ -38,63 +38,39 @@ body {
     }
 
     .contact {
-      @include flexCenter(column);
       position: relative;
       height: auto;
-      padding-block: 4rem;
-      padding-inline: 2rem;
+      padding: 2rem 2rem 0 2rem;
 
-      &_form-container,
-      &_illustration-container {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        text-align: center;
+      h2 {
+        margin-bottom: 2rem;
+        font-family: fontName("exodar");
+        font-size: fontSize("md");
+        color: color("darkOrange");
+        max-width: 80vw;
+        margin-inline: auto;
+        @include whiteDropShadow;
+        z-index: 40;
 
-        img {
-          width: 60%;
-          height: auto;
-          object-fit: cover;
-          @include blackDropShadow;
-        }
-      }
-
-      @include tablet {
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
-        align-content: stretch;
-
-        &_form-container,
-        &_illustration-container {
-          height: 100%;
-        }
-
-        &_illustration-container {
-          width: 40%;
-
-          img {
-            width: 60%;
-            height: auto;
-            top: 0;
-            object-fit: cover;
-          }
+        @include smallDesktops {
+          margin-bottom: 3rem;
+          margin-left: 8rem;
         }
       }
     }
+  }
 
-    .location {
-      height: 70vh;
-      width: 100vh;
-    }
+  .location {
+    height: 70vh;
+    width: 100vh;
+  }
 
-    .company-presentation {
-      position: relative;
-      height: fit-content;
-      padding: 2rem;
-      @include flexCenter(column);
-      background-color: color("white");
-      width: 100%;
-    }
+  .company-presentation {
+    position: relative;
+    height: fit-content;
+    padding: 2rem;
+    @include flexCenter(column);
+    background-color: color("white");
+    width: 100%;
   }
 }

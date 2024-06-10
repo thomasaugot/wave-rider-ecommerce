@@ -46,7 +46,7 @@
     width: 100%;
     padding: 0.5rem;
     z-index: 40;
-    font-family: fontName("decalotype"), sans-serif;
+    font-family: fontName("roboto"), sans-serif;
   }
 
   .navbar-container {
@@ -132,7 +132,7 @@
 
     .logo {
       position: absolute;
-      height: 110%;
+      height: 100%;
       top: 50%;
       transform: translateY(-50%);
       left: 0.5rem;
@@ -146,8 +146,8 @@
 
       @include largeDesktops {
         position: relative;
-        transform: translateY(-10%);
-        height: 8rem;
+        transform: translateY(0);
+        height: 7rem;
         width: auto;
       }
     }
@@ -157,8 +157,8 @@
       position: absolute;
       display: flex;
       align-items: flex-start;
-      top: 55%;
-      transform: translateY(-35%);
+      top: 50%;
+      transform: translateY(-50%);
       right: 16%;
       > a {
         @include brandTextandIconStyle;
@@ -237,7 +237,7 @@
         justify-content: space-between;
         list-style: none;
         gap: 1rem;
-        padding-left: 0;
+        padding-inline: 3rem;
       }
 
       &:first-child {
@@ -268,19 +268,18 @@
           width: auto;
           gap: 1rem;
           align-items: center;
-          padding-left: 3rem;
         }
       }
 
       li a {
         @include flexCenter(row);
-        font-family: fontName("galada"), sans-serif;
+        font-family: fontName("exodar"), sans-serif;
         text-decoration: none;
         transition: 0.3s ease color;
         cursor: pointer;
         color: color("darkGrey");
-        font-size: fontSize("sm");
-        font-weight: fontWeight("slim");
+        font-size: fontSize("xs");
+        font-weight: fontWeight("medium");
 
         @include tablet {
           font-size: fontSize("md");

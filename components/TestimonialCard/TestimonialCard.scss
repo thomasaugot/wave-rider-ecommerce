@@ -53,7 +53,7 @@
 
   &__name {
     @include blackDropShadow;
-    font-family: fontName("galada"), sans-serif;
+    font-family: fontName("exodar"), sans-serif;
     color: color("skyBlue");
     font-size: fontSize("md");
     z-index: 20;
@@ -64,7 +64,7 @@
   }
 
   &__message {
-    font-family: fontName("decalotype");
+    font-family: fontName("roboto");
     color: color("white");
     @include blackDropShadow;
   }

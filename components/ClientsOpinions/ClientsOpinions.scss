@@ -22,9 +22,9 @@
 
   &__heading {
     @include blackDropShadow;
-    font-family: fontName("galada"), sans-serif;
+    font-family: fontName("exodar"), sans-serif;
     color: color("skyBlue");
-    font-size: fontSize("xl");
+    font-size: fontSize("lg");
     z-index: 20;
     text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
       1px 1px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,

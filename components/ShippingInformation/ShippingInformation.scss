@@ -77,6 +77,7 @@
       position: absolute;
       text-align: center;
       margin-top: 5%;
+      margin-left: 5%;
       z-index: 2;
       color: color("darkOrange");
       @include whiteDropShadow;
@@ -86,16 +87,13 @@
       }
 
       @include smallDesktops {
-        margin-top: -11%;
-      }
-
-      @include largeDesktops {
-        margin-top: 0;
+        margin-top: 5%;
       }
 
       h2 {
-        font-family: fontName("galada"), sans-serif;
+        font-family: fontName("exodar"), sans-serif;
         font-size: fontSize("sm");
+        font-weight: fontWeight("extra");
         text-align: center;
 
         @include tablet {
@@ -104,10 +102,6 @@
 
         @include smallDesktops {
           font-size: fontSize("md");
-        }
-
-        @include largeDesktops {
-          font-size: fontSize("lg");
         }
       }
 
@@ -127,14 +121,9 @@
 
         @include smallDesktops {
           font-size: fontSize("xs");
-          margin-top: 7%;
+          margin-top: 20%;
           max-width: 75%;
           margin-left: 7%;
-        }
-
-        @include largeDesktops {
-          margin-top: 14%;
-          font-size: fontSize("sm");
         }
       }
     }

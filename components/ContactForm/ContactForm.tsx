@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import gradientSurfBoard from "@/public/assets/img//gradient-surfboard.png";
+import gradientSurfBoard from "@/public/assets/img/gradient-surfboard.webp";
 import "./ContactForm.scss";
 import CustomButton from "../CustomButton/CustomButton";
 import Image from "next/image";

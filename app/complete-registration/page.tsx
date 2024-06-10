@@ -21,8 +21,9 @@ export default function CompleteRegistration() {
   const [phone, setPhone] = useState("");
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      const user = JSON.parse(userString);
       console.log("the user I get from localstorage ---->", user);
       setUserId(user.id);
     } else {
@@ -30,7 +31,8 @@ export default function CompleteRegistration() {
     }
   }, [router]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
     try {
       const userData = {
         firstname,
@@ -43,7 +45,7 @@ export default function CompleteRegistration() {
         phone,
       };
 
-      if (firstname !== "" || lastname !== "" || dateOfBirth !== "") {
+      if (firstname !== "" && lastname !== "" && dateOfBirth !== "") {
         await updateUser(userId, userData);
         router.push(`/`);
       } else {

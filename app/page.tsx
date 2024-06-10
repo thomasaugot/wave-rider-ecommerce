@@ -12,8 +12,6 @@ import { ClientsOpinions } from "@/components/ClientsOpinions/ClientsOpinions";
 import { Separator } from "@/components/Separator/Separator";
 import emailjs from "@emailjs/browser";
 import { ContactForm } from "@/components/ContactForm/ContactForm";
-import Image from "next/image";
-import gradientSurfBoard from "@/public/assets/img//gradient-surfboard.png";
 import { CategoriesBentoGrid } from "@/components/CategoriesBentoGrid/CategoriesBentoGrid";
 import { GoogleMapComponent } from "@/components/GoogleMap/GoogleMap";
 import { FullPresentation } from "@/components/FullPresentation/FullPresentation";

@@ -114,9 +114,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className={`navbar ${menuOpen ? "open" : ""}`}>
-      <div className="promotion_banner">
-        Free shipping for orders over a 60€*
-      </div>
+      <div className="promotion_banner">Free shipping for orders over 60€*</div>
       <div className="navbar-container">
         <WavyAnimation />
         <a href="/">

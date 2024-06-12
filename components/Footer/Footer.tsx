@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
             <h4>Shop</h4>
             <ul>
               <li>
-                <Link href="/products">All Products</Link>
+                <Link href="/all-products">All Products</Link>
               </li>
               <li>
                 <Link href="/categories">Categories</Link>

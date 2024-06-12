@@ -1,0 +1,39 @@
+@import "@/styles/globals.scss";
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  max-width: 80vw;
+  background-color: color("white");
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 2rem auto;
+  @include boxShadow;
+
+  input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 8px;
+    font-size: 16px;
+
+    &::placeholder {
+      color: #666;
+    }
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 8px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: #333;
+    }
+  }
+}

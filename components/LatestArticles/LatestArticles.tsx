@@ -6,6 +6,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 import CustomButton from "../CustomButton/CustomButton";
+import { useRouter } from "next/navigation";
 import "./LatestArticles.scss";
 
 interface LatestArticlesProps {
@@ -19,6 +20,7 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
   };
 
   const latestProducts: Product[] = filterLatestProducts(products);
+  const router = useRouter();
 
   const variants = {
     hidden: { opacity: 0 },
@@ -73,9 +75,7 @@ export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
       <div className="link-container">
         <CustomButton
           text={"View All Products"}
-          onClick={() => {
-            /* Handle button click */
-          }}
+          onClick={() => router.push("/all-products")}
         />
       </div>
     </div>

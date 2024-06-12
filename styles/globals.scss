@@ -90,3 +90,25 @@
     1px 1px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
     2px 2px 0 #fff;
 }
+
+@mixin responsiveGridSystem {
+  display: grid;
+  margin: 0 auto;
+  grid-gap: 2rem;
+  justify-content: center;
+  text-align: center;
+  padding: 0;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include smallDesktops {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include largeDesktops {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

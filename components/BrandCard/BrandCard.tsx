@@ -1,7 +1,30 @@
-import React from "react";
-import "./BrandCard.scss";
-// import { BrandCardType } from "@/types";
+"use client";
 
-export const BrandCard: React.FC = () => {
-  return <div className="brand-card"></div>;
+import React from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { Brand } from "@/types";
+import "./BrandCard.scss";
+
+interface BrandCardProps {
+  brand: Brand;
+}
+
+export const BrandCard: React.FC<BrandCardProps> = ({ brand }) => {
+  const router = useRouter();
+
+  return (
+    <div className="brand-card" onClick={() => router.push(brand.redirectTo)}>
+      <div className="brand-card__img-container">
+        <Image
+          src={brand.imageUrl}
+          alt={brand.name}
+          layout="fill"
+          objectFit="contain"
+          priority
+        />
+        <h3 className="brand-card__title">{brand.name}</h3>
+      </div>
+    </div>
+  );
 };

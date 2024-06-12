@@ -6,6 +6,7 @@ import gradientSurfBoard from "@/public/assets/img/gradient-surfboard.webp";
 import "./ContactForm.scss";
 import CustomButton from "../CustomButton/CustomButton";
 import Image from "next/image";
+// import { useFramerMotion } from "@/hooks/useFramerMotion";
 
 export const ContactForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -68,6 +69,18 @@ export const ContactForm: React.FC = () => {
     messageRef.current.value = "";
   };
 
+  // const variants = {
+  //   hidden: { opacity: 0, x: 100 },
+  //   show: {
+  //     opacity: 1,
+  //     x: 0,
+  //     transition: {
+  //       duration: 0.5,
+  //       ease: "linear",
+  //     },
+  //   },
+  // };
+
   return (
     <div className="form-container">
       <form className="contact_form" onSubmit={sendMessage}>
@@ -95,7 +108,12 @@ export const ContactForm: React.FC = () => {
 
         <div className="message">{stateMessage && <p>{stateMessage}</p>}</div>
       </form>
+      {/* {useFramerMotion({
+        variants,
+        children: ( */}
       <Image src={gradientSurfBoard} alt="Gradient surf board illustration" />
+      {/* ),
+      })} */}
     </div>
   );
 };

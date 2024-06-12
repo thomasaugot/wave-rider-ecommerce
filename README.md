@@ -12,6 +12,12 @@ E-commerce Progressive Web App - My most complete project to date
 - EmailJS
 - Framer Motion
 
+The app is progressive, it means that:
+
+- You can download it from compatible browsers and use it like a native app
+- You can run it while offline
+- Essential data is cached so it loads the content faster
+
 ## Coming soon:
 
 - Stripe API integration

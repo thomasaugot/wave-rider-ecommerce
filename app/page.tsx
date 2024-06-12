@@ -65,6 +65,7 @@ export default function Home() {
       <section className="location">
         <GoogleMapComponent />
       </section>
+      <Separator />
     </main>
   );
 }

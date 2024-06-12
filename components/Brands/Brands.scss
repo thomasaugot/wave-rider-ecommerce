@@ -15,12 +15,16 @@
     @include whiteDropShadow;
   }
 
-  .brand {
-    margin: 0 10px;
+  .marquee {
+    margin-bottom: 3rem;
 
-    .brand__item {
-      width: auto;
-      height: 7rem;
+    .brand {
+      margin: 0 10px;
+
+      .brand__item {
+        width: auto;
+        height: 7rem;
+      }
     }
   }
 }

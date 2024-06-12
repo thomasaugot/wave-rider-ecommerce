@@ -1,4 +1,4 @@
-export interface BrandCard {
+export interface Brand {
   name: string;
   imageUrl: string;
   redirectTo: string;

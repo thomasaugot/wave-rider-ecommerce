@@ -10,12 +10,7 @@ import wingfoil from "@/public/assets/img/windfoil.webp";
 import aerialBeach from "@/public/assets/img/aerial-beach.webp";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
-interface Category {
-  name: string;
-  imageUrl: string;
-  redirectTo: string;
-}
+import { Category } from "@/types";
 
 export const CategoriesBentoGrid: React.FC = () => {
   const router = useRouter();

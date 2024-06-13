@@ -10,7 +10,7 @@ import scubaDiving from "@/public/assets/img/scubaDiving.webp";
 import snorkeling from "@/public/assets/img/snorkeling.webp";
 import sailing from "@/public/assets/img/sailing.webp";
 import wakeboarding from "@/public/assets/img/wakeboarding.webp";
-import waterSkiing from "@/public/assets/img/waterSkiing.webp";
+import waterSkiing from "@/public/assets/img/waterskiing.webp";
 import rafting from "@/public/assets/img/rafting.webp";
 import { Category } from "@/types";
 import "./categories.scss";

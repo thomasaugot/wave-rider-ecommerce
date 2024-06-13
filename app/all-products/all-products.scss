@@ -9,16 +9,8 @@
   text-align: center;
 
   &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    @include backgroundImg;
     background-image: url(../../public/assets/img/palms-bg.webp);
-    @include bgImageStyle;
-    opacity: 0.2;
-    z-index: -1;
   }
 
   h1 {

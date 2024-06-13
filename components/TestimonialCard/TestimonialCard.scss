@@ -12,7 +12,9 @@
   overflow: visible;
   @include whiteDropShadow;
   background-image: url(../../public/assets/img/wavy-card-bg.svg);
-  @include bgImageStyle;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   background-size: 500% auto;
   background-position: bottom center;
 

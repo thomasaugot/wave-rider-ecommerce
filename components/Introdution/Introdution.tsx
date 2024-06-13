@@ -1,7 +1,8 @@
 import React from "react";
-import "./Introdution.scss";
 import { useFramerMotion } from "@/hooks/useFramerMotion";
 import CustomButton from "../CustomButton/CustomButton";
+import { useRouter } from "next/navigation";
+import "./Introdution.scss";
 
 export const Introdution: React.FC = () => {
   const variants = {
@@ -14,6 +15,8 @@ export const Introdution: React.FC = () => {
       },
     },
   };
+
+  const router = useRouter();
 
   return (
     <div className="presentation">
@@ -29,9 +32,7 @@ export const Introdution: React.FC = () => {
             </p>
             <CustomButton
               text={"View All Products"}
-              onClick={() => {
-                /* Handle button click */
-              }}
+              onClick={() => router.push("/all-products")}
             />
           </>
         ),

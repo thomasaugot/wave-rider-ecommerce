@@ -1,1 +1,25 @@
 @import "@/styles/globals.scss";
+
+.categories-container {
+  width: 100%;
+  min-height: 80vh;
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+
+  &::before {
+    @include backgroundImg;
+    background-image: url(../../public/assets/img/flag-beach.webp);
+  }
+
+  .title {
+    @include blackDropShadow;
+    @include blueOceanTitle;
+    margin-bottom: 3rem;
+  }
+
+  .categories-grid {
+    @include responsiveGridSystem;
+  }
+}

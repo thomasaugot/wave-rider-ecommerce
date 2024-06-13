@@ -84,7 +84,9 @@
     text-align: center;
     transition: height 0.3s ease-in-out;
     background-image: url(../../public/assets/img/wavy-card-bg.svg);
-    @include bgImageStyle;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     background-position-y: 1rem;
 
     h2 {

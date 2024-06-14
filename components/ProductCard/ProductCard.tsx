@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useProducts } from "@/context/productContext";
 
 import "./ProductCard.scss";
 import CustomButton from "../CustomButton/CustomButton";
@@ -11,7 +12,7 @@ interface ProductCardProps {
   name: string;
   description: string;
   price: number;
-  addToCartButton: React.ReactNode;
+  addToCartButton?: React.ReactNode;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -23,6 +24,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   addToCartButton,
 }) => {
   const router = useRouter();
+  const { handleProductSelection } = useProducts();
+
+  const handleDetailsClick = () => {
+    handleProductSelection(id);
+    router.push(`/product-details/${id}`);
+  };
 
   return (
     <div className="product-card" key={id}>
@@ -37,9 +44,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <div className="details-button">
           <CustomButton
             text={"More Details"}
-            disabled={undefined}
-            onClick={() => router.push(`/product-details/${id}`)}
-            type="submit"
+            onClick={handleDetailsClick}
+            type="button"
           />
         </div>
       </div>

@@ -17,9 +17,10 @@ import { GoogleMapComponent } from "@/components/GoogleMap/GoogleMap";
 import { FullPresentation } from "@/components/FullPresentation/FullPresentation";
 import { Introdution } from "@/components/Introdution/Introdution";
 import { useExodarFont } from "@/hooks/useExodarFont";
+import { useProducts } from "@/context/productContext";
 
 export default function Home() {
-  const [products, setProducts] = useState<Product[] | null>(null);
+  const { setProducts } = useProducts();
   const emailJSPublicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
 
   useExodarFont();
@@ -32,8 +33,10 @@ export default function Home() {
 
     fetchProducts();
 
-    emailJSPublicKey && emailjs.init(emailJSPublicKey);
-  }, []);
+    if (emailJSPublicKey) {
+      emailjs.init(emailJSPublicKey);
+    }
+  }, [setProducts, emailJSPublicKey]);
 
   return (
     <main className="homepage">
@@ -46,7 +49,7 @@ export default function Home() {
         <ShippingInformation />
       </section>
       <section className="latest-articles">
-        {products && <LatestArticles products={products} />}
+        <LatestArticles />
       </section>
       <section className="categories">
         <CategoriesBentoGrid />

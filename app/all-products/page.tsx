@@ -18,8 +18,12 @@ const AllProducts: React.FC = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const allProducts: Product[] = await getProducts();
-      setProducts(allProducts);
+      try {
+        const allProducts: Product[] = await getProducts();
+        setProducts(allProducts);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
     };
 
     fetchProducts();

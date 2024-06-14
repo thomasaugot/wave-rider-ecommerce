@@ -8,6 +8,7 @@ import { Navbar } from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { AppLoader } from "@/components/AppLoader/AppLoader";
 import "@/styles/globals.scss";
+import { ProductProvider } from "@/context/productContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -54,11 +55,13 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <StoreProvider>
-          <AppLoader>
-            <Navbar />
-            {children}
-            <Footer />
-          </AppLoader>
+          <ProductProvider>
+            <AppLoader>
+              <Navbar />
+              {children}
+              <Footer />
+            </AppLoader>
+          </ProductProvider>
         </StoreProvider>
       </body>
     </html>

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Product } from "@/types/product";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -7,31 +6,30 @@ import { Navigation } from "swiper/modules";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 import CustomButton from "../CustomButton/CustomButton";
 import { useRouter } from "next/navigation";
+import { useProductContext } from "@/context/productContext";
 import "./LatestArticles.scss";
+import { Product } from "@/types";
 
-interface LatestArticlesProps {
-  products: Product[];
-}
-
-export const LatestArticles: React.FC<LatestArticlesProps> = ({ products }) => {
+export const LatestArticles: React.FC = () => {
+  const { products } = useProductContext();
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
+
   const filterLatestProducts = (products: Product[]) => {
-    return products; // to be modified later
+    return products.slice(0, 5);
   };
 
-  const latestProducts: Product[] = filterLatestProducts(products);
+  const latestProducts = filterLatestProducts(products);
   const router = useRouter();
 
-  const variants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        duration: 2,
-        yoyo: Infinity,
-      },
-    },
-  };
+  useEffect(() => {
+    const initSwiper = () => {
+      if (swiperInstance) {
+        swiperInstance.update(); // Ensure Swiper updates on changes
+      }
+    };
+
+    initSwiper();
+  }, [swiperInstance]);
 
   const handleSwiper = (swiper: any) => {
     setSwiperInstance(swiper);

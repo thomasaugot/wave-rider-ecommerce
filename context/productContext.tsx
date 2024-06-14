@@ -4,10 +4,11 @@ import React, {
   createContext,
   useContext,
   useState,
-  ReactNode,
   useEffect,
+  ReactNode,
 } from "react";
 import { Product } from "@/types/product";
+import { getProducts } from "@/services/apiCalls";
 
 interface ProductContextType {
   products: Product[];
@@ -26,20 +27,23 @@ const ProductProvider: React.FC<ProductProviderProps> = ({ children }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const handleProductSelection = (productId: string) => {
-    const product: any = products.find((product) => product.id === productId);
-    setSelectedProduct(product);
-  };
-
-  // Replace with your actual API logic to fetch products
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await fetch("/api/products"); // Replace with your API endpoint
-      const data = await response.json();
-      setProducts(data);
+      try {
+        const fetchedProducts = await getProducts();
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
     };
+
     fetchProducts();
   }, []);
+
+  const handleProductSelection = (productId: string) => {
+    const product = products.find((product) => product.id === productId);
+    setSelectedProduct(product || null);
+  };
 
   return (
     <ProductContext.Provider
@@ -58,5 +62,4 @@ const useProducts = () => {
   return context;
 };
 
-// Important: Add "use client" directive to prevent server-side rendering issues
-export { ProductProvider, useProducts }; // Mark for client-side only
+export { ProductProvider, useProducts };

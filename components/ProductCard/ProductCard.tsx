@@ -28,7 +28,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   const handleDetailsClick = () => {
     handleProductSelection(id);
-    router.push(`/product-details/${id}`);
+    router.push(`/all-products/${id}`);
   };
 
   return (

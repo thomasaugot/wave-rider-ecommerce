@@ -5,6 +5,7 @@ import "./authentication.scss";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import { createUser, loginUser } from "@/services/apiCalls";
 import { useRouter } from "next/navigation";
+import { useExodarFont } from "@/hooks/useExodarFont";
 
 export default function Authentication() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
@@ -14,6 +15,8 @@ export default function Authentication() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const router = useRouter();
+
+  useExodarFont();
 
   useEffect(() => {
     setIsLoginFormVisible(false);
@@ -39,7 +42,7 @@ export default function Authentication() {
   const handleLogin = async () => {
     try {
       await loginUser(loginEmail, loginPassword);
-      router.back(); // Redirect to the previous page
+      router.back();
     } catch (error) {
       console.error("Error logging in:", error);
     }

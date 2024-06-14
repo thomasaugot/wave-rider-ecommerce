@@ -16,10 +16,13 @@ import { CategoriesBentoGrid } from "@/components/CategoriesBentoGrid/Categories
 import { GoogleMapComponent } from "@/components/GoogleMap/GoogleMap";
 import { FullPresentation } from "@/components/FullPresentation/FullPresentation";
 import { Introdution } from "@/components/Introdution/Introdution";
+import { useExodarFont } from "@/hooks/useExodarFont";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[] | null>(null);
   const emailJSPublicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
+
+  useExodarFont();
 
   useEffect(() => {
     const fetchProducts = async () => {

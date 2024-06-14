@@ -1,4 +1,5 @@
 import React from "react";
+import { useExodarFont } from "@/hooks/useExodarFont";
 import "./CustomButton.scss";
 
 interface CustomButtonProps {
@@ -16,6 +17,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   type,
   secondary = false,
 }) => {
+  useExodarFont();
   return (
     <button
       className={`custom-button ${disabled ? "disabled" : ""} ${

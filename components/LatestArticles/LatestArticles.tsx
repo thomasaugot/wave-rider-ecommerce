@@ -6,12 +6,12 @@ import { Navigation } from "swiper/modules";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 import CustomButton from "../CustomButton/CustomButton";
 import { useRouter } from "next/navigation";
-import { useProductContext } from "@/context/productContext";
+import { useProducts } from "@/context/productContext";
 import "./LatestArticles.scss";
 import { Product } from "@/types";
 
 export const LatestArticles: React.FC = () => {
-  const { products } = useProductContext();
+  const { products } = useProducts();
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
 
   const filterLatestProducts = (products: Product[]) => {

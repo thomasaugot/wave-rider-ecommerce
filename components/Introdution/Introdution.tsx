@@ -32,7 +32,7 @@ export const Introdution: React.FC = () => {
             </p>
             <CustomButton
               text={"View All Products"}
-              onClick={() => router.push("/all-products")}
+              onClick={() => router.push("/products")}
             />
           </>
         ),

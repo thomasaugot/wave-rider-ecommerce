@@ -10,7 +10,7 @@ export const AppLoader: React.FC<{ children: React.ReactNode }> = ({
 
   setTimeout(() => {
     setLoading(false);
-  }, 3000);
+  }, 1500);
 
   return <>{loading ? <Loading /> : children}</>;
 };

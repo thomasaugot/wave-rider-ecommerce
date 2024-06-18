@@ -5,12 +5,12 @@ import { Product } from "@/types/product";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 import { getProducts } from "@/services/apiCalls";
 import { useFilterItems } from "@/hooks/useFilterItems";
-import "./all-products.scss";
+import "./products.scss";
 import SearchBar from "@/components/SearchBar/SearchBar";
 
 const ITEMS_PER_PAGE = 20;
 
-const AllProducts: React.FC = () => {
+const Products: React.FC = () => {
   const [products, setProducts] = useState<Product[] | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { searchQuery, setSearchQuery, filteredItems } =
@@ -67,4 +67,4 @@ const AllProducts: React.FC = () => {
   );
 };
 
-export default AllProducts;
+export default Products;

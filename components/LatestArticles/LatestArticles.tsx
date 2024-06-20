@@ -24,7 +24,7 @@ export const LatestArticles: React.FC = () => {
   useEffect(() => {
     const initSwiper = () => {
       if (swiperInstance) {
-        swiperInstance.update(); // Ensure Swiper updates on changes
+        swiperInstance.update();
       }
     };
 
@@ -66,7 +66,7 @@ export const LatestArticles: React.FC = () => {
       >
         {latestProducts.map((product) => (
           <SwiperSlide key={product.id}>
-            <ProductCard addToCartButton={undefined} {...product} />
+            <ProductCard {...product} />
           </SwiperSlide>
         ))}
       </Swiper>

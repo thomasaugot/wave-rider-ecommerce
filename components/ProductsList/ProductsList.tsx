@@ -7,12 +7,11 @@ const ProductList = ({ products }: { products: Product[] }) => {
       {products.map((product) => (
         <ProductCard
           key={product.id}
-          id={""}
+          id={product.id}
           images={[]}
           name={""}
           description={""}
           price={0}
-          addToCartButton={undefined}
         />
       ))}
     </div>

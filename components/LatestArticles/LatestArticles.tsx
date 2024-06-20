@@ -73,7 +73,7 @@ export const LatestArticles: React.FC = () => {
       <div className="link-container">
         <CustomButton
           text={"View All Products"}
-          onClick={() => router.push("/all-products")}
+          onClick={() => router.push("/products")}
         />
       </div>
     </div>

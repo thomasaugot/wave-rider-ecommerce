@@ -1,0 +1,20 @@
+@import "@/styles/globals.scss";
+
+.similar-products {
+  margin-top: 2rem;
+  padding: 2rem;
+  border-radius: 8px;
+
+  h2 {
+    margin-bottom: 2rem;
+    font-family: fontName("exodar");
+    color: color("darkOrange");
+  }
+
+  &__container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}

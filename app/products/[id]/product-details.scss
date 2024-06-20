@@ -1,15 +1,15 @@
 @import "@/styles/globals.scss";
 
-.product-details {
+.product-details-page {
   display: flex;
   flex-direction: column;
+  background-size: cover;
+  padding: 4rem 2rem;
   width: 100%;
   height: auto;
-  padding: 4rem 2rem;
   position: relative;
   overflow: hidden;
   text-align: center;
-  background-size: cover;
 
   &::before {
     @include backgroundImg;
@@ -24,62 +24,105 @@
   }
 
   @include tablet {
-    flex-direction: row;
     min-height: 80vh;
   }
 
-  .img-container {
-    display: inline-block;
-    width: 100%;
+  .product-details {
+    display: flex;
+    flex-direction: column;
 
     @include tablet {
-      width: 40%;
+      flex-direction: row;
     }
 
-    .product-image {
+    .img-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-  }
 
-  .details-container {
-    width: 100%;
+      @include tablet {
+        width: 40%;
+      }
 
-    @include tablet {
-      width: 60%;
-      padding-left: 2rem;
-    }
+      .carousel-swiper {
+        width: 100%;
+        height: auto;
 
-    h1 {
-      font-family: fontName("exodar");
-      color: color("darkOrange");
-    }
+        .main-image-wrapper {
+          width: 100%;
+          position: relative;
+        }
 
-    p {
-      font-family: fontName("roboto"), sans-serif;
-      color: color("darkGrey");
-      font-weight: fontWeight("bold");
+        .product-image {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
 
-      &:last-of-type {
-        font-family: fontName("roboto");
-        color: color("darkOrange");
-        font-size: fontSize("md");
-        font-weight: fontWeight("bold");
+      .thumbnail-swiper {
+        width: 100%;
+        height: 100px;
+        margin-top: 10px;
+
+        .thumbnail-wrapper {
+          width: 100%;
+          height: 100%;
+          position: relative;
+        }
+
+        .thumbnail-image {
+          cursor: pointer;
+          opacity: 0.7;
+          &:hover {
+            opacity: 1;
+          }
+        }
       }
     }
-  }
 
-  .actions-container {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    width: 100%;
-    margin-top: 2rem;
+    .details-container {
+      width: 100%;
 
-    @include tablet {
-      width: auto;
-      margin: 0 auto;
+      @include tablet {
+        width: 60%;
+        padding-left: 2rem;
+      }
+
+      h1 {
+        font-family: fontName("exodar");
+        color: color("darkOrange");
+      }
+
+      p {
+        font-family: fontName("roboto"), sans-serif;
+        color: color("darkGrey");
+        font-weight: fontWeight("bold");
+
+        &:last-of-type {
+          font-family: fontName("roboto");
+          color: color("darkOrange");
+          font-size: fontSize("md");
+          font-weight: fontWeight("bold");
+        }
+      }
+    }
+
+    .actions-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      width: 100%;
+      margin-top: 2rem;
+
+      @include tablet {
+        margin: 0 auto;
+      }
+    }
+
+    .similar-products {
+      margin-top: 2rem;
     }
   }
 }

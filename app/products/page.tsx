@@ -39,7 +39,7 @@ const Products: React.FC = () => {
   const currentProducts = filteredItems.slice(startIndex, endIndex);
 
   return (
-    <div className="all-products-container">
+    <div className="products-container">
       <h1>All Products</h1>
       <SearchBar
         onChange={(query) => setSearchQuery(query)}

@@ -48,7 +48,7 @@ const Products: React.FC = () => {
       <div className="products-grid">
         {currentProducts.map((product) => (
           <div key={product.id}>
-            <ProductCard addToCartButton={undefined} {...product} />
+            <ProductCard {...product} />
           </div>
         ))}
       </div>

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useProducts } from "@/context/productContext";
+import { useCart } from "@/context/cartContext";
 import "./product-details.scss";
 import Image from "next/image";
 import CustomButton from "@/components/CustomButton/CustomButton";
@@ -12,6 +13,7 @@ import { Autoplay, Pagination, Thumbs } from "swiper/modules";
 import { Swiper as SwiperCore } from "swiper/types";
 import { SimilarProducts } from "@/components/SimilarProducts/SimilarProducts";
 import { Loading } from "@/components/Loading/Loading";
+import { useRouter } from "next/navigation";
 
 export default function ProductDetailsPage({
   params,
@@ -19,7 +21,9 @@ export default function ProductDetailsPage({
   params: { id: string };
 }) {
   const { selectedProduct, handleProductSelection, products } = useProducts();
+  const { dispatch } = useCart();
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (params.id) {
@@ -28,6 +32,26 @@ export default function ProductDetailsPage({
       handleProductSelection(params.id);
     }
   }, [params.id, handleProductSelection, products]);
+
+  const addToCart = () => {
+    if (selectedProduct) {
+      dispatch({
+        type: "ADD_ITEM",
+        payload: {
+          id: selectedProduct.id,
+          name: selectedProduct.name,
+          price: selectedProduct.price,
+          quantity: 1,
+          image: selectedProduct.images[0],
+        },
+      });
+    }
+  };
+
+  const buyNow = () => {
+    addToCart();
+    router.push("/shopping-cart");
+  };
 
   if (!selectedProduct) {
     return (
@@ -95,12 +119,8 @@ export default function ProductDetailsPage({
           <p>{selectedProduct.description}</p>
           <p>Price: €{selectedProduct.price.toFixed(2)}</p>
           <div className="actions-container">
-            <CustomButton text={"Add to Cart"} onClick={undefined} />
-            <CustomButton
-              text={"Buy Now"}
-              secondary={true}
-              onClick={undefined}
-            />
+            <CustomButton text={"Add to Cart"} onClick={addToCart} />
+            <CustomButton text={"Buy Now"} secondary={true} onClick={buyNow} />
           </div>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
+import { useCart } from "@/context/cartContext";
 import { Product } from "@/types";
 import logo from "../../public/assets/img/logo.png";
 import "./Navbar.scss";
@@ -15,12 +16,12 @@ import { WavyAnimation } from "@/components/WavyAnimation/WavyAnimation";
 export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [cartCount, setCartCount] = useState<number>(2);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [isHovering, setIsHovering] = useState<boolean>(false);
 
+  const { cartState } = useCart(); // Access cart state
   const searchRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
@@ -107,9 +108,7 @@ export const Navbar: React.FC = () => {
   }, [isMobile]);
 
   const handleSearchButtonClick = () => {
-    // if (searchQuery.trim() !== "") {
     router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
-    // }
   };
 
   return (
@@ -199,7 +198,7 @@ export const Navbar: React.FC = () => {
                 <Link href={"/shopping-cart"}>
                   <div className="cart-icon">
                     <FaShoppingCart className="nav-icon" />
-                    <span className="cart-count">{cartCount}</span>
+                    <span className="cart-count">{cartState.items.length}</span>
                   </div>
                 </Link>
               </li>

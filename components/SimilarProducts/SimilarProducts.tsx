@@ -35,9 +35,9 @@ export const SimilarProducts: React.FC<SimilarProductsProps> = ({
             product.category === currentProduct.category &&
             product.id !== currentProduct.id
         );
-        setSimilarProducts(similarByCategory.slice(0, 3));
+        setSimilarProducts(similarByCategory.slice(0, 4));
       } else {
-        setSimilarProducts(similarByName.slice(0, 3));
+        setSimilarProducts(similarByName.slice(0, 4));
       }
     };
 

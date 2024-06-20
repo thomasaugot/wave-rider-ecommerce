@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useProducts } from "@/context/productContext";
-
+import { useCart } from "@/context/cartContext";
 import "./ProductCard.scss";
 import CustomButton from "../CustomButton/CustomButton";
 
@@ -12,7 +12,6 @@ interface ProductCardProps {
   name: string;
   description: string;
   price: number;
-  addToCartButton?: React.ReactNode;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -21,14 +20,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   name,
   description,
   price,
-  addToCartButton,
 }) => {
   const router = useRouter();
   const { handleProductSelection } = useProducts();
+  const { dispatch } = useCart();
 
   const handleDetailsClick = () => {
     handleProductSelection(id);
     router.push(`/products/${id}`);
+  };
+
+  const handleAddToCart = () => {
+    dispatch({
+      type: "ADD_ITEM",
+      payload: { id, name, price, quantity: 1, image: images[0] },
+    });
   };
 
   return (
@@ -41,11 +47,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           objectFit="cover"
           className="Product-image"
         />
-        <div className="details-button">
+        <div className="action-buttons">
           <CustomButton
-            text={"More Details"}
+            text="More Details"
             onClick={handleDetailsClick}
             type="button"
+          />
+          <CustomButton
+            text="Add to Cart"
+            onClick={handleAddToCart}
+            type="button"
+            secondary
           />
         </div>
       </div>
@@ -53,7 +65,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <h2>{name.toUpperCase()}</h2>
         <p className="price">€ {price.toFixed(2)}</p>
         <p className="description">{description}</p>
-        {addToCartButton}
       </div>
     </div>
   );

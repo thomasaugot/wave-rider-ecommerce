@@ -33,6 +33,7 @@
 
     @include tablet {
       flex-direction: row;
+      align-items: center;
     }
 
     .img-container {

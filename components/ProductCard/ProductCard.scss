@@ -31,7 +31,7 @@
         z-index: 20;
       }
 
-      .details-button {
+      .action-buttons {
         opacity: 1;
         transform: translate(-50%, -50%);
         z-index: 30;
@@ -64,13 +64,16 @@
       object-fit: cover;
     }
 
-    .details-button {
+    .action-buttons {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       opacity: 0;
       transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
   }
 

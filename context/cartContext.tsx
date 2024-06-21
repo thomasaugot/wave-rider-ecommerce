@@ -4,27 +4,17 @@ import React, {
   createContext,
   useContext,
   useReducer,
-  ReactNode,
   useEffect,
+  ReactNode,
 } from "react";
+import { CartItem, CartState } from "@/types";
 
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
-
-interface CartState {
-  items: CartItem[];
-  totalAmount: number;
-}
-
-interface CartAction {
-  type: "ADD_ITEM" | "REMOVE_ITEM" | "SET_CART";
-  payload: CartItem[] | CartItem;
-}
+type CartAction =
+  | { type: "ADD_ITEM"; payload: CartItem }
+  | { type: "REMOVE_ITEM"; payload: { id: string } }
+  | { type: "INCREMENT_ITEM"; payload: { id: string } }
+  | { type: "DECREMENT_ITEM"; payload: { id: string } }
+  | { type: "SET_CART"; payload: CartState };
 
 const CartContext = createContext<{
   cartState: CartState;
@@ -38,11 +28,9 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
     case "ADD_ITEM": {
       const updatedTotalAmount =
-        state.totalAmount +
-        (action.payload as CartItem).price *
-          (action.payload as CartItem).quantity;
+        state.totalAmount + action.payload.price * action.payload.quantity;
       const existingCartItemIndex = state.items.findIndex(
-        (item) => item.id === (action.payload as CartItem).id
+        (item) => item.id === action.payload.id
       );
       const existingCartItem = state.items[existingCartItemIndex];
       let updatedItems;
@@ -50,29 +38,58 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       if (existingCartItem) {
         const updatedItem = {
           ...existingCartItem,
-          quantity:
-            existingCartItem.quantity + (action.payload as CartItem).quantity,
+          quantity: existingCartItem.quantity + action.payload.quantity,
         };
         updatedItems = [...state.items];
         updatedItems[existingCartItemIndex] = updatedItem;
       } else {
-        updatedItems = state.items.concat(action.payload as CartItem);
+        updatedItems = state.items.concat(action.payload);
       }
 
       return { items: updatedItems, totalAmount: updatedTotalAmount };
     }
     case "REMOVE_ITEM": {
       const existingCartItemIndex = state.items.findIndex(
-        (item) => item.id === (action.payload as CartItem).id
+        (item) => item.id === action.payload.id
       );
       const existingCartItem = state.items[existingCartItemIndex];
-      const updatedTotalAmount = state.totalAmount - existingCartItem.price;
+      const updatedTotalAmount =
+        state.totalAmount - existingCartItem.price * existingCartItem.quantity;
+      const updatedItems = state.items.filter(
+        (item) => item.id !== action.payload.id
+      );
+
+      return { items: updatedItems, totalAmount: updatedTotalAmount };
+    }
+    case "INCREMENT_ITEM": {
+      const existingCartItemIndex = state.items.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      const existingCartItem = state.items[existingCartItemIndex];
+      const updatedItem = {
+        ...existingCartItem,
+        quantity: existingCartItem.quantity + 1,
+      };
+      const updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+
+      const updatedTotalAmount = state.totalAmount + existingCartItem.price;
+
+      return { items: updatedItems, totalAmount: updatedTotalAmount };
+    }
+    case "DECREMENT_ITEM": {
+      const existingCartItemIndex = state.items.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      const existingCartItem = state.items[existingCartItemIndex];
       let updatedItems;
+      let updatedTotalAmount = state.totalAmount;
 
       if (existingCartItem.quantity === 1) {
         updatedItems = state.items.filter(
-          (item) => item.id !== (action.payload as CartItem).id
+          (item) => item.id !== action.payload.id
         );
+        updatedTotalAmount -= existingCartItem.price;
       } else {
         const updatedItem = {
           ...existingCartItem,
@@ -80,19 +97,13 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         };
         updatedItems = [...state.items];
         updatedItems[existingCartItemIndex] = updatedItem;
+        updatedTotalAmount -= existingCartItem.price;
       }
 
       return { items: updatedItems, totalAmount: updatedTotalAmount };
     }
     case "SET_CART": {
-      const newCartItems = Array.isArray(action.payload)
-        ? action.payload
-        : [action.payload];
-      const newTotalAmount = newCartItems.reduce((total, item) => {
-        return total + item.price * item.quantity;
-      }, 0);
-
-      return { items: newCartItems, totalAmount: newTotalAmount };
+      return action.payload;
     }
     default:
       return state;
@@ -108,16 +119,15 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
   });
 
   useEffect(() => {
-    const savedCartItems = localStorage.getItem("cartItems");
-    if (savedCartItems) {
-      const parsedCartItems = JSON.parse(savedCartItems);
-      dispatch({ type: "SET_CART", payload: parsedCartItems });
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      dispatch({ type: "SET_CART", payload: JSON.parse(storedCart) });
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartState.items));
-  }, [cartState.items]);
+    localStorage.setItem("cart", JSON.stringify(cartState));
+  }, [cartState]);
 
   return (
     <CartContext.Provider value={{ cartState, dispatch }}>

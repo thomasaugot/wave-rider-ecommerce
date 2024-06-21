@@ -2,9 +2,8 @@
 
 .shopping-cart {
   position: relative;
-  padding: 4rem 2rem;
+  padding: 2rem;
   margin: 0 auto;
-  font-family: fontName("exodar");
   min-height: 60vh;
   display: flex;
   flex-direction: column;
@@ -22,6 +21,7 @@
     font-size: fontSize("xl");
     margin-bottom: 1rem;
     text-align: center;
+    font-family: fontName("exodar");
     color: color("darkOrange");
   }
 
@@ -31,84 +31,117 @@
     list-style: none;
     padding-inline-start: 0;
 
-    .cart-item {
+    .shopping-cart-item {
       display: flex;
+      flex-direction: column;
       background-color: rgba(color("white"), 0.7);
       border-radius: 1rem;
       padding: 1rem;
-      width: 90%;
+      width: 100%;
       margin: 0 auto;
+      align-items: center;
 
-      &__image {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        margin-right: 20px;
+      @include tablet {
+        flex-direction: row;
+        gap: 1rem;
+        justify-content: space-between;
       }
 
-      &__details {
-        flex-grow: 1;
+      &__info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-family: fontName("roboto");
+        font-weight: fontWeight("semibold");
 
-        &__name {
-          font-size: 1.2rem;
-          margin: 0 0 10px;
+        @include tablet {
+          width: 58%;
         }
 
-        &__price {
-          font-size: 1rem;
-          color: #666;
-          margin: 0 0 5px;
+        &__img {
+          object-fit: contain;
+          margin-right: 20px;
         }
 
-        &__quantity {
-          font-size: fontSize("lg");
-        }
-
-        &__controls {
+        &__details {
           display: flex;
-          align-items: center;
-          margin-top: 10px;
+          flex-direction: column;
+          font-family: fontName("roboto");
+          font-weight: fontWeight("semibold");
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          line-height: 1.2;
 
-          .control-button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: #0070f3;
-            margin-right: 10px;
-            transition: color 0.3s;
-
-            &:hover {
-              color: #005bb5;
-            }
+          @include tablet {
+            margin: 0;
           }
+        }
+      }
+    }
+
+    .price-and-controls {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      @include tablet {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .controls {
+        display: flex;
+        margin: 1rem 0;
+        align-items: center;
+
+        @include tablet {
+          margin: 0;
+          justify-content: flex-end;
+        }
+
+        .quantity {
+          margin-inline: 1rem;
+          font-size: fontSize("md");
+          font-family: fontName("roboto");
+          font-weight: fontWeight("bold");
+        }
+      }
+
+      .price {
+        font-size: fontSize("md");
+        margin: 1rem;
+        font-family: fontName("roboto");
+        font-weight: fontWeight("extra");
+        text-align: center;
+        flex-wrap: nowrap;
+
+        @include tablet {
+          text-align: right;
+          margin: 0;
         }
       }
     }
   }
 
-  .cart-total {
-    // margin-top: 20px;
-    text-align: center;
+  .total-price {
+    font-family: fontName("roboto");
+    font-weight: fontWeight("bold");
+    margin: 2rem auto;
     color: color("darkOrange");
 
-    h2 {
-      font-size: 1.5rem;
-      margin: 10px 0;
+    @include tablet {
+      text-align: right;
+      margin: 2rem 1rem;
     }
 
-    .checkout-button {
-      background-color: #0070f3;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s;
-
-      &:hover {
-        background-color: #005bb5;
-      }
+    span {
+      font-family: fontName("exodar");
     }
   }
 }

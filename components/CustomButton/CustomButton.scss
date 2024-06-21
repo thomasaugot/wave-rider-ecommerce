@@ -3,7 +3,7 @@
 .custom-button {
   background: linear-gradient(90deg, color("skyBlue"), color("purpleBlue"));
   border: none;
-  padding: 0.7rem 1.5rem;
+  padding: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
   border-radius: 0.5rem;
@@ -11,7 +11,7 @@
   @include boxShadow;
   position: relative;
   overflow: hidden;
-  width: 170px;
+  min-width: 45px;
   max-height: 45px;
   text-wrap: nowrap;
   margin-inline: auto;

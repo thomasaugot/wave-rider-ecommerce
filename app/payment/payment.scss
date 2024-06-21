@@ -1,0 +1,19 @@
+@import "@/styles/globals.scss";
+
+.payment-page {
+  position: relative;
+  padding: 2rem;
+  margin: 0 auto;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+
+  @include smallDesktops {
+    padding: 4rem;
+  }
+
+  &::before {
+    @include backgroundImg;
+    background-image: url(../../public/assets/img/tropical-wooden-bg.webp);
+  }
+}

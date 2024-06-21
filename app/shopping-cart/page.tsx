@@ -11,13 +11,6 @@ const CartPage: React.FC = () => {
   const { cartState, dispatch } = useCart();
   const router = useRouter();
 
-  // const handleRemoveFromCart = (id: string) => {
-  //   dispatch({
-  //     type: "REMOVE_ITEM",
-  //     payload: { id },
-  //   });
-  // };
-
   const handleIncrementItem = (id: string) => {
     dispatch({
       type: "INCREMENT_ITEM",

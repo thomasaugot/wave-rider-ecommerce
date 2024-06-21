@@ -3,14 +3,8 @@
 .payment-page {
   position: relative;
   padding: 2rem;
-  margin: 0 auto;
-  min-height: 60vh;
-  display: flex;
-  flex-direction: column;
-
-  @include smallDesktops {
-    padding: 4rem;
-  }
+  @include flexCenter(row);
+  min-height: 100vh;
 
   &::before {
     @include backgroundImg;

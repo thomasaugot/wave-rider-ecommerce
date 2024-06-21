@@ -132,15 +132,15 @@
 
     .logo {
       position: absolute;
-      height: 100%;
-      top: 50%;
+      height: 90%;
+      top: 52%;
       transform: translateY(-50%);
-      left: 0.5rem;
+      left: 1rem;
       width: auto;
       @include blackDropShadow;
 
       @include tablet {
-        margin-left: 5%;
+        // margin-left: 5%;
         transform: translateY(-50%);
       }
 
@@ -156,7 +156,7 @@
       @include whiteDropShadow;
       position: absolute;
       display: flex;
-      align-items: flex-start;
+      align-items: flex-end;
       top: 50%;
       transform: translateY(-50%);
       right: 16%;

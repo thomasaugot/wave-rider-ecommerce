@@ -1,16 +1,45 @@
 "use client";
 
-import React from "react";
+import React, { FormEvent, useState } from "react";
 import "./payment.scss";
 import { useCart } from "@/context/cartContext";
 import CustomButton from "@/components/CustomButton/CustomButton";
+import getStripe from "@/services/clientStripe";
 
-const PaymentPage: React.FC = () => {
+export default function PaymentPage() {
   const { cartState } = useCart();
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log("Payment form submitted");
+    setLoading(true);
+
+    const response = await fetch("/api/checkout_sessions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ amount: cartState.totalAmount }),
+    });
+
+    const checkoutSession = await response.json();
+
+    if (response.ok) {
+      const stripe = await getStripe();
+      if (stripe) {
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: checkoutSession.id,
+        });
+
+        if (error) {
+          console.error(error.message);
+        }
+      }
+    } else {
+      console.error(checkoutSession.message);
+    }
+
+    setLoading(false);
   };
 
   const totalAmount = cartState.totalAmount.toFixed(2);
@@ -81,7 +110,6 @@ const PaymentPage: React.FC = () => {
               />
             </div>
           </div>
-
           <div className="payment-info">
             <h3 className="section-heading">Payment Information</h3>
             <div className="form-group">
@@ -128,17 +156,16 @@ const PaymentPage: React.FC = () => {
                 className="card-input"
               />
             </div>
-            <p>Pay now: {totalAmount} </p>
+            <p>Pay now: {totalAmount}</p>
           </div>
           <CustomButton
-            text="Validate Payment"
+            text={loading ? "Processing..." : "Validate Payment"}
             type="submit"
             onClick={undefined}
+            disabled={loading}
           />
         </form>
       </div>
     </div>
   );
-};
-
-export default PaymentPage;
+}

@@ -8,6 +8,7 @@ import { FaSearch } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from "@/context/cartContext";
+import { Product } from "@/types";
 import logo from "../../public/assets/img/logo.png";
 import "./Navbar.scss";
 import { WavyAnimation } from "@/components/WavyAnimation/WavyAnimation";
@@ -17,11 +18,17 @@ export const Navbar: React.FC = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [isHovering, setIsHovering] = useState<boolean>(false);
 
-  const { cartState } = useCart();
+  const { cartState } = useCart(); // Access cart state
   const searchRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
+
+  const handleMenuToggle = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,10 +43,6 @@ export const Navbar: React.FC = () => {
     };
   }, []);
 
-  const handleMenuToggle = () => {
-    setMenuOpen(!menuOpen);
-  };
-
   const handleSearchToggle = () => {
     setSearchOpen(!searchOpen);
   };
@@ -47,95 +50,135 @@ export const Navbar: React.FC = () => {
   const handleSearchQueryChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setSearchQuery(event.target.value);
+    const query = event.target.value;
+    setSearchQuery(query);
+    setFilteredProducts(mockFilterProducts(query));
+  };
+
+  const mockFilterProducts = (query: string): Product[] => {
+    const allProducts: Product[] = [];
+    return allProducts.filter(
+      (product) =>
+        product.name.includes(query) || product.description.includes(query)
+    );
   };
 
   const handleMouseEnter = () => {
-    setSearchOpen(true);
+    setIsHovering(true);
   };
 
   const handleMouseLeave = () => {
-    setSearchOpen(false);
+    setIsHovering(false);
   };
+
+  useEffect(() => {
+    if (!searchOpen) return;
+
+    let timer: NodeJS.Timeout;
+    if (!isHovering && !isMobile) {
+      timer = setTimeout(() => {
+        setSearchOpen(false);
+      }, 1500);
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [isHovering, searchOpen, isMobile]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setSearchOpen(false);
+      }
+    };
+
+    if (isMobile) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMobile]);
 
   const handleSearchButtonClick = () => {
     router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
   };
 
-  const handleCategoryClick = (category: string) => {
-    router.push(
-      `/products?category=${encodeURIComponent(
-        category.toLowerCase().replace(" ", "-")
-      )}`
-    );
-  };
-
-  const menuItems = [
-    { label: "Surf", onClick: () => handleCategoryClick("Surf") },
-    { label: "Bodyboard", onClick: () => handleCategoryClick("Bodyboard") },
-    { label: "Paddlesurf", onClick: () => handleCategoryClick("Paddlesurf") },
-    { label: "Kitesurf", onClick: () => handleCategoryClick("Kitesurf") },
-    { label: "Windsurf", onClick: () => handleCategoryClick("Windsurf") },
-    {
-      label: "Accessories",
-      onClick: () => handleCategoryClick("Accessories"),
-      mobileOnly: true,
-    },
-    { label: "All Categories", href: "/categories" },
-  ];
-
   return (
     <nav className={`navbar ${menuOpen ? "open" : ""}`}>
+      {/* <div className="promotion_banner">Free shipping for orders over 60€*</div> */}
       <div className="navbar-container">
         <WavyAnimation />
         <a href="/">
           <Image src={logo} alt="logo" className="logo" />
         </a>
-
-        {isMobile && (
-          <div className="mobile-top-icons">
+        <div className="mobile-top-icons">
+          {isMobile && (
             <Link href="#" onClick={handleSearchToggle}>
               <FaSearch />
             </Link>
+          )}
+          {isMobile && (
             <Link href={"/shopping-cart"}>
               <div className="cart-icon">
                 <FaShoppingCart className="nav-icon" />
                 <span className="cart-count">{cartState.items.length}</span>
               </div>
             </Link>
-            <input
-              type="checkbox"
-              checked={menuOpen}
-              onChange={handleMenuToggle}
-            />
-            <label htmlFor="menu-toggle" className="hamburger-lines">
-              <span className="line line1"></span>
-              <span className="line line2"></span>
-              <span className="line line3"></span>
-            </label>
-          </div>
-        )}
+          )}
+        </div>
+        <input type="checkbox" checked={menuOpen} onChange={handleMenuToggle} />
+        <label htmlFor="menu-toggle" className="hamburger-lines">
+          <span className="line line1"></span>
+          <span className="line line2"></span>
+          <span className="line line3"></span>
+        </label>
         <div className="menu-items">
           <ul>
-            {menuItems.map((item, index) => (
-              <li key={index}>
-                {item.href ? (
-                  <Link href={item.href} className="menu-links">
-                    {item.label}
-                  </Link>
-                ) : (
-                  <a
-                    onClick={item.onClick}
-                    className="menu-links"
-                    style={{
-                      display: item.mobileOnly && !isMobile ? "none" : "block",
-                    }}
-                  >
-                    {item.label}
-                  </a>
-                )}
+            <li>
+              <Link href="/products" className="menu-links">
+                Surf
+              </Link>
+            </li>
+            <li>
+              <Link href="/products" className="menu-links">
+                Bodyboard
+              </Link>
+            </li>
+            <li>
+              <Link href="/products" className="menu-links">
+                Sup
+              </Link>
+            </li>
+            <li>
+              <Link href="/products" className="menu-links">
+                Kitesurf
+              </Link>
+            </li>
+            <li>
+              <Link href="/products" className="menu-links">
+                Windsurf
+              </Link>
+            </li>
+            {isMobile && (
+              <li>
+                <Link href="/products" className="menu-links">
+                  Accessories
+                </Link>
               </li>
-            ))}
+            )}
+            <li>
+              <Link href="/categories" className="menu-links">
+                All Categories
+              </Link>
+            </li>
           </ul>
           <ul>
             {!isMobile && (

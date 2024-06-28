@@ -1,171 +1,281 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
 import "./payment.scss";
 import { useCart } from "@/context/cartContext";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import getStripe from "@/services/clientStripe";
+import VisaLogo from "../../public/assets/img/visa.png";
+import MasterCardLogo from "../../public/assets/img/mastercard.png";
+import AmexLogo from "../../public/assets/img/amex.png";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function PaymentPage() {
+const PaymentPage = () => {
   const { cartState } = useCart();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+  const [deliveryInfo, setDeliveryInfo] = useState({
+    fullName: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    deliveryOption: "standard",
+  });
+
+  const [useSameAddress, setUseSameAddress] = useState(false);
+  const [billingInfo, setBillingInfo] = useState({
+    fullName: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    state: "",
+    postalCode: "",
+  });
+
+  useEffect(() => {
+    if (searchParams) {
+      setDeliveryInfo({
+        fullName: searchParams.get("fullName") || "",
+        addressLine1: searchParams.get("addressLine1") || "",
+        addressLine2: searchParams.get("addressLine2") || "",
+        city: searchParams.get("city") || "",
+        state: searchParams.get("state") || "",
+        postalCode: searchParams.get("postalCode") || "",
+        deliveryOption: searchParams.get("deliveryOption") || "standard",
+      });
+
+      setBillingInfo({
+        fullName: searchParams.get("fullName") || "",
+        addressLine1: searchParams.get("addressLine1") || "",
+        addressLine2: searchParams.get("addressLine2") || "",
+        city: searchParams.get("city") || "",
+        state: searchParams.get("state") || "",
+        postalCode: searchParams.get("postalCode") || "",
+      });
+    }
+  }, [searchParams]);
+
+  const handleCheckout = async (e: FormEvent) => {
+    e.preventDefault();
     setLoading(true);
 
-    const response = await fetch("/api/checkout_sessions", {
+    const stripe = await getStripe();
+
+    const response = await fetch("/api/stripe", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ amount: cartState.totalAmount }),
+      body: JSON.stringify({
+        items: cartState.items,
+        deliveryInfo,
+        billingInfo: useSameAddress ? deliveryInfo : billingInfo,
+      }),
     });
 
-    const checkoutSession = await response.json();
+    const data = await response.json();
 
-    if (response.ok) {
-      const stripe = await getStripe();
-      if (stripe) {
-        const { error } = await stripe.redirectToCheckout({
-          sessionId: checkoutSession.id,
-        });
-
-        if (error) {
-          console.error(error.message);
-        }
-      }
+    if (data.sessionId) {
+      stripe?.redirectToCheckout({ sessionId: data.sessionId });
     } else {
-      console.error(checkoutSession.message);
+      console.error("Failed to create Stripe session.");
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   const totalAmount = cartState.totalAmount.toFixed(2);
+  const deliveryCost =
+    deliveryInfo.deliveryOption === "standard"
+      ? 5.0
+      : deliveryInfo.deliveryOption === "express"
+      ? 15.0
+      : 25.0;
+  const totalWithDelivery = (parseFloat(totalAmount) + deliveryCost).toFixed(2);
+
+  const handleBillingInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setBillingInfo((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div className="payment-page">
       <div className="checkout-container">
-        <form className="payment-form" onSubmit={handleSubmit}>
-          <div className="billing-info">
-            <h3 className="section-heading">Billing Information</h3>
-            <div className="form-group">
-              <label htmlFor="full-name">Full Name</label>
-              <input
-                id="full-name"
-                name="full-name"
-                placeholder="Kelly Slater"
-                required
-                type="text"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="address-line1">Address Line 1</label>
-              <input
-                id="address-line1"
-                name="address-line1"
-                placeholder="123 Surfboard Ave."
-                required
-                type="text"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="address-line2">Address Line 2</label>
-              <input
-                id="address-line2"
-                name="address-line2"
-                placeholder="Apt 10"
-                type="text"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="city">City</label>
-              <input
-                id="city"
-                name="city"
-                placeholder="Wavesville"
-                required
-                type="text"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="state">State</label>
-              <input
-                id="state"
-                name="state"
-                placeholder="Ocean State"
-                required
-                type="text"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="postal-code">Postal Code</label>
-              <input
-                id="postal-code"
-                name="postal-code"
-                placeholder="12345"
-                required
-                type="text"
-              />
-            </div>
+        <h2 className="section-heading">Payment Information</h2>
+        <form className="payment-form" onSubmit={handleCheckout}>
+          <div className="delivery-info">
+            <h3>Delivery Information</h3>
+            <p>
+              <strong>Name:</strong> {deliveryInfo.fullName}
+            </p>
+            <p>
+              <strong>Address:</strong> {deliveryInfo.addressLine1},{" "}
+              {deliveryInfo.addressLine2 && `${deliveryInfo.addressLine2}, `}
+              {deliveryInfo.city}, {deliveryInfo.state},{" "}
+              {deliveryInfo.postalCode}
+            </p>
+            <p>
+              <strong>Delivery Option:</strong>{" "}
+              {deliveryInfo.deliveryOption.charAt(0).toUpperCase() +
+                deliveryInfo.deliveryOption.slice(1)}
+            </p>
           </div>
-          <div className="payment-info">
-            <h3 className="section-heading">Payment Information</h3>
-            <div className="form-group">
-              <label htmlFor="credit-card-num">Card Number</label>
+          <div className="billing-info">
+            <h3>Billing Information</h3>
+            <label>
               <input
-                id="credit-card-num"
-                name="credit-card-num"
-                placeholder="1111-2222-3333-4444"
-                required
-                type="text"
-                className="card-input"
+                type="checkbox"
+                checked={useSameAddress}
+                onChange={() => setUseSameAddress(!useSameAddress)}
+              />
+              Use same address for billing
+            </label>
+            {!useSameAddress && (
+              <div className="billing-form">
+                <div className="form-group">
+                  <label htmlFor="billing-fullName">Full Name</label>
+                  <input
+                    type="text"
+                    id="billing-fullName"
+                    name="fullName"
+                    placeholder="Full Name"
+                    value={billingInfo.fullName}
+                    onChange={handleBillingInfoChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="billing-addressLine1">Address Line 1</label>
+                  <input
+                    type="text"
+                    id="billing-addressLine1"
+                    name="addressLine1"
+                    placeholder="Address Line 1"
+                    value={billingInfo.addressLine1}
+                    onChange={handleBillingInfoChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="billing-addressLine2">Address Line 2</label>
+                  <input
+                    type="text"
+                    id="billing-addressLine2"
+                    name="addressLine2"
+                    placeholder="Address Line 2"
+                    value={billingInfo.addressLine2}
+                    onChange={handleBillingInfoChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="billing-city">City</label>
+                  <input
+                    type="text"
+                    id="billing-city"
+                    name="city"
+                    placeholder="City"
+                    value={billingInfo.city}
+                    onChange={handleBillingInfoChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="billing-state">State</label>
+                  <input
+                    type="text"
+                    id="billing-state"
+                    name="state"
+                    placeholder="State"
+                    value={billingInfo.state}
+                    onChange={handleBillingInfoChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="billing-postalCode">Postal Code</label>
+                  <input
+                    type="text"
+                    id="billing-postalCode"
+                    name="postalCode"
+                    placeholder="Postal Code"
+                    value={billingInfo.postalCode}
+                    onChange={handleBillingInfoChange}
+                    required
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="order-summary">
+            <h3>Order Summary</h3>
+            <p>Items Total: € {totalAmount}</p>
+            <p>Delivery: € {deliveryCost.toFixed(2)}</p>
+            <p>Total: € {totalWithDelivery}</p>
+          </div>
+          <div className="payment-method">
+            <h3>Choose Payment Method</h3>
+            <div className="payment-method__logos">
+              <Image src={VisaLogo} alt="Visa" width={60} height={40} />
+              <Image
+                src={MasterCardLogo}
+                alt="MasterCard"
+                width={60}
+                height={40}
+              />
+              <Image
+                src={AmexLogo}
+                alt="American Express"
+                width={60}
+                height={40}
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="expiration-month">Expiration Month</label>
-              <input
-                id="expiration-month"
-                name="expiration-month"
-                placeholder="MM"
-                required
-                type="text"
-                className="card-input"
-              />
+            <div className="credit-card-inputs">
+              <div className="form-group">
+                <label htmlFor="cardNumber">Card Number</label>
+                <input
+                  type="text"
+                  id="cardNumber"
+                  name="cardNumber"
+                  placeholder="Card Number"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="expiryDate">Expiry Date</label>
+                <input
+                  type="text"
+                  id="expiryDate"
+                  name="expiryDate"
+                  placeholder="MM/YY"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="cvc">CVC</label>
+                <input
+                  type="text"
+                  id="cvc"
+                  name="cvc"
+                  placeholder="CVC"
+                  required
+                />
+              </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="expiration-year">Expiration Year</label>
-              <input
-                id="expiration-year"
-                name="expiration-year"
-                placeholder="YYYY"
-                required
-                type="text"
-                className="card-input"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="cvv">CVV</label>
-              <input
-                id="cvv"
-                name="cvv"
-                placeholder="123"
-                required
-                type="text"
-                className="card-input"
-              />
-            </div>
-            <p>Pay now: {totalAmount}</p>
           </div>
           <CustomButton
-            text={loading ? "Processing..." : "Validate Payment"}
+            text={loading ? "Processing..." : "Pay Now"}
             type="submit"
-            onClick={undefined}
             disabled={loading}
+            onClick={undefined}
           />
         </form>
       </div>
     </div>
   );
-}
+};
+
+export default PaymentPage;

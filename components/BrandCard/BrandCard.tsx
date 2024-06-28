@@ -13,8 +13,12 @@ interface BrandCardProps {
 export const BrandCard: React.FC<BrandCardProps> = ({ brand }) => {
   const router = useRouter();
 
+  const handleClick = () => {
+    router.push(`/products?brand=${encodeURIComponent(brand.name)}`);
+  };
+
   return (
-    <div className="brand-card" onClick={() => router.push(brand.redirectTo)}>
+    <div className="brand-card" onClick={handleClick}>
       <div className="brand-card__img-container">
         <Image
           src={brand.imageUrl}

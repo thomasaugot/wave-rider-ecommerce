@@ -7,6 +7,7 @@ interface Product {
   images: string[];
   categories: string[];
   created_at: string;
+  brand: string;
 }
 
 export type { Product }; // so I can export it as a module

@@ -25,9 +25,8 @@ const CartPage: React.FC = () => {
     });
   };
 
-  const handleProceedToPayment = () => {
-    const total = cartState.totalAmount.toFixed(2);
-    router.push(`/payment?total=${total}`);
+  const handleProceedToDelivery = () => {
+    router.push("/delivery-info");
   };
 
   return (
@@ -74,10 +73,7 @@ const CartPage: React.FC = () => {
       <h2 className="total-price">
         <span>Total:</span> € {cartState.totalAmount.toFixed(2)}
       </h2>
-      <CustomButton
-        text="Proceed to Payment"
-        onClick={handleProceedToPayment}
-      />
+      <CustomButton text="Process Order" onClick={handleProceedToDelivery} />
     </div>
   );
 };

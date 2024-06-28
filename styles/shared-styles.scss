@@ -10,6 +10,7 @@
   @include flexCenter(column);
   position: relative;
   overflow: hidden;
+  text-align: center;
 
   &::before {
     @include backgroundImg;
@@ -28,6 +29,7 @@
 
   ul {
     list-style: none;
+    padding-inline-start: 0 !important;
   }
 
   h1,
@@ -40,5 +42,6 @@
   li {
     font-family: fontName("roboto"), sans-serif;
     max-width: 80vw;
+    margin-inline: auto;
   }
 }

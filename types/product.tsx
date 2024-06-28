@@ -5,8 +5,8 @@ interface Product {
   price: number;
   description: string;
   images: string[];
-  category: string;
+  categories: string[];
   created_at: string;
 }
 
-export type { Product };
+export type { Product }; // so I can export it as a module

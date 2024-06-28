@@ -9,4 +9,4 @@ interface UserType {
   address: string;
 }
 
-export type { UserType };
+export type { UserType }; // so I can export it as a module

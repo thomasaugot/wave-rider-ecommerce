@@ -13,11 +13,17 @@ interface CategoryCardProps {
 export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   const router = useRouter();
 
+  const handleClick = () => {
+    const formattedCategory = category.name.toLowerCase().replace(/ /g, "-");
+    router.push(`/products?category=${formattedCategory}`);
+    console.log(
+      "-----------------------------------------------------category:",
+      formattedCategory
+    );
+  };
+
   return (
-    <div
-      className="category-card"
-      onClick={() => router.push(category.redirectTo)}
-    >
+    <div className="category-card" onClick={handleClick}>
       <div className="category-card__img-container">
         <Image
           src={category.imageUrl}

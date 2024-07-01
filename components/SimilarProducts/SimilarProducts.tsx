@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useProducts } from "@/context/productContext";
@@ -32,8 +30,9 @@ export const SimilarProducts: React.FC<SimilarProductsProps> = ({
       if (similarByName.length === 0) {
         const similarByCategory = products.filter(
           (product) =>
-            product.category === currentProduct.category &&
-            product.id !== currentProduct.id
+            product.categories.some((category) =>
+              currentProduct.categories.includes(category)
+            ) && product.id !== currentProduct.id
         );
         setSimilarProducts(similarByCategory.slice(0, 4));
       } else {

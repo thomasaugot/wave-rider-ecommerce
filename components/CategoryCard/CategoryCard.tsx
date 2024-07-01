@@ -16,10 +16,6 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   const handleClick = () => {
     const formattedCategory = category.name.toLowerCase().replace(/ /g, "-");
     router.push(`/products?category=${formattedCategory}`);
-    console.log(
-      "-----------------------------------------------------category:",
-      formattedCategory
-    );
   };
 
   return (

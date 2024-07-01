@@ -13,6 +13,12 @@ import logo from "../../public/assets/img/logo.png";
 import "./Navbar.scss";
 import { WavyAnimation } from "@/components/WavyAnimation/WavyAnimation";
 
+interface MenuItem {
+  label: string;
+  category?: string;
+  url: string;
+}
+
 export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -21,7 +27,7 @@ export const Navbar: React.FC = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [isHovering, setIsHovering] = useState<boolean>(false);
 
-  const { cartState } = useCart(); // Access cart state
+  const { cartState } = useCart();
   const searchRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
@@ -111,9 +117,30 @@ export const Navbar: React.FC = () => {
     router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
   };
 
+  const menuItems: MenuItem[] = [
+    { label: "Surf", category: "surf", url: "/products?category=surf" },
+    {
+      label: "Bodyboard",
+      category: "bodyboard",
+      url: "/products?category=bodyboard",
+    },
+    { label: "Sup", category: "sup", url: "/products?category=sup" },
+    {
+      label: "Kitesurf",
+      category: "kitesurf",
+      url: "/products?category=kitesurf",
+    },
+    {
+      label: "Windsurf",
+      category: "windsurf",
+      url: "/products?category=windsurf",
+    },
+    { label: "Accessories", url: "/products?category=accessories" },
+    { label: "All Categories", url: "/categories" },
+  ];
+
   return (
     <nav className={`navbar ${menuOpen ? "open" : ""}`}>
-      {/* <div className="promotion_banner">Free shipping for orders over 60€*</div> */}
       <div className="navbar-container">
         <WavyAnimation />
         <a href="/">
@@ -142,43 +169,13 @@ export const Navbar: React.FC = () => {
         </label>
         <div className="menu-items">
           <ul>
-            <li>
-              <Link href="/products" className="menu-links">
-                Surf
-              </Link>
-            </li>
-            <li>
-              <Link href="/products" className="menu-links">
-                Bodyboard
-              </Link>
-            </li>
-            <li>
-              <Link href="/products" className="menu-links">
-                Sup
-              </Link>
-            </li>
-            <li>
-              <Link href="/products" className="menu-links">
-                Kitesurf
-              </Link>
-            </li>
-            <li>
-              <Link href="/products" className="menu-links">
-                Windsurf
-              </Link>
-            </li>
-            {isMobile && (
-              <li>
-                <Link href="/products" className="menu-links">
-                  Accessories
+            {menuItems.map((item, index) => (
+              <li key={index}>
+                <Link href={item.url} className="menu-links">
+                  {item.label}
                 </Link>
               </li>
-            )}
-            <li>
-              <Link href="/categories" className="menu-links">
-                All Categories
-              </Link>
-            </li>
+            ))}
           </ul>
           <ul>
             {!isMobile && (

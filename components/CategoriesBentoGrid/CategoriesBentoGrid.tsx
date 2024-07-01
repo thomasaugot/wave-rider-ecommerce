@@ -1,6 +1,8 @@
 import React from "react";
-import "./CategoriesBentoGrid.scss";
+import Image from "next/image";
 import CustomButton from "../CustomButton/CustomButton";
+import { useRouter } from "next/navigation";
+import { Category } from "@/types";
 import surf from "@/public/assets/img/surfer-canarias.webp";
 import kitesurf from "@/public/assets/img/kitesurf.webp";
 import windsurf from "@/public/assets/img/windsurf.webp";
@@ -8,9 +10,7 @@ import paddleboard from "@/public/assets/img/paddle.webp";
 import bodyboard from "@/public/assets/img/bodyboarder.webp";
 import wingfoil from "@/public/assets/img/windfoil.webp";
 import aerialBeach from "@/public/assets/img/aerial-beach.webp";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { Category } from "@/types";
+import "./CategoriesBentoGrid.scss";
 
 export const CategoriesBentoGrid: React.FC = () => {
   const router = useRouter();
@@ -19,42 +19,40 @@ export const CategoriesBentoGrid: React.FC = () => {
     {
       name: "Surf",
       imageUrl: surf.src,
-      redirectTo: "/categories/surf",
     },
     {
       name: "Kitesurf",
       imageUrl: kitesurf.src,
-      redirectTo: "/categories/kitesurf",
     },
     {
       name: "Windsurf",
       imageUrl: windsurf.src,
-      redirectTo: "/categories/windsurf",
     },
     {
       name: "Paddleboard",
       imageUrl: paddleboard.src,
-      redirectTo: "/categories/paddleboard",
     },
     {
       name: "Bodyboard",
       imageUrl: bodyboard.src,
-      redirectTo: "/categories/bodyboard",
     },
     {
       name: "Wingfoil",
       imageUrl: wingfoil.src,
-      redirectTo: "/categories/wingfoil",
     },
     {
       name: "More Categories",
       imageUrl: aerialBeach.src,
-      redirectTo: "/categories",
     },
   ];
 
+  const handleClick = (category: Category) => {
+    const formattedCategory = category.name.toLowerCase().replace(/ /g, "-");
+    router.push(`/products?category=${formattedCategory}`);
+  };
+
   return (
-    <>
+    <div className="categories-bento-grid">
       <h1 className="title">Categories</h1>
       <div className="bento-grid">
         {categories.map((category, index) => (
@@ -68,13 +66,12 @@ export const CategoriesBentoGrid: React.FC = () => {
             />
             <CustomButton
               text={category.name}
-              disabled={undefined}
-              onClick={() => router.push(category.redirectTo)}
-              type="submit"
+              onClick={() => handleClick(category)}
+              type="button"
             />
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };

@@ -5,9 +5,9 @@ import "./payment.scss";
 import { useCart } from "@/context/cartContext";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import getStripe from "@/services/clientStripe";
-import VisaLogo from "../../public/assets/img/visa.png";
-import MasterCardLogo from "../../public/assets/img/mastercard.png";
-import AmexLogo from "../../public/assets/img/amex.png";
+import VisaLogo from "../../public/assets/img/visa.webp";
+import MasterCardLogo from "../../public/assets/img/mastercard.webp";
+import AmexLogo from "../../public/assets/img/amex.webp";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 

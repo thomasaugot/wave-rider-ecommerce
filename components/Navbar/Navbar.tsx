@@ -117,6 +117,13 @@ export const Navbar: React.FC = () => {
     router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
   };
 
+  const handleMenuItemClick = (url: string) => {
+    setMenuOpen(false);
+    setTimeout(() => {
+      router.push(url);
+    }, 300);
+  };
+
   const menuItems: MenuItem[] = [
     { label: "Surf", category: "surf", url: "/products?category=surf" },
     {
@@ -143,22 +150,25 @@ export const Navbar: React.FC = () => {
     <nav className={`navbar ${menuOpen ? "open" : ""}`}>
       <div className="navbar-container">
         <WavyAnimation />
-        <a href="/">
+        <Link href="/">
           <Image src={logo} alt="logo" className="logo" />
-        </a>
+        </Link>
         <div className="mobile-top-icons">
           {isMobile && (
-            <Link href="#" onClick={handleSearchToggle}>
-              <FaSearch />
-            </Link>
-          )}
-          {isMobile && (
-            <Link href={"/shopping-cart"}>
-              <div className="cart-icon">
-                <FaShoppingCart className="nav-icon" />
-                <span className="cart-count">{cartState.items.length}</span>
-              </div>
-            </Link>
+            <>
+              <Link href="#">
+                <FaSearch onClick={handleSearchToggle} />
+              </Link>
+              <Link
+                href="/shopping-cart"
+                onClick={() => handleMenuItemClick("/shopping-cart")}
+              >
+                <div className="cart-icon">
+                  <FaShoppingCart className="nav-icon" />
+                  <span className="cart-count">{cartState.items.length}</span>
+                </div>
+              </Link>
+            </>
           )}
         </div>
         <input type="checkbox" checked={menuOpen} onChange={handleMenuToggle} />
@@ -171,7 +181,11 @@ export const Navbar: React.FC = () => {
           <ul>
             {menuItems.map((item, index) => (
               <li key={index}>
-                <Link href={item.url} className="menu-links">
+                <Link
+                  href={item.url}
+                  className="menu-links"
+                  onClick={() => handleMenuItemClick(item.url)}
+                >
                   {item.label}
                 </Link>
               </li>
@@ -189,13 +203,16 @@ export const Navbar: React.FC = () => {
               </li>
             )}
             <li>
-              <Link href="/authentication">
+              <Link
+                href="/authentication"
+                onClick={() => handleMenuItemClick("/authentication")}
+              >
                 <IoPerson className="nav-icon" />
               </Link>
             </li>
             {!isMobile && (
               <li>
-                <Link href={"/shopping-cart"}>
+                <Link href="/shopping-cart">
                   <div className="cart-icon">
                     <FaShoppingCart className="nav-icon" />
                     <span className="cart-count">{cartState.items.length}</span>

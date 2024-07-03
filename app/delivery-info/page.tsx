@@ -41,7 +41,7 @@ const DeliveryInfoPage: React.FC = () => {
 
   return (
     <div className="delivery-info-page">
-      <div className="checkout-container">
+      <div className="delivery-info-container">
         <h2 className="section-heading">Delivery Information</h2>
         <form className="delivery-form" onSubmit={handleSubmit}>
           <div className="form-group">

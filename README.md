@@ -1,6 +1,8 @@
 # WAVE RIDER | SURF SHOP
 
-E-commerce Progressive Web App - My most complete project to date
+E-commerce Progressive Web App
+
+A website I built to practice a bunch of technologies:
 
 ## Tech Stack
 
@@ -9,6 +11,8 @@ E-commerce Progressive Web App - My most complete project to date
 - Typecript
 - Redux
 - Google Maps API
+- Stripe API / payment gateway
+- Supabase (hosting my database)
 - EmailJS
 - Framer Motion
 
@@ -17,10 +21,6 @@ The app is progressive, it means that:
 - You can download it from compatible browsers and use it like a native app
 - You can run it while offline
 - Essential data is cached so it loads the content faster
-
-## Coming soon:
-
-- Stripe API integration
 
 ## Getting Started
 

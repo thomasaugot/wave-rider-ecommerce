@@ -105,6 +105,22 @@
           justify-content: flex-end;
         }
 
+        .cart-controls {
+          font-family: fontName("roboto");
+          font-weight: fontWeight("bold");
+          border: none;
+          background-color: transparent;
+          font-size: fontSize("lg");
+          border-radius: 1rem;
+          cursor: pointer;
+          @include blackDropShadow;
+          color: color("darkOrange");
+
+          &:first-child {
+            font-size: fontSize("xxl");
+          }
+        }
+
         .quantity {
           margin-inline: 1rem;
           font-size: fontSize("md");

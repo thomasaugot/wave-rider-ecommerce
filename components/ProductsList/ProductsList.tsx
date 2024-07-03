@@ -3,7 +3,7 @@ import { ProductCard } from "@/components/ProductCard/ProductCard";
 
 const ProductList = ({ products }: { products: Product[] }) => {
   return (
-    <div>
+    <div className="product-list__container">
       {products.map((product) => (
         <ProductCard
           key={product.id}

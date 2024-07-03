@@ -50,17 +50,19 @@ const CartPage: React.FC = () => {
               </div>
               <div className="price-and-controls">
                 <div className="controls">
-                  <CustomButton
+                  <button
+                    className="cart-controls"
                     onClick={() => handleDecrementItem(item.id)}
-                    text={"-"}
-                    secondary={true}
-                  />
+                  >
+                    -
+                  </button>
                   <span className="quantity">{item.quantity}</span>
-                  <CustomButton
+                  <button
+                    className="cart-controls"
                     onClick={() => handleIncrementItem(item.id)}
-                    text={"+"}
-                    secondary={true}
-                  />
+                  >
+                    +
+                  </button>
                 </div>
                 <p className="price">
                   € {(item.price * item.quantity).toFixed(2)}

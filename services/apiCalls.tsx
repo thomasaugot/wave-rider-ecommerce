@@ -1,17 +1,14 @@
-import { Product } from "@/types";
+import { Product, UserType } from "@/types";
 import { supabase } from "./supabase";
 
 // From here I centralize all my API call functions
 
-// function to create user
 export const createUser = async (email: string, password: string) => {
-  // Email format validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     throw new Error("Invalid email format");
   }
 
-  // Password length and complexity validation
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
   if (!passwordRegex.test(password)) {
@@ -20,31 +17,25 @@ export const createUser = async (email: string, password: string) => {
     );
   }
 
-  // Attempt to sign up user
   try {
     let { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
     });
 
-    // Check for existing user error
     if (error && error.message.includes("already exists")) {
       throw new Error("Email already exists");
     }
 
-    // Return data if sign up successful
     console.log("new user created! --> ", data);
     return data;
   } catch (error) {
-    // Throw error if sign up fails
     throw error;
   }
 };
 
-// Function to log in the user
 export const loginUser = async (email: string, password: string) => {
   try {
-    // Sign in user with email and password
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -60,37 +51,30 @@ export const loginUser = async (email: string, password: string) => {
   }
 };
 
-// log the user out and redirects to login page
 export const logoutUser = async () => {
   try {
-    // Log out the user
     await supabase.auth.signOut();
-
-    // Redirect the user to the login page
     window.location.href = "/login";
-
-    // Optionally, you can return a success message or perform other actions after logout
     return "User logged out successfully.";
   } catch (error: any) {
-    throw new Error("Error logging out user: " + error.message);
+    throw error;
   }
 };
 
-// Function to fetch additional user data after login
-export const getUserData = async (userId: any) => {
+export const getUserData = async (userId: string): Promise<UserType | null> => {
   try {
-    // Fetch user data from the users table using user's ID
     const { data, error } = await supabase
       .from("users")
       .select("*")
       .eq("id", userId)
-      .single();
+      .limit(1)
+      .maybeSingle();
 
-    if (!error) {
-      return data;
-    } else {
-      throw new Error("Error fetching user data: " + error.message);
+    if (error) {
+      throw error;
     }
+
+    return data || null;
   } catch (error) {
     throw error;
   }
@@ -98,22 +82,14 @@ export const getUserData = async (userId: any) => {
 
 export const updateUser = async (
   userId: string,
-  newData: {
-    firstname: string;
-    lastname: string;
-    dateOfBirth: string;
-    address: string;
-    zipCode: string;
-    city: string;
-    country: string;
-    phone: string;
-  }
-) => {
+  newData: Partial<UserType>
+): Promise<UserType> => {
   try {
     const { data, error } = await supabase
       .from("users")
       .update(newData)
-      .eq("id", userId);
+      .eq("id", userId)
+      .single();
 
     if (error) {
       throw new Error("Error updating user data: " + error.message);
@@ -127,15 +103,12 @@ export const updateUser = async (
 
 export const deleteUser = async (userId: any) => {
   try {
-    // Delete user data from the users table using user's ID
     const { data, error } = await supabase
       .from("users")
       .delete()
       .eq("id", userId);
 
-    // Log out the user
     await supabase.auth.signOut();
-
     alert("User deleted successfully.");
 
     if (!error) {
@@ -148,12 +121,10 @@ export const deleteUser = async (userId: any) => {
   }
 };
 
-// function to fetch all the products
 export const getProducts = async (): Promise<Product[]> => {
   try {
     let { data: products, error } = await supabase.from("products").select("*");
 
-    // If there's no error, return all products
     if (!error) {
       console.log("my products: ", products);
       return products || [];
@@ -165,7 +136,6 @@ export const getProducts = async (): Promise<Product[]> => {
   }
 };
 
-// function to add a product, only avail. for admin user
 export const addProduct = async (productData: { [key: string]: any }) => {
   try {
     const { data, error } = await supabase
@@ -184,7 +154,6 @@ export const addProduct = async (productData: { [key: string]: any }) => {
   }
 };
 
-// function to get all details of a product
 export const getProductDetails = async (id: any) => {
   try {
     let { data: productDetails, error } = await supabase
@@ -201,7 +170,6 @@ export const getProductDetails = async (id: any) => {
   }
 };
 
-// to add item in the cart
 export const addToCart = async (
   cartContent: { [key: string]: any },
   userId: string
@@ -223,7 +191,6 @@ export const addToCart = async (
   }
 };
 
-// fetching a user's cart if any and returning its data
 export const getCart = async (userId: any) => {
   try {
     let { data: cartItems, error } = await supabase
@@ -238,5 +205,60 @@ export const getCart = async (userId: any) => {
     }
   } catch (error) {
     throw error;
+  }
+};
+
+export const fetchLastPurchases = async (
+  userId: string
+): Promise<Product[]> => {
+  try {
+    const { data: purchases, error } = await supabase
+      .from("purchases")
+      .select("product_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(5);
+
+    if (error) {
+      throw new Error("Error fetching last purchases: " + error.message);
+    }
+
+    const productIds = purchases.map((purchase) => purchase.product_id);
+
+    const { data: products, error: productError } = await supabase
+      .from("products")
+      .select("*")
+      .in("id", productIds);
+
+    if (productError) {
+      throw new Error(
+        "Error fetching product details: " + productError.message
+      );
+    }
+
+    return products || [];
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Function to upload profile picture
+export const uploadProfilePic = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "your-upload-preset");
+
+  try {
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/your-cloud-name/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    const data = await response.json();
+    return data.secure_url;
+  } catch (error: any) {
+    throw new Error("Error uploading profile picture: " + error.message);
   }
 };

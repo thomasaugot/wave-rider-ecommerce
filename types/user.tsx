@@ -1,12 +1,29 @@
+interface PastOrder {
+  productId: string;
+  quantity: number;
+  price: number;
+  date: string;
+  name: string;
+}
+
 interface UserType {
   id: string;
   created_at: string;
   firstname: string;
   lastname: string;
   full_name: string;
+  dateOfBirth: string;
   email: string;
   phone: string;
   address: string;
+  role: string;
+  liked_products: string[];
+  cart_items: string[];
+  country: string;
+  city: string;
+  zipcode: string;
+  profilePic?: string;
+  pastOrders?: PastOrder[];
 }
 
-export type { UserType }; // so I can export it as a module
+export type { UserType, PastOrder };

@@ -8,30 +8,37 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./complete-registration.scss";
 
-export default function CompleteRegistration() {
+const CompleteRegistration: React.FC = () => {
   const router = useRouter();
-  const [userId, setUserId] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [address, setAddress] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [phone, setPhone] = useState("");
+  const [userId, setUserId] = useState<string>("");
+  const [firstname, setFirstname] = useState<string>("");
+  const [lastname, setLastname] = useState<string>("");
+  const [dateOfBirth, setDateOfBirth] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [zipcode, setZipcode] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
 
   useEffect(() => {
     const userString = localStorage.getItem("user");
     if (userString) {
       const user = JSON.parse(userString);
-      console.log("the user I get from localstorage ---->", user);
-      setUserId(user.id);
+      if (user && user.user && user.user.id) {
+        console.log("user id -->", user.user.id);
+        setUserId(user.user.id);
+      } else {
+        console.error(
+          "User object in localStorage is missing 'user' or 'id' property."
+        );
+        router.push("/authentication");
+      }
     } else {
       router.push("/authentication");
     }
   }, [router]);
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       const userData = {
@@ -39,15 +46,15 @@ export default function CompleteRegistration() {
         lastname,
         dateOfBirth,
         address,
-        zipCode,
+        zipcode,
         city,
         country,
         phone,
       };
 
-      if (firstname !== "" && lastname !== "" && dateOfBirth !== "") {
+      if (userId && firstname !== "" && lastname !== "" && dateOfBirth !== "") {
         await updateUser(userId, userData);
-        router.push(`/`);
+        router.push(`/profile?userId=${userId}`);
       } else {
         console.log("Mandatory fields can't be empty");
       }
@@ -106,12 +113,12 @@ export default function CompleteRegistration() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="zipCode">Zip Code</label>
+            <label htmlFor="zipcode">Zip Code</label>
             <input
               type="text"
-              id="zipCode"
-              value={zipCode}
-              onChange={(e) => setZipCode(e.target.value)}
+              id="zipcode"
+              value={zipcode}
+              onChange={(e) => setZipcode(e.target.value)}
               placeholder="Enter your zip code"
               required
             />
@@ -153,4 +160,6 @@ export default function CompleteRegistration() {
       </form>
     </div>
   );
-}
+};
+
+export default CompleteRegistration;

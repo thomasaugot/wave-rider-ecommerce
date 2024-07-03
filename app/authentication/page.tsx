@@ -33,7 +33,8 @@ export default function Authentication() {
       const user = await createUser(signupEmail, signupPassword);
       console.log("authenticated user --->", user);
       localStorage.setItem("user", JSON.stringify(user));
-      router.push("/complete-registration");
+      router.push("/confirm-email");
+      loginUser(signupEmail, signupPassword);
     } catch (error) {
       console.error("Error signing up:", error);
     }

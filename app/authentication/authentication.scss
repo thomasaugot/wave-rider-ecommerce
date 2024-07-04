@@ -59,8 +59,8 @@
     @include boxShadow;
     background-color: rgba(color("white"), 0.9);
     border-radius: 1rem;
-    height: 57%;
-    width: 110%;
+    height: 45vh;
+    width: 90vw;
     z-index: 10;
     position: absolute;
     bottom: 0;
@@ -76,8 +76,8 @@
     }
 
     @include tablet {
-      height: 120%;
-      width: 50%;
+      height: 40vh;
+      width: 35vw;
       z-index: 10;
       position: absolute;
       right: 0;
@@ -92,6 +92,10 @@
       &.moving {
         right: 45%;
         bottom: 0;
+      }
+
+      @include smallDesktops {
+        height: 60vh;
       }
     }
   }

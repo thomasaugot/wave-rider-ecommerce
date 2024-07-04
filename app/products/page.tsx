@@ -5,13 +5,16 @@ import { ProductCard } from "@/components/ProductCard/ProductCard";
 import useFilterByCategory from "@/hooks/useFilterByCategory";
 import useFilterByBrand from "@/hooks/useFilterByBrand";
 import { useSearchParams } from "next/navigation";
+import useFuzzySearch from "@/hooks/useFuzzySearch";
 import "./products.scss";
 import SearchBar from "@/components/SearchBar/SearchBar";
+import { Product } from "@/types";
 
 const Products: React.FC = () => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
   const brand = searchParams.get("brand");
+  const searchQuery = searchParams.get("search") || "";
 
   const {
     searchQuery: categorySearchQuery,
@@ -31,15 +34,23 @@ const Products: React.FC = () => {
     handlePageChange: handleBrandPageChange,
   } = useFilterByBrand();
 
-  const searchQuery = categorySearchQuery || brandSearchQuery;
   const setSearchQuery = (query: string) => {
     setCategorySearchQuery(query);
     setBrandSearchQuery(query);
   };
 
-  const currentProducts = categoryCurrentProducts.length
+  const allProducts = categoryCurrentProducts.length
     ? categoryCurrentProducts
     : brandCurrentProducts;
+
+  // Using useFuzzySearch hook correctly
+  const { filteredItems: filteredProducts, handleSearch } = useFuzzySearch(
+    allProducts,
+    searchQuery,
+    {
+      keys: ["name", "description"],
+    }
+  );
 
   const totalPages = Math.max(categoryTotalPages, brandTotalPages);
   const currentPage = categoryCurrentPage || brandCurrentPage;
@@ -63,11 +74,11 @@ const Products: React.FC = () => {
     <div className="products-container">
       <h1>{getTitle()}</h1>
       <SearchBar
-        onChange={(query) => setSearchQuery(query)}
+        onChange={(query) => handleSearch(query)} // Use handleSearch to update the search query
         placeholder="Search a product, a brand, a sport..."
       />
       <div className="products-grid">
-        {currentProducts.map((product) => (
+        {filteredProducts.map((product) => (
           <div key={product.id}>
             <ProductCard {...product} />
           </div>

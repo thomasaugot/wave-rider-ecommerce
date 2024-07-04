@@ -15,11 +15,11 @@
     border: none;
     outline: none;
     background: transparent;
-    padding: 8px;
-    font-size: 16px;
+    padding: 0.5rem;
+    font-size: fontSize("xs");
 
     &::placeholder {
-      color: #666;
+      color: color("darkGrey");
     }
   }
 

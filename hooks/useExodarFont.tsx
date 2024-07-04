@@ -1,3 +1,6 @@
+// exodar font has a big line height, causing some iregularities in the UI
+// applying this hook will set a negative margin top to solve this
+
 "use client";
 
 import { useEffect } from "react";

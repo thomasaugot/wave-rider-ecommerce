@@ -133,7 +133,7 @@ const PaymentPage = () => {
                   checked={useSameAddress}
                   onChange={() => setUseSameAddress(!useSameAddress)}
                 />
-                Use same address for billing
+                <span>Use same address for billing</span>
               </label>
               {!useSameAddress && (
                 <div className="billing-form">

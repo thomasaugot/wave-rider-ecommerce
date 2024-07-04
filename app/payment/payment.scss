@@ -58,7 +58,8 @@
         margin-bottom: 1rem;
       }
 
-      p {
+      p,
+      span {
         font-family: fontName("roboto"), sans-serif;
         color: color("black");
         font-size: fontSize("xs");

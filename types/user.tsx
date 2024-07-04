@@ -22,7 +22,7 @@ interface UserType {
   country: string;
   city: string;
   zipcode: string;
-  profilePic?: string;
+  profilePic?: string | null;
   pastOrders?: PastOrder[];
 }
 

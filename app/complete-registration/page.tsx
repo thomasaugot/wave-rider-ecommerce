@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import { updateUser } from "@/services/apiCalls";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { useUser } from "@/context/userContext";
 import "./complete-registration.scss";
 
 const CompleteRegistration: React.FC = () => {
   const router = useRouter();
-  const [userId, setUserId] = useState<string>("");
+  const { user } = useUser();
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
   const [dateOfBirth, setDateOfBirth] = useState<string>("");
@@ -19,24 +20,6 @@ const CompleteRegistration: React.FC = () => {
   const [city, setCity] = useState<string>("");
   const [country, setCountry] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-
-  useEffect(() => {
-    const userString = localStorage.getItem("user");
-    if (userString) {
-      const user = JSON.parse(userString);
-      if (user && user.user && user.user.id) {
-        console.log("user id -->", user.user.id);
-        setUserId(user.user.id);
-      } else {
-        console.error(
-          "User object in localStorage is missing 'user' or 'id' property."
-        );
-        router.push("/authentication");
-      }
-    } else {
-      router.push("/authentication");
-    }
-  }, [router]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -52,9 +35,15 @@ const CompleteRegistration: React.FC = () => {
         phone,
       };
 
-      if (userId && firstname !== "" && lastname !== "" && dateOfBirth !== "") {
-        await updateUser(userId, userData);
-        router.push(`/profile?userId=${userId}`);
+      if (
+        user &&
+        user.id &&
+        firstname !== "" &&
+        lastname !== "" &&
+        dateOfBirth !== ""
+      ) {
+        await updateUser(user.id, userData);
+        router.push(`/profile?userId=${user.id}`);
       } else {
         console.log("Mandatory fields can't be empty");
       }

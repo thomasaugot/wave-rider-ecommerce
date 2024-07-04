@@ -1,8 +1,6 @@
 import { Product, UserType } from "@/types";
 import { supabase } from "./supabase";
 
-// From here I centralize all my API call functions
-
 export const createUser = async (email: string, password: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
@@ -89,10 +87,15 @@ export const updateUser = async (
       .from("users")
       .update(newData)
       .eq("id", userId)
+      .select("*")
       .single();
 
     if (error) {
       throw new Error("Error updating user data: " + error.message);
+    }
+
+    if (!data) {
+      throw new Error("No user found with the provided ID.");
     }
 
     return data;
@@ -239,26 +242,5 @@ export const fetchLastPurchases = async (
     return products || [];
   } catch (error) {
     throw error;
-  }
-};
-
-// Function to upload profile picture
-export const uploadProfilePic = async (file: File): Promise<string> => {
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "your-upload-preset");
-
-  try {
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/your-cloud-name/image/upload`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-    const data = await response.json();
-    return data.secure_url;
-  } catch (error: any) {
-    throw new Error("Error uploading profile picture: " + error.message);
   }
 };

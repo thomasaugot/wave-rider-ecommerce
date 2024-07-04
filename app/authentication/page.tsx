@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./authentication.scss";
 import CustomButton from "@/components/CustomButton/CustomButton";
-import { createUser, loginUser } from "@/services/apiCalls";
+import { createUser, loginUser, getUserData } from "@/services/apiCalls";
 import { useRouter } from "next/navigation";
 import { useExodarFont } from "@/hooks/useExodarFont";
+import { useUser } from "@/context/userContext";
 
-export default function Authentication() {
+const Authentication: React.FC = () => {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const [isSignupFormVisible, setIsSignupFormVisible] = useState(true);
   const [signupEmail, setSignupEmail] = useState("");
@@ -15,13 +16,9 @@ export default function Authentication() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const router = useRouter();
+  const { user, setUser } = useUser();
 
   useExodarFont();
-
-  useEffect(() => {
-    setIsLoginFormVisible(false);
-    setIsSignupFormVisible(true);
-  }, []);
 
   const toggleForms = () => {
     setIsLoginFormVisible(!isLoginFormVisible);
@@ -30,11 +27,10 @@ export default function Authentication() {
 
   const handleSignup = async () => {
     try {
-      const user = await createUser(signupEmail, signupPassword);
-      console.log("authenticated user --->", user);
+      const user: any = await createUser(signupEmail, signupPassword);
       localStorage.setItem("user", JSON.stringify(user));
-      router.push("/confirm-email");
-      loginUser(signupEmail, signupPassword);
+      setUser(user);
+      router.push("/complete-registration");
     } catch (error) {
       console.error("Error signing up:", error);
     }
@@ -42,7 +38,10 @@ export default function Authentication() {
 
   const handleLogin = async () => {
     try {
-      await loginUser(loginEmail, loginPassword);
+      const { user } = await loginUser(loginEmail, loginPassword);
+      const fetchedUserData = await getUserData(user.id);
+      localStorage.setItem("user", JSON.stringify(fetchedUserData));
+      setUser(fetchedUserData);
       router.back();
     } catch (error) {
       console.error("Error logging in:", error);
@@ -65,7 +64,7 @@ export default function Authentication() {
                 text={"Sign Up"}
                 onClick={toggleForms}
                 secondary={true}
-                type="submit"
+                type="button"
               />
             </div>
           </div>
@@ -81,7 +80,7 @@ export default function Authentication() {
                 text={"Log in"}
                 onClick={toggleForms}
                 secondary={true}
-                type="submit"
+                type="button"
               />
             </div>
           </div>
@@ -133,4 +132,6 @@ export default function Authentication() {
       </div>
     </div>
   );
-}
+};
+
+export default Authentication;

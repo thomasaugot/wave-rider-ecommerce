@@ -8,10 +8,10 @@ import { FaSearch } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from "@/context/cartContext";
+import { useUser } from "@/context/userContext";
 import logo from "../../public/assets/img/logo.png";
 import "./Navbar.scss";
 import { WavyAnimation } from "@/components/WavyAnimation/WavyAnimation";
-import { Product } from "@/types";
 
 interface MenuItem {
   label: string;
@@ -19,17 +19,14 @@ interface MenuItem {
   url: string;
 }
 
-interface NavbarProps {
-  products: Product[];
-}
-
-export const Navbar: React.FC<NavbarProps> = ({ products }) => {
+export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const { cartState } = useCart();
+  const { user } = useUser();
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [searchOpen, setSearchOpen] = useState<boolean>(false);
 
   const handleMenuToggle = () => setMenuOpen(!menuOpen);
 
@@ -154,8 +151,12 @@ export const Navbar: React.FC<NavbarProps> = ({ products }) => {
             )}
             <li>
               <Link
-                href="/authentication"
-                onClick={() => handleMenuItemClick("/authentication")}
+                href={user ? `/profile?userId=${user.id}` : "/authentication"}
+                onClick={() =>
+                  handleMenuItemClick(
+                    user ? `/profile?userId=${user.id}` : "/authentication"
+                  )
+                }
               >
                 <IoPerson className="nav-icon" />
               </Link>

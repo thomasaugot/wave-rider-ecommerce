@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./authentication.scss";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import { createUser, loginUser, getUserData } from "@/services/apiCalls";
@@ -15,8 +15,10 @@ const Authentication: React.FC = () => {
   const [signupPassword, setSignupPassword] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   const router = useRouter();
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
 
   useExodarFont();
 
@@ -25,8 +27,21 @@ const Authentication: React.FC = () => {
     setIsSignupFormVisible(!isSignupFormVisible);
   };
 
+  const validatePassword = (password: string): boolean => {
+    const passwordRegex =
+      /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleSignup = async () => {
     try {
+      if (!validatePassword(signupPassword)) {
+        setPasswordError(
+          "Password must be at least 8 characters long, contain at least one uppercase letter, one special character, and one number."
+        );
+        return;
+      }
+
       const user: any = await createUser(signupEmail, signupPassword);
       localStorage.setItem("user", JSON.stringify(user));
       setUser(user);
@@ -42,7 +57,7 @@ const Authentication: React.FC = () => {
       const fetchedUserData = await getUserData(user.id);
       localStorage.setItem("user", JSON.stringify(fetchedUserData));
       setUser(fetchedUserData);
-      router.back();
+      router.push("/");
     } catch (error) {
       console.error("Error logging in:", error);
     }
@@ -123,8 +138,16 @@ const Authentication: React.FC = () => {
                 name="password"
                 placeholder="Password"
                 value={signupPassword}
-                onChange={(e) => setSignupPassword(e.target.value)}
+                onChange={(e) => {
+                  setSignupPassword(e.target.value);
+                  setPasswordError("");
+                }}
               />
+            </div>
+            <div className="error-container">
+              {passwordError && (
+                <p className="password-error">{passwordError}</p>
+              )}
             </div>
             <CustomButton text={"Sign Up"} onClick={handleSignup} />
           </div>

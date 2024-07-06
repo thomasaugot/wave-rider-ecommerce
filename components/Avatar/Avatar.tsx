@@ -3,6 +3,9 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import { supabase } from "@/services/supabase";
 import Image from "next/image";
+import { FaEdit } from "react-icons/fa";
+import "./Avatar.scss";
+import placeholder from "@/public/assets/img/profile-placeholder.png";
 
 interface AvatarProps {
   url: string | null;
@@ -38,7 +41,7 @@ const Avatar: React.FC<AvatarProps> = ({ url, size, onUpload }) => {
       setUploading(true);
 
       if (!event.target.files || event.target.files.length === 0) {
-        throw new Error("You must select an image to upload.");
+        throw new Error("Please select an image to upload.");
       }
 
       const file = event.target.files[0];
@@ -62,31 +65,30 @@ const Avatar: React.FC<AvatarProps> = ({ url, size, onUpload }) => {
   };
 
   return (
-    <div>
+    <div className="avatar-container">
       {avatarUrl ? (
         <Image
           src={avatarUrl}
           alt="Avatar"
-          className="avatar image"
+          className="avatar-img"
           width={size}
           height={size}
-          style={{ borderRadius: "50%" }}
         />
       ) : (
         <div
-          className="avatar no-image"
-          style={{ height: size, width: size }}
+          className="no-image"
+          style={{
+            width: size,
+            height: size,
+            backgroundImage: placeholder as any,
+          }}
         />
       )}
-      <div style={{ width: size }}>
-        <label className="button primary block" htmlFor="single">
-          {uploading ? "Uploading ..." : "Upload"}
+      <div className="actions-container">
+        <label className="button" htmlFor="single">
+          {uploading ? "Uploading ..." : <FaEdit />}
         </label>
         <input
-          style={{
-            visibility: "hidden",
-            position: "absolute",
-          }}
           type="file"
           id="single"
           accept="image/*"

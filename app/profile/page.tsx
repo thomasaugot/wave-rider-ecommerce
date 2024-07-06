@@ -137,7 +137,8 @@ const Profile: React.FC = () => {
         text="Edit Profile"
         onClick={() => router.push(`/edit-profile?userId=${userId}`)}
       />
-      <CustomButton text="Logout" onClick={handleLogout} />
+      <br />
+      <CustomButton text="Logout" onClick={handleLogout} secondary={true} />
     </div>
   );
 };

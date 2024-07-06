@@ -1,17 +1,20 @@
 "use client";
 
-import React, { useState, useContext } from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState, FormEvent } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import CustomButton from "@/components/CustomButton/CustomButton";
-import { updateUser } from "@/services/apiCalls";
+import { getUserData, updateUser } from "@/services/apiCalls";
+import { UserType } from "@/types/user";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { useUser } from "@/context/userContext";
-import "./complete-registration.scss";
+import "./edit-profile.scss";
 
-const CompleteRegistration: React.FC = () => {
+const EditProfile: React.FC = () => {
   const router = useRouter();
-  const { user } = useUser();
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("userId");
+
+  const [profilePic, setProfilePic] = useState<string | null>(null);
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
   const [dateOfBirth, setDateOfBirth] = useState<string>("");
@@ -21,10 +24,39 @@ const CompleteRegistration: React.FC = () => {
   const [country, setCountry] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  useEffect(() => {
+    if (userId) {
+      fetchUserData(userId);
+    } else {
+      router.push(`/profile/${userId}`);
+    }
+  }, [userId, router]);
+
+  async function fetchUserData(id: string) {
     try {
-      const userData = {
+      const userData: UserType | null = await getUserData(id);
+
+      if (userData) {
+        setFirstname(userData.firstname);
+        setLastname(userData.lastname);
+        setDateOfBirth(userData.dateOfBirth);
+        setAddress(userData.address);
+        setZipcode(userData.zipcode);
+        setCity(userData.city);
+        setCountry(userData.country);
+        setPhone(userData.phone);
+        setProfilePic(userData.profilePic || null);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    try {
+      await updateUser(userId!, {
         firstname,
         lastname,
         dateOfBirth,
@@ -33,24 +65,17 @@ const CompleteRegistration: React.FC = () => {
         city,
         country,
         phone,
-      };
-
-      console.log("user data ----->", userData);
-
-      if (user) {
-        await updateUser(user.id, userData);
-        router.push(`/profile?userId=${user.id}`);
-      } else {
-        console.log("Mandatory fields can't be empty");
-      }
+        profilePic,
+      });
+      router.push("/profile");
     } catch (error) {
       console.error("Error updating user data:", error);
     }
-  };
+  }
 
   return (
-    <div className="registration-page">
-      <h2>Please complete your registration</h2>
+    <div className="edit-profile-container">
+      <h2>Edit Your Profile</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-items-container">
           <div className="form-group">
@@ -138,13 +163,14 @@ const CompleteRegistration: React.FC = () => {
               onChange={setPhone}
               placeholder="Enter your phone number"
               inputClass="phone-input"
+              specialLabel=""
             />
           </div>
         </div>
-        <CustomButton text="Submit" type="submit" onClick={undefined} />
+        <CustomButton text="Save Changes" type="submit" onClick={undefined} />
       </form>
     </div>
   );
 };
 
-export default CompleteRegistration;
+export default EditProfile;

@@ -1,0 +1,37 @@
+@import "@/styles/globals.scss";
+
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  .avatar-img,
+  .no-image {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .no-image {
+    background: url("../../public/assets/img/profile-placeholder.png") no-repeat
+      center center;
+    background-size: cover;
+    width: 150px;
+    height: 150px;
+  }
+
+  input[type="file"] {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  .actions-container {
+    position: absolute;
+    bottom: 0;
+    right: 30%;
+
+    label {
+      color: color("darkOrange");
+    }
+  }
+}

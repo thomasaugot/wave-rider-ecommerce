@@ -29,7 +29,7 @@ export const CategoriesBentoGrid: React.FC = () => {
       imageUrl: windsurf.src,
     },
     {
-      name: "Paddleboard",
+      name: "SUP",
       imageUrl: paddleboard.src,
     },
     {
@@ -47,8 +47,12 @@ export const CategoriesBentoGrid: React.FC = () => {
   ];
 
   const handleClick = (category: Category) => {
-    const formattedCategory = category.name.toLowerCase().replace(/ /g, "-");
-    router.push(`/products?category=${formattedCategory}`);
+    if (category.name === "More Categories") {
+      router.push(`/categories`);
+    } else {
+      const formattedCategory = category.name.toLowerCase().replace(/ /g, "-");
+      router.push(`/products?category=${formattedCategory}`);
+    }
   };
 
   return (

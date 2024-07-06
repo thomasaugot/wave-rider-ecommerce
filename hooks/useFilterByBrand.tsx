@@ -11,8 +11,7 @@ const useFilterByBrand = () => {
   const ITEMS_PER_PAGE = 20;
 
   const searchParams = useSearchParams();
-  const brand = searchParams.get("brand");
-
+  const brand = searchParams.get("brand")?.toLowerCase();
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -28,8 +27,7 @@ const useFilterByBrand = () => {
 
   useEffect(() => {
     const filtered = allProducts.filter((product) => {
-      const matchesBrand =
-        brand && product.brand.toLowerCase() === brand.toLowerCase();
+      const matchesBrand = brand && product.brand.toLowerCase() === brand;
       const matchesSearch = searchQuery
         ? product.name.toLowerCase().includes(searchQuery.toLowerCase())
         : true;

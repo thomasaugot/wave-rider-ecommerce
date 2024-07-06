@@ -7,12 +7,12 @@ import useFilterByBrand from "@/hooks/useFilterByBrand";
 import { useSearchParams } from "next/navigation";
 import "./products.scss";
 import SearchBar from "@/components/SearchBar/SearchBar";
-import { Category, Product } from "@/types";
+import { Product } from "@/types";
 
 const Products: React.FC = () => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
-  const brand = searchParams.get("brand");
+  const brand = searchParams.get("brand")?.toLowerCase(); // Convert brand to lowercase
   const searchQuery = searchParams.get("search") || "";
 
   const {
@@ -33,14 +33,36 @@ const Products: React.FC = () => {
     handlePageChange: handleBrandPageChange,
   } = useFilterByBrand();
 
-  const allProducts: Product[] = useMemo(() => {
-    return categoryCurrentProducts.length
-      ? categoryCurrentProducts
-      : brandCurrentProducts;
-  }, [categoryCurrentProducts, brandCurrentProducts]);
-
   const filteredProducts: Product[] = useMemo(() => {
-    let filtered = allProducts;
+    let filtered: Product[] = []; // Initialize filtered as an empty array
+
+    // Combine category and brand filtered products
+    if (categoryCurrentProducts.length > 0) {
+      // Filter by selected categories if category parameter exists
+      if (category) {
+        const selectedCategories = category.split(","); // Split category string into an array
+        filtered = categoryCurrentProducts.filter((product) => {
+          // Check if any category in product.categories matches a selected category
+          return (
+            product.categories &&
+            product.categories.some((cat) => selectedCategories.includes(cat))
+          );
+        });
+      } else {
+        // No category parameter, use all category products
+        filtered = categoryCurrentProducts;
+      }
+    }
+
+    // Apply brand filter if brand parameter exists
+    if (brandCurrentProducts.length > 0 && brand) {
+      filtered = filtered.filter((product) => {
+        // Filter by brand property
+        return product.brand.toLowerCase() === brand;
+      });
+    }
+
+    // Apply search query filter if provided
     if (searchQuery) {
       filtered = filtered.filter(
         (product) =>
@@ -48,8 +70,15 @@ const Products: React.FC = () => {
           product.description.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
+
     return filtered;
-  }, [allProducts, searchQuery]);
+  }, [
+    categoryCurrentProducts,
+    brandCurrentProducts,
+    searchQuery,
+    category,
+    brand,
+  ]);
 
   const totalPages = Math.max(categoryTotalPages, brandTotalPages);
   const currentPage = categoryCurrentPage || brandCurrentPage;

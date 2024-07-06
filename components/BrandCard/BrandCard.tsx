@@ -14,7 +14,9 @@ export const BrandCard: React.FC<BrandCardProps> = ({ brand }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/products?brand=${encodeURIComponent(brand.name)}`);
+    router.push(
+      `/products?brand=${encodeURIComponent(brand.name).toLowerCase()}`
+    );
   };
 
   return (

@@ -7,7 +7,7 @@ import useFilterByBrand from "@/hooks/useFilterByBrand";
 import { useSearchParams } from "next/navigation";
 import "./products.scss";
 import SearchBar from "@/components/SearchBar/SearchBar";
-import { Product } from "@/types";
+import { Category, Product } from "@/types";
 
 const Products: React.FC = () => {
   const searchParams = useSearchParams();
@@ -33,19 +33,22 @@ const Products: React.FC = () => {
     handlePageChange: handleBrandPageChange,
   } = useFilterByBrand();
 
-  const allProducts = useMemo(() => {
+  const allProducts: Product[] = useMemo(() => {
     return categoryCurrentProducts.length
       ? categoryCurrentProducts
       : brandCurrentProducts;
   }, [categoryCurrentProducts, brandCurrentProducts]);
 
-  const filteredProducts = useMemo(() => {
-    if (!searchQuery) return allProducts;
-    return allProducts.filter(
-      (product) =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  const filteredProducts: Product[] = useMemo(() => {
+    let filtered = allProducts;
+    if (searchQuery) {
+      filtered = filtered.filter(
+        (product) =>
+          product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return filtered;
   }, [allProducts, searchQuery]);
 
   const totalPages = Math.max(categoryTotalPages, brandTotalPages);
@@ -56,14 +59,15 @@ const Products: React.FC = () => {
   };
 
   const getTitle = () => {
+    let title = "All Products";
     if (category && brand) {
-      return `All ${category} Products from ${brand}`;
+      title = `All ${category} Products from ${brand}`;
     } else if (category) {
-      return `All ${category} Products`;
+      title = `All ${category} Products`;
     } else if (brand) {
-      return `All Products from ${brand}`;
+      title = `All Products from ${brand}`;
     }
-    return "All Products";
+    return title;
   };
 
   return (

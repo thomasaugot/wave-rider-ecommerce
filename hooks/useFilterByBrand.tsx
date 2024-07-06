@@ -27,13 +27,15 @@ const useFilterByBrand = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = allProducts.filter(
-      (product) =>
-        (brand ? product.brand?.toLowerCase() === brand.toLowerCase() : true) &&
-        (searchQuery
-          ? product.name.toLowerCase().includes(searchQuery.toLowerCase())
-          : true)
-    );
+    const filtered = allProducts.filter((product) => {
+      const matchesBrand =
+        brand && product.brand.toLowerCase() === brand.toLowerCase();
+      const matchesSearch = searchQuery
+        ? product.name.toLowerCase().includes(searchQuery.toLowerCase())
+        : true;
+
+      return matchesBrand && matchesSearch;
+    });
 
     setFilteredProducts(filtered);
   }, [allProducts, brand, searchQuery]);

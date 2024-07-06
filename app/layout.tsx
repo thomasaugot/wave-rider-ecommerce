@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "swiper/swiper-bundle.css";
 import "swiper/css/pagination";
@@ -13,6 +13,14 @@ import { CartProvider } from "@/context/cartContext";
 import { UserProvider } from "@/context/userContext";
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const viewport: Viewport = {
+  themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#fff" }],
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
 
 export const metadata: Metadata = {
   title: "Wave Rider | Surf Shop",
@@ -31,15 +39,12 @@ export const metadata: Metadata = {
     telephone: false,
   },
   manifest: "/manifest.json",
-  themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#fff" }],
   authors: [
     {
       name: "Thomas Augot",
       url: "https://thomasaugot.com/",
     },
   ],
-  viewport:
-    "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
   icons: [
     { rel: "apple-touch-icon", url: "/apple-touch-icon.png" },
     { rel: "shortcut icon", url: "/favicon.ico" },

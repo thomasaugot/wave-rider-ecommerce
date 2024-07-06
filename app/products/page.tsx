@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 import useFilterByCategory from "@/hooks/useFilterByCategory";
 import useFilterByBrand from "@/hooks/useFilterByBrand";
 import { useSearchParams } from "next/navigation";
-import useFuzzySearch from "@/hooks/useFuzzySearch";
 import "./products.scss";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { Product } from "@/types";
@@ -34,23 +33,20 @@ const Products: React.FC = () => {
     handlePageChange: handleBrandPageChange,
   } = useFilterByBrand();
 
-  const setSearchQuery = (query: string) => {
-    setCategorySearchQuery(query);
-    setBrandSearchQuery(query);
-  };
+  const allProducts = useMemo(() => {
+    return categoryCurrentProducts.length
+      ? categoryCurrentProducts
+      : brandCurrentProducts;
+  }, [categoryCurrentProducts, brandCurrentProducts]);
 
-  const allProducts = categoryCurrentProducts.length
-    ? categoryCurrentProducts
-    : brandCurrentProducts;
-
-  // Using useFuzzySearch hook correctly
-  const { filteredItems: filteredProducts, handleSearch } = useFuzzySearch(
-    allProducts,
-    searchQuery,
-    {
-      keys: ["name", "description"],
-    }
-  );
+  const filteredProducts = useMemo(() => {
+    if (!searchQuery) return allProducts;
+    return allProducts.filter(
+      (product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [allProducts, searchQuery]);
 
   const totalPages = Math.max(categoryTotalPages, brandTotalPages);
   const currentPage = categoryCurrentPage || brandCurrentPage;
@@ -74,7 +70,10 @@ const Products: React.FC = () => {
     <div className="products-container">
       <h1>{getTitle()}</h1>
       <SearchBar
-        onChange={(query) => handleSearch(query)} // Use handleSearch to update the search query
+        onChange={(query) => {
+          setCategorySearchQuery(query);
+          setBrandSearchQuery(query);
+        }}
         placeholder="Search a product, a brand, a sport..."
       />
       <div className="products-grid">

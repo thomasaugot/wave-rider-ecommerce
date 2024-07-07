@@ -3,7 +3,7 @@
 .similar-products {
   margin-top: 2rem;
   padding: 2rem;
-  border-radius: 8px;
+  text-align: center;
 
   h2 {
     margin-bottom: 2rem;
@@ -11,10 +11,47 @@
     color: color("darkOrange");
   }
 
-  &__container {
+  .swiper-container {
+    padding: 1rem 0;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
+  }
+
+  .swiper-wrapper {
+    display: flex;
+
+    @include tablet {
+      justify-content: center;
+    }
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: color("white");
+    background-color: color("skyBlue");
+    border-radius: 50%;
+    height: 2.5rem;
+    width: 2.5rem;
+    opacity: 0.7;
+    transition: all 500ms;
+
+    &::after {
+      position: absolute;
+      top: 11px;
+      left: 15px;
+      font-size: fontSize("sm");
+      font-weight: fontWeight("bold");
+    }
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }

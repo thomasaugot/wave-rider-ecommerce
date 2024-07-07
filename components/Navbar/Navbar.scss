@@ -217,43 +217,22 @@
     }
 
     ul {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(3, 1fr);
-      grid-column-gap: 20px;
-      grid-row-gap: 20px;
-      justify-items: center;
-      align-items: center;
-      padding-left: 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      justify-content: space-between;
       list-style: none;
-
-      @include tablet {
-        grid-column-gap: 30px;
-        grid-row-gap: 30px;
-      }
-
-      @include largeDesktops {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        list-style: none;
-        gap: 1rem;
-        padding-inline: 3rem;
-      }
+      gap: 1rem;
+      padding-left: 0;
 
       &:first-child {
         margin-top: 2rem;
 
         @include largeDesktops {
           margin-top: 22px !important;
-        }
-
-        li:nth-child(even) {
-          margin-right: auto;
-        }
-
-        li:nth-child(odd) {
-          margin-left: auto;
+          flex-direction: row;
+          margin-left: 1rem;
         }
       }
 
@@ -280,7 +259,7 @@
         transition: 0.3s ease color;
         cursor: pointer;
         color: color("darkGrey");
-        font-size: fontSize("xs");
+        font-size: fontSize("md");
         font-weight: fontWeight("medium");
 
         @include tablet {
@@ -303,6 +282,14 @@
             transform: scale(1.1);
             transition: all 0.3s ease-in-out;
             @include blackDropShadow;
+          }
+        }
+
+        .profile-icon {
+          font-size: fontSize("xl");
+
+          @include smallDesktops {
+            font-size: fontSize("md");
           }
         }
       }

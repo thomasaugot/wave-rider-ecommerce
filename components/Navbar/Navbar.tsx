@@ -158,7 +158,7 @@ export const Navbar: React.FC = () => {
                   )
                 }
               >
-                <IoPerson className="nav-icon" />
+                <IoPerson className="nav-icon profile-icon" />
               </Link>
             </li>
             {!isMobile && (

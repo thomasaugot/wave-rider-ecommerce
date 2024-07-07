@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 import { useProducts } from "@/context/productContext";
+import { ProductCard } from "@/components/ProductCard/ProductCard";
 import "./SimilarProducts.scss";
 import { Product } from "@/types";
-import { ProductCard } from "@/components/ProductCard/ProductCard";
 
 interface SimilarProductsProps {
   currentProduct: Product;
@@ -14,10 +17,10 @@ export const SimilarProducts: React.FC<SimilarProductsProps> = ({
 }) => {
   const { products } = useProducts();
   const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
+  const [swiperInstance, setSwiperInstance] = useState<any>(null);
 
   useEffect(() => {
     const fetchSimilarProducts = () => {
-      // Find products with similar names
       const similarByName = products.filter(
         (product) =>
           product.name
@@ -26,7 +29,6 @@ export const SimilarProducts: React.FC<SimilarProductsProps> = ({
           product.id !== currentProduct.id
       );
 
-      // If no products found by name, find by category
       if (similarByName.length === 0) {
         const similarByCategory = products.filter(
           (product) =>
@@ -43,25 +45,58 @@ export const SimilarProducts: React.FC<SimilarProductsProps> = ({
     fetchSimilarProducts();
   }, [currentProduct, products]);
 
+  const handleSwiper = (swiper: any) => {
+    setSwiperInstance(swiper);
+    updateNavigationVisibility(swiper);
+  };
+
+  const updateNavigationVisibility = (swiper: any) => {
+    if (!swiper) return;
+    const { isBeginning, isEnd } = swiper;
+    const prevButton = swiper.navigation.prevEl;
+    const nextButton = swiper.navigation.nextEl;
+    if (prevButton)
+      prevButton.style.display =
+        isBeginning || similarProducts.length < 4 ? "none" : "block";
+    if (nextButton)
+      nextButton.style.display =
+        isEnd || similarProducts.length < 4 ? "none" : "block";
+  };
+
+  useEffect(() => {
+    if (swiperInstance) {
+      swiperInstance.update();
+      updateNavigationVisibility(swiperInstance);
+    }
+  }, [swiperInstance, similarProducts]);
+
   return (
     <div className="similar-products">
       <h2>Similar Products</h2>
-      <div className="similar-products__container">
+      <Swiper
+        slidesPerView={1}
+        spaceBetween={10}
+        navigation={similarProducts.length >= 4} // Only enable navigation if there are 4 or more products
+        breakpoints={{
+          640: { slidesPerView: 2, spaceBetween: 20 },
+          768: { slidesPerView: 3, spaceBetween: 30 },
+          1024: { slidesPerView: 4, spaceBetween: 40 },
+        }}
+        modules={[Navigation]}
+        className="mySwiper"
+        onSwiper={handleSwiper}
+        onSlideChange={(swiper) => updateNavigationVisibility(swiper)}
+      >
         {similarProducts.length > 0 ? (
           similarProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              images={product.images}
-              name={product.name}
-              description={product.description}
-              price={product.price}
-            />
+            <SwiperSlide key={product.id}>
+              <ProductCard {...product} />
+            </SwiperSlide>
           ))
         ) : (
           <p>No similar products found.</p>
         )}
-      </div>
+      </Swiper>
     </div>
   );
 };

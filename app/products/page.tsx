@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 import useFilterByCategory from "@/hooks/useFilterByCategory";
 import useFilterByBrand from "@/hooks/useFilterByBrand";
@@ -12,7 +12,7 @@ import { Product } from "@/types";
 const Products: React.FC = () => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
-  const brand = searchParams.get("brand")?.toLowerCase(); // Convert brand to lowercase
+  const brand = searchParams.get("brand")?.toLowerCase();
   const searchQuery = searchParams.get("search") || "";
 
   const {
@@ -33,36 +33,30 @@ const Products: React.FC = () => {
     handlePageChange: handleBrandPageChange,
   } = useFilterByBrand();
 
+  const productsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+
   const filteredProducts: Product[] = useMemo(() => {
-    let filtered: Product[] = []; // Initialize filtered as an empty array
+    let filtered: Product[] = [];
 
-    // Combine category and brand filtered products
-    if (categoryCurrentProducts.length > 0) {
-      // Filter by selected categories if category parameter exists
-      if (category) {
-        const selectedCategories = category.split(","); // Split category string into an array
-        filtered = categoryCurrentProducts.filter((product) => {
-          // Check if any category in product.categories matches a selected category
-          return (
-            product.categories &&
-            product.categories.some((cat) => selectedCategories.includes(cat))
-          );
-        });
-      } else {
-        // No category parameter, use all category products
-        filtered = categoryCurrentProducts;
-      }
-    }
-
-    // Apply brand filter if brand parameter exists
-    if (brandCurrentProducts.length > 0 && brand) {
-      filtered = filtered.filter((product) => {
-        // Filter by brand property
+    if (category) {
+      const selectedCategories = category.split(",");
+      filtered = categoryCurrentProducts.filter((product) => {
+        return (
+          product.categories &&
+          product.categories.some((cat) =>
+            selectedCategories.includes(cat.toLowerCase())
+          )
+        );
+      });
+    } else if (brand) {
+      filtered = brandCurrentProducts.filter((product) => {
         return product.brand.toLowerCase() === brand;
       });
+    } else {
+      filtered = [...categoryCurrentProducts, ...brandCurrentProducts];
     }
 
-    // Apply search query filter if provided
     if (searchQuery) {
       filtered = filtered.filter(
         (product) =>
@@ -80,11 +74,18 @@ const Products: React.FC = () => {
     brand,
   ]);
 
-  const totalPages = Math.max(categoryTotalPages, brandTotalPages);
-  const currentPage = categoryCurrentPage || brandCurrentPage;
+  const totalFilteredPages = Math.ceil(
+    filteredProducts.length / productsPerPage
+  );
+
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * productsPerPage;
+    const end = start + productsPerPage;
+    return filteredProducts.slice(start, end);
+  }, [filteredProducts, currentPage, productsPerPage]);
+
   const handlePageChange = (page: number) => {
-    handleCategoryPageChange(page);
-    handleBrandPageChange(page);
+    setCurrentPage(page);
   };
 
   const getTitle = () => {
@@ -110,22 +111,24 @@ const Products: React.FC = () => {
         placeholder="Search a product, a brand, a sport..."
       />
       <div className="products-grid">
-        {filteredProducts.map((product) => (
+        {paginatedProducts.map((product) => (
           <div key={product.id}>
             <ProductCard {...product} />
           </div>
         ))}
       </div>
       <div className="pagination">
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <button
-            key={page}
-            onClick={() => handlePageChange(page)}
-            className={currentPage === page ? "active" : ""}
-          >
-            {page}
-          </button>
-        ))}
+        {Array.from({ length: totalFilteredPages }, (_, i) => i + 1).map(
+          (page) => (
+            <button
+              key={page}
+              onClick={() => handlePageChange(page)}
+              className={currentPage === page ? "active" : ""}
+            >
+              {page}
+            </button>
+          )
+        )}
       </div>
     </div>
   );

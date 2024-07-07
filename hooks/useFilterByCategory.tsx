@@ -9,7 +9,6 @@ const useFilterByCategory = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const ITEMS_PER_PAGE = 20;
-
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
 

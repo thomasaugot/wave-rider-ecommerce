@@ -9,6 +9,7 @@ import {
 import { MdEmail } from "react-icons/md";
 import "./Footer.scss";
 import { WavyAnimation } from "@/components/WavyAnimation/WavyAnimation";
+import { FaRegHeart } from "react-icons/fa6";
 
 const Footer: React.FC = () => {
   return (
@@ -104,8 +105,9 @@ const Footer: React.FC = () => {
       <div className="footer-bottom">
         <WavyAnimation />
         <p>
-          &copy; {new Date().getFullYear()} Wave Rider Surf Shop. All rights
-          reserved
+          &copy; {new Date().getFullYear()} Wave Rider Surf Shop. Designed and
+          Coded with <FaRegHeart className="heart-icon" size="20px" /> by Thomas
+          Augot
         </p>
       </div>
     </footer>

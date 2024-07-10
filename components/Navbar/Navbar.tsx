@@ -7,8 +7,10 @@ import { useRouter } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
-import { useCart } from "@/context/cartContext";
-import { useUser } from "@/context/userContext";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, logoutUserThunk } from "@/store/slices/userSlice";
+import { selectCart } from "@/store/slices/cartSlice";
+import { RootState } from "@/store/store";
 import logo from "../../public/assets/img/logo.png";
 import "./Navbar.scss";
 import { WavyAnimation } from "@/components/WavyAnimation/WavyAnimation";
@@ -22,11 +24,14 @@ interface MenuItem {
 export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const { cartState } = useCart();
-  const { user } = useUser();
+  const { user } = useSelector((state: RootState) => selectUser(state));
+  const { items: cartItems } = useSelector((state: RootState) =>
+    selectCart(state)
+  );
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
+  const dispatch: any = useDispatch();
 
   const handleMenuToggle = () => setMenuOpen(!menuOpen);
 
@@ -71,6 +76,14 @@ export const Navbar: React.FC = () => {
     }, 300);
   };
 
+  const handleUserIconClick = () => {
+    if (user && user.id) {
+      router.push(`/profile?userId=${user.id}`);
+    } else {
+      router.push("/authentication");
+    }
+  };
+
   const menuItems: MenuItem[] = [
     { label: "Surf", category: "surf", url: "/products?category=surf" },
     {
@@ -103,16 +116,11 @@ export const Navbar: React.FC = () => {
         <div className="mobile-top-icons">
           {isMobile && (
             <>
-              <Link href="#">
-                <FaSearch onClick={() => handleMenuItemClick("/products")} />
-              </Link>
-              <Link
-                href="/shopping-cart"
-                onClick={() => handleMenuItemClick("/shopping-cart")}
-              >
+              <FaSearch onClick={() => handleMenuItemClick("/products")} />
+              <Link href="/shopping-cart">
                 <div className="cart-icon">
                   <FaShoppingCart className="nav-icon" />
-                  <span className="cart-count">{cartState.items.length}</span>
+                  <span className="cart-count">{cartItems.length}</span>
                 </div>
               </Link>
             </>
@@ -150,15 +158,11 @@ export const Navbar: React.FC = () => {
               </li>
             )}
             <li>
-              <Link
-                href={user ? `/profile?userId=${user.id}` : "/authentication"}
-                onClick={() =>
-                  handleMenuItemClick(
-                    user ? `/profile?userId=${user.id}` : "/authentication"
-                  )
-                }
-              >
-                <IoPerson className="nav-icon profile-icon" />
+              <Link href="#">
+                <IoPerson
+                  className="nav-icon profile-icon"
+                  onClick={handleUserIconClick}
+                />
               </Link>
             </li>
             {!isMobile && (
@@ -166,7 +170,7 @@ export const Navbar: React.FC = () => {
                 <Link href="/shopping-cart">
                   <div className="cart-icon">
                     <FaShoppingCart className="nav-icon" />
-                    <span className="cart-count">{cartState.items.length}</span>
+                    <span className="cart-count">{cartItems.length}</span>
                   </div>
                 </Link>
               </li>

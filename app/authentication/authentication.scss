@@ -25,6 +25,10 @@
     justify-content: center;
     padding-block: 8%;
 
+    &::before {
+      opacity: 0;
+    }
+
     @include tablet {
       height: 300px;
     }
@@ -52,6 +56,10 @@
       flex-direction: row;
       justify-content: center;
       padding-block: 5%;
+    }
+
+    @include smallDesktops {
+      height: 250px;
     }
   }
 

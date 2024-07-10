@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useProducts } from "@/context/productContext";
-import { useCart } from "@/context/cartContext";
-import "./product-details.scss";
+import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -14,37 +12,55 @@ import { Swiper as SwiperCore } from "swiper/types";
 import { SimilarProducts } from "@/components/SimilarProducts/SimilarProducts";
 import { Loading } from "@/components/Loading/Loading";
 import { useRouter } from "next/navigation";
+import {
+  fetchProductsThunk,
+  selectProducts,
+  setSelectedProduct,
+  selectSelectedProduct,
+} from "@/store/slices/productSlice";
+import { addItem, selectCart } from "@/store/slices/cartSlice";
+import "./product-details.scss";
 
-export default function ProductDetailsPage({
-  params,
-}: {
+interface ProductDetailsPageProps {
   params: { id: string };
-}) {
-  const { selectedProduct, handleProductSelection, products } = useProducts();
-  const { dispatch } = useCart();
+}
+
+const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ params }) => {
+  const dispatch: any = useDispatch();
+  const selectedProduct = useSelector(selectSelectedProduct);
+  const products: any = useSelector(selectProducts);
+  const cart = useSelector(selectCart);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null);
   const router = useRouter();
 
+  console.log("selected product --->,", selectedProduct);
+
   useEffect(() => {
-    if (params.id) {
-      console.log("Product ID:", params.id);
-      console.log("Products in context:", products);
-      handleProductSelection(params.id);
+    dispatch(fetchProductsThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (params.id && products.length > 0) {
+      const product = products.find((product: any) => product.id === params.id);
+      if (product) {
+        dispatch(setSelectedProduct(product));
+      } else {
+        console.log("No product found");
+      }
     }
-  }, [params.id, handleProductSelection, products]);
+  }, [params.id, products, dispatch]);
 
   const addToCart = () => {
     if (selectedProduct) {
-      dispatch({
-        type: "ADD_ITEM",
-        payload: {
+      dispatch(
+        addItem({
           id: selectedProduct.id,
           name: selectedProduct.name,
           price: selectedProduct.price,
           quantity: 1,
           image: selectedProduct.images[0],
-        },
-      });
+        })
+      );
     }
   };
 
@@ -68,9 +84,7 @@ export default function ProductDetailsPage({
           <Swiper
             pagination={{ clickable: true }}
             modules={[Pagination, Autoplay, Thumbs]}
-            autoplay={{
-              delay: 3000,
-            }}
+            autoplay={{ delay: 3000 }}
             style={{ width: "100%", height: "auto" }}
             className="carousel-swiper"
             thumbs={{ swiper: thumbsSwiper }}
@@ -127,4 +141,6 @@ export default function ProductDetailsPage({
       <SimilarProducts currentProduct={selectedProduct} />
     </div>
   );
-}
+};
+
+export default ProductDetailsPage;

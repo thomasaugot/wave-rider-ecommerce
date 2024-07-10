@@ -6,7 +6,8 @@ import CustomButton from "@/components/CustomButton/CustomButton";
 import { createUser, loginUser, getUserData } from "@/services/apiCalls";
 import { useRouter } from "next/navigation";
 import { useExodarFont } from "@/hooks/useExodarFont";
-import { useUser } from "@/context/userContext";
+import { useDispatch } from "react-redux";
+import { loginUserThunk } from "@/store/slices/userSlice";
 
 const Authentication: React.FC = () => {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
@@ -18,7 +19,7 @@ const Authentication: React.FC = () => {
   const [passwordError, setPasswordError] = useState("");
 
   const router = useRouter();
-  const { setUser } = useUser();
+  const dispatch: any = useDispatch();
 
   useExodarFont();
 
@@ -44,7 +45,9 @@ const Authentication: React.FC = () => {
 
       const user: any = await createUser(signupEmail, signupPassword);
       localStorage.setItem("user", JSON.stringify(user));
-      setUser(user);
+      dispatch(
+        loginUserThunk({ email: signupEmail, password: signupPassword })
+      );
       router.push("/complete-registration");
     } catch (error) {
       console.error("Error signing up:", error);
@@ -56,7 +59,7 @@ const Authentication: React.FC = () => {
       const { user } = await loginUser(loginEmail, loginPassword);
       const fetchedUserData = await getUserData(user.id);
       localStorage.setItem("user", JSON.stringify(fetchedUserData));
-      setUser(fetchedUserData);
+      dispatch(loginUserThunk({ email: loginEmail, password: loginPassword }));
       router.push("/");
     } catch (error) {
       console.error("Error logging in:", error);

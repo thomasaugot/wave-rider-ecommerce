@@ -1,13 +1,16 @@
 "use client";
 
 import React, { FormEvent, useState } from "react";
-import { useCart } from "@/context/cartContext";
-import CustomButton from "@/components/CustomButton/CustomButton";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import CustomButton from "@/components/CustomButton/CustomButton";
+import { updateCart, selectCart } from "@/store/slices/cartSlice";
 import "./delivery-info.scss";
 
 const DeliveryInfoPage: React.FC = () => {
-  const { cartState } = useCart();
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -19,7 +22,7 @@ const DeliveryInfoPage: React.FC = () => {
     deliveryOption: "standard",
   });
 
-  const router = useRouter();
+  const cartState = useSelector(selectCart);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -31,6 +34,21 @@ const DeliveryInfoPage: React.FC = () => {
     event.preventDefault();
     setLoading(true);
 
+    const updatedCart = {
+      ...cartState,
+      deliveryOption: formData.deliveryOption,
+      deliveryAddress: {
+        fullName: formData.fullName,
+        addressLine1: formData.addressLine1,
+        addressLine2: formData.addressLine2,
+        city: formData.city,
+        state: formData.state,
+        postalCode: formData.postalCode,
+      },
+    };
+
+    dispatch(updateCart(updatedCart));
+
     const queryString = new URLSearchParams(formData).toString();
     router.push(`/payment?${queryString}`);
 
@@ -38,6 +56,10 @@ const DeliveryInfoPage: React.FC = () => {
   };
 
   const totalAmount = cartState.totalAmount.toFixed(2);
+
+  const goBack = () => {
+    router.back();
+  };
 
   return (
     <div className="delivery-info-page">
@@ -151,12 +173,21 @@ const DeliveryInfoPage: React.FC = () => {
               ).toFixed(2)}
             </p>
           </div>
-          <CustomButton
-            text={loading ? "Processing..." : "Proceed to Payment"}
-            type="submit"
-            disabled={loading}
-            onClick={undefined}
-          />
+          <div className="actions-container">
+            <CustomButton
+              text={loading ? "Processing..." : "Proceed to Payment"}
+              type="submit"
+              disabled={loading}
+              onClick={undefined}
+            />
+            <CustomButton
+              text={"Back"}
+              type="submit"
+              disabled={loading}
+              onClick={goBack}
+              secondary={true}
+            />
+          </div>
         </form>
       </div>
     </div>

@@ -3,7 +3,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { useProducts } from "@/context/productContext";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 import "./SimilarProducts.scss";
 import { Product } from "@/types";
@@ -15,7 +16,7 @@ interface SimilarProductsProps {
 export const SimilarProducts: React.FC<SimilarProductsProps> = ({
   currentProduct,
 }) => {
-  const { products } = useProducts();
+  const products = useSelector((state: RootState) => state.products.products);
   const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
 
@@ -76,7 +77,7 @@ export const SimilarProducts: React.FC<SimilarProductsProps> = ({
       <Swiper
         slidesPerView={1}
         spaceBetween={10}
-        navigation={similarProducts.length >= 4} // Only enable navigation if there are 4 or more products
+        navigation={similarProducts.length >= 4}
         breakpoints={{
           640: { slidesPerView: 2, spaceBetween: 20 },
           768: { slidesPerView: 3, spaceBetween: 30 },

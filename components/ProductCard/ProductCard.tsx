@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useProducts } from "@/context/productContext";
-import { useCart } from "@/context/cartContext";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "@/store/slices/cartSlice";
 import "./ProductCard.scss";
 import CustomButton from "../CustomButton/CustomButton";
+import { RootState } from "@/store/store";
 
 interface ProductCardProps {
   id: string;
@@ -22,19 +23,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   price,
 }) => {
   const router = useRouter();
-  const { handleProductSelection } = useProducts();
-  const { dispatch } = useCart();
+  const dispatch = useDispatch();
+  const { items } = useSelector((state: RootState) => state.cart);
 
   const handleDetailsClick = () => {
-    handleProductSelection(id);
     router.push(`/products/${id}`);
   };
 
   const handleAddToCart = () => {
-    dispatch({
-      type: "ADD_ITEM",
-      payload: { id, name, price, quantity: 1, image: images[0] },
-    });
+    dispatch(
+      addItem({
+        id,
+        name,
+        price,
+        quantity: 1,
+        image: images[0],
+      })
+    );
   };
 
   return (

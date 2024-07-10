@@ -1,3 +1,5 @@
+// components/LatestArticles/LatestArticles.tsx
+
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -6,25 +8,36 @@ import { Navigation } from "swiper/modules";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 import CustomButton from "../CustomButton/CustomButton";
 import { useRouter } from "next/navigation";
-import { useProducts } from "@/context/productContext";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchProductsThunk,
+  selectProducts,
+} from "@/store/slices/productSlice";
 import "./LatestArticles.scss";
 import { Product } from "@/types";
 
 export const LatestArticles: React.FC = () => {
-  const { products } = useProducts();
+  const dispatch: any = useDispatch();
+  const products: any = useSelector(selectProducts);
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    dispatch(fetchProductsThunk());
+  }, [dispatch]);
 
   const filterLatestProducts = (products: Product[]) => {
+    if (!Array.isArray(products)) return [];
     return products.slice(0, 5);
   };
 
   const latestProducts = filterLatestProducts(products);
-  const router = useRouter();
 
   useEffect(() => {
     const initSwiper = () => {
       if (swiperInstance) {
         swiperInstance.update();
+        updateNavigationVisibility(swiperInstance);
       }
     };
 

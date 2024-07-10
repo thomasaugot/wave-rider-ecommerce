@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import { updateUser } from "@/services/apiCalls";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { useUser } from "@/context/userContext";
 import "./complete-registration.scss";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const CompleteRegistration: React.FC = () => {
   const router = useRouter();
-  const { user } = useUser();
+  const user = useSelector((state: RootState) => state.user.user);
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
   const [dateOfBirth, setDateOfBirth] = useState<string>("");

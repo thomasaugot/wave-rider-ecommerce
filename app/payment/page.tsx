@@ -1,22 +1,24 @@
 "use client";
 
 import React, { FormEvent, useState, useEffect } from "react";
-import "./payment.scss";
-import { useCart } from "@/context/cartContext";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import CustomButton from "@/components/CustomButton/CustomButton";
-import getStripe from "@/services/clientStripe";
 import VisaLogo from "../../public/assets/img/visa.webp";
 import MasterCardLogo from "../../public/assets/img/mastercard.webp";
 import AmexLogo from "../../public/assets/img/amex.webp";
-import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import getStripe from "@/services/clientStripe";
+import { updateCart, selectCart } from "@/store/slices/cartSlice";
+import "./payment.scss";
 
 const PaymentPage = () => {
-  const { cartState } = useCart();
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const cartState = useSelector(selectCart);
 
+  const [loading, setLoading] = useState(false);
   const [deliveryInfo, setDeliveryInfo] = useState({
     fullName: "",
     addressLine1: "",
@@ -100,6 +102,10 @@ const PaymentPage = () => {
   const handleBillingInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setBillingInfo((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const goBack = () => {
+    router.back();
   };
 
   return (
@@ -288,7 +294,7 @@ const PaymentPage = () => {
             text={"Back"}
             type="submit"
             disabled={loading}
-            onClick={undefined}
+            onClick={goBack}
             secondary={true}
           />
         </div>

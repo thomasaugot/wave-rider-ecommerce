@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getProducts } from "@/services/apiCalls";
-import { Product } from "@/types/product";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchProductsThunk } from "@/store/slices/productSlice";
+import { useSelector } from "react-redux";
+import { selectProducts } from "@/store/slices/productSlice";
 import { Carousel } from "@/components/Carousel/Carousel";
 import { ShippingInformation } from "@/components/ShippingInformation/ShippingInformation";
 import { LatestArticles } from "@/components/LatestArticles/LatestArticles";
-import "@/styles/page.scss";
 import { Brands } from "@/components/Brands/Brands";
 import { ClientsOpinions } from "@/components/ClientsOpinions/ClientsOpinions";
 import { Separator } from "@/components/Separator/Separator";
@@ -17,26 +18,22 @@ import { GoogleMapComponent } from "@/components/GoogleMap/GoogleMap";
 import { FullPresentation } from "@/components/FullPresentation/FullPresentation";
 import { Introdution } from "@/components/Introdution/Introdution";
 import { useExodarFont } from "@/hooks/useExodarFont";
-import { useProducts } from "@/context/productContext";
+import "@/styles/page.scss";
 
 export default function Home() {
-  const { setProducts } = useProducts();
+  const dispatch: any = useDispatch();
+  const products = useSelector(selectProducts);
   const emailJSPublicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
 
   useExodarFont();
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const allProducts: Product[] = await getProducts();
-      setProducts(allProducts);
-    };
-
-    fetchProducts();
+    dispatch(fetchProductsThunk());
 
     if (emailJSPublicKey) {
       emailjs.init(emailJSPublicKey);
     }
-  }, [setProducts, emailJSPublicKey]);
+  }, [dispatch, emailJSPublicKey]);
 
   return (
     <main className="homepage">

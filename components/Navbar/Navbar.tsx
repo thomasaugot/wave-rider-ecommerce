@@ -8,7 +8,7 @@ import { FaSearch } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUser, logoutUserThunk } from "@/store/slices/userSlice";
+import { selectUser } from "@/store/slices/userSlice";
 import { selectCart } from "@/store/slices/cartSlice";
 import { RootState } from "@/store/store";
 import logo from "../../public/assets/img/logo.png";
@@ -76,14 +76,6 @@ export const Navbar: React.FC = () => {
     }, 300);
   };
 
-  const handleUserIconClick = () => {
-    if (user && user.id) {
-      router.push(`/profile?userId=${user.id}`);
-    } else {
-      router.push("/authentication");
-    }
-  };
-
   const menuItems: MenuItem[] = [
     { label: "Surf", category: "surf", url: "/products?category=surf" },
     {
@@ -116,7 +108,9 @@ export const Navbar: React.FC = () => {
         <div className="mobile-top-icons">
           {isMobile && (
             <>
-              <FaSearch onClick={() => handleMenuItemClick("/products")} />
+              <Link href="#">
+                <FaSearch onClick={() => handleMenuItemClick("/products")} />
+              </Link>
               <Link href="/shopping-cart">
                 <div className="cart-icon">
                   <FaShoppingCart className="nav-icon" />
@@ -158,11 +152,10 @@ export const Navbar: React.FC = () => {
               </li>
             )}
             <li>
-              <Link href="#">
-                <IoPerson
-                  className="nav-icon profile-icon"
-                  onClick={handleUserIconClick}
-                />
+              <Link
+                href={user ? `/profile?userId=${user.id}` : "/authentication"}
+              >
+                <IoPerson className="nav-icon profile-icon" />
               </Link>
             </li>
             {!isMobile && (

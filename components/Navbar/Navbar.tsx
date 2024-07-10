@@ -155,7 +155,10 @@ export const Navbar: React.FC = () => {
               <Link
                 href={user ? `/profile?userId=${user.id}` : "/authentication"}
               >
-                <IoPerson className="nav-icon profile-icon" />
+                <IoPerson
+                  className="nav-icon profile-icon"
+                  onClick={() => setMenuOpen(false)}
+                />
               </Link>
             </li>
             {!isMobile && (

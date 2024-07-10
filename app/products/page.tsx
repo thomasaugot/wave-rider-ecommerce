@@ -33,7 +33,7 @@ const Products: React.FC = () => {
     handlePageChange: handleBrandPageChange,
   } = useFilterByBrand();
 
-  const productsPerPage = 10;
+  const productsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredProducts: Product[] = useMemo(() => {

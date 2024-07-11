@@ -34,8 +34,8 @@ export const loginUserThunk = createAsyncThunk(
   async (payload: LoginPayload, { rejectWithValue }) => {
     const { email, password } = payload;
     try {
-      const { user, session, weakPassword } = await loginUser(email, password);
-      return { user, session, weakPassword };
+      const response = await loginUser(email, password);
+      return response.user;
     } catch (error: any) {
       return rejectWithValue(error.response?.data || error.message);
     }
@@ -43,15 +43,13 @@ export const loginUserThunk = createAsyncThunk(
 );
 
 export const logoutUserThunk = createAsyncThunk(
-  "user/logoutUser",
-  async (_, thunkAPI) => {
+  "user/logout",
+  async (_, { rejectWithValue }) => {
     try {
       await logoutUser();
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("user");
-      }
+      localStorage.removeItem("user");
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -68,8 +66,9 @@ const userSlice = createSlice({
       })
       .addCase(loginUserThunk.fulfilled, (state: any, action) => {
         state.loading = false;
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.error = null;
+        localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(loginUserThunk.rejected, (state, action) => {
         state.loading = false;
@@ -95,5 +94,7 @@ const userSlice = createSlice({
   },
 });
 
-export const selectUser = (state: RootState) => state.user;
+export const selectUser = (state: RootState) => state.user.user;
+export const selectLoading = (state: RootState) => state.user.loading;
+export const selectError = (state: RootState) => state.user.error;
 export default userSlice.reducer;

@@ -9,10 +9,11 @@ import "react-phone-input-2/lib/style.css";
 import "./complete-registration.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { selectUser } from "@/store/slices/userSlice";
 
 const CompleteRegistration: React.FC = () => {
   const router = useRouter();
-  const user = useSelector((state: RootState) => state.user.user);
+  const user = useSelector(selectUser);
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
   const [dateOfBirth, setDateOfBirth] = useState<string>("");
@@ -35,8 +36,6 @@ const CompleteRegistration: React.FC = () => {
         country,
         phone,
       };
-
-      console.log("user data ----->", userData);
 
       if (user) {
         await updateUser(user.id, userData);

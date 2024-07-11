@@ -285,17 +285,17 @@ const PaymentPage = () => {
         </form>
         <div className="actions-container">
           <CustomButton
-            text={loading ? "Processing..." : "Pay Now"}
-            type="submit"
-            disabled={loading}
-            onClick={undefined}
-          />
-          <CustomButton
             text={"Back"}
             type="submit"
             disabled={loading}
             onClick={goBack}
             secondary={true}
+          />
+          <CustomButton
+            text={loading ? "Processing..." : "Pay Now"}
+            type="submit"
+            disabled={loading}
+            onClick={undefined}
           />
         </div>
       </div>

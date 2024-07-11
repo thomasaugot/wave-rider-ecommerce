@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectUser } from "@/store/slices/userSlice";
 import { selectCart } from "@/store/slices/cartSlice";
 import { RootState } from "@/store/store";
@@ -24,14 +24,13 @@ interface MenuItem {
 export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const { user } = useSelector((state: RootState) => selectUser(state));
+  const user = useSelector(selectUser);
   const { items: cartItems } = useSelector((state: RootState) =>
     selectCart(state)
   );
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
-  const dispatch: any = useDispatch();
 
   const handleMenuToggle = () => setMenuOpen(!menuOpen);
 
@@ -98,6 +97,10 @@ export const Navbar: React.FC = () => {
     { label: "All Categories", url: "/categories" },
   ];
 
+  const profileLink = user?.id
+    ? `/profile?userId=${user.id}`
+    : "/authentication";
+
   return (
     <nav className={`navbar ${menuOpen ? "open" : ""}`}>
       <div className="navbar-container">
@@ -108,9 +111,7 @@ export const Navbar: React.FC = () => {
         <div className="mobile-top-icons">
           {isMobile && (
             <>
-              <Link href="#">
-                <FaSearch onClick={() => handleMenuItemClick("/products")} />
-              </Link>
+              <FaSearch onClick={() => handleMenuItemClick("/products")} />
               <Link href="/shopping-cart">
                 <div className="cart-icon">
                   <FaShoppingCart className="nav-icon" />
@@ -143,7 +144,7 @@ export const Navbar: React.FC = () => {
           <ul>
             {!isMobile && (
               <li>
-                <Link href="#">
+                <Link href={"/products"}>
                   <FaSearch
                     className="nav-icon"
                     onClick={() => handleMenuItemClick("/products")}
@@ -152,9 +153,7 @@ export const Navbar: React.FC = () => {
               </li>
             )}
             <li>
-              <Link
-                href={user ? `/profile?userId=${user.id}` : "/authentication"}
-              >
+              <Link href={profileLink}>
                 <IoPerson
                   className="nav-icon profile-icon"
                   onClick={() => setMenuOpen(false)}

@@ -7,10 +7,15 @@ import Avatar from "@/components/Avatar/Avatar";
 import { updateUser, getUserData } from "@/services/apiCalls";
 import { UserType, PastOrder } from "@/types/user";
 import "@/styles/shared-styles.scss";
+import { Loading } from "@/components/Loading/Loading";
+import { logoutUserThunk } from "@/store/slices/userSlice";
+import { useDispatch } from "react-redux";
 
 const Profile: React.FC = () => {
   const router = useRouter();
-  const [userId, setUserId] = useState<string>("");
+  const dispatch: any = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
   const [profilePic, setProfilePic] = useState<string | null>(null);
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
@@ -24,58 +29,74 @@ const Profile: React.FC = () => {
   const [pastOrders, setPastOrders] = useState<PastOrder[]>([]);
 
   useEffect(() => {
-    const userString = localStorage.getItem("user");
+    const fetchUserData = async (id: string) => {
+      try {
+        const userData: UserType | null = await getUserData(id);
 
+        if (userData) {
+          setFirstname(userData.firstname);
+          setLastname(userData.lastname);
+          setDateOfBirth(userData.dateOfBirth);
+          setAddress(userData.address);
+          setZipcode(userData.zipcode);
+          setCity(userData.city);
+          setCountry(userData.country);
+          setPhone(userData.phone);
+          setUserType(userData.role);
+          setPastOrders(userData.pastOrders || []);
+          setProfilePic(userData.profilePic || null);
+        } else {
+          console.error("Failed to fetch user data");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const userString = localStorage.getItem("user");
     if (userString) {
       const user = JSON.parse(userString);
-      if (user && user.user && user.user.id) {
-        setUserId(user.user.id);
-        fetchUserData(user.user.id);
+      if (user && user.id) {
+        setUserId(user.id);
+        fetchUserData(user.id);
       } else {
-        console.error(
-          "User object in localStorage is missing 'user' or 'id' property."
-        );
-        router.push("/authentication");
+        console.error("User object in localStorage is missing 'id' property.");
+        handleLogout();
       }
     } else {
-      router.push("/products");
+      console.error("User object not found in localStorage.");
+      handleLogout();
     }
-  }, [router]);
+  }, []);
 
-  async function fetchUserData(id: string) {
+  const handleAvatarUpload = async (url: string) => {
     try {
-      const userData: UserType | null = await getUserData(id);
-
-      if (userData) {
-        setFirstname(userData.firstname);
-        setLastname(userData.lastname);
-        setDateOfBirth(userData.dateOfBirth);
-        setAddress(userData.address);
-        setZipcode(userData.zipcode);
-        setCity(userData.city);
-        setCountry(userData.country);
-        setPhone(userData.phone);
-        setUserType(userData.role);
-        setPastOrders(userData.pastOrders || []);
-        setProfilePic(userData.profilePic || null);
+      if (userId) {
+        await updateUser(userId, { profilePic: url });
+        setProfilePic(url);
+      } else {
+        console.error("userId is null when updating profile picture");
       }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  }
-
-  async function handleAvatarUpload(url: string) {
-    try {
-      await updateUser(userId, { profilePic: url });
-      setProfilePic(url);
     } catch (error) {
       console.error("Error updating profile picture:", error);
     }
-  }
+  };
 
-  function handleLogout() {
-    localStorage.removeItem("user");
-    router.push("/authentication");
+  const handleLogout = () => {
+    try {
+      dispatch(logoutUserThunk);
+      localStorage.clear();
+      router.replace("/");
+    } catch (error) {
+      console.error("Error clearing localStorage:", error);
+      router.replace("/");
+    }
+  };
+
+  if (loading) {
+    return <Loading />;
   }
 
   return (

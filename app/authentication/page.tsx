@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./authentication.scss";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import { createUser, loginUser, getUserData } from "@/services/apiCalls";
 import { useRouter } from "next/navigation";
 import { useExodarFont } from "@/hooks/useExodarFont";
-import { useDispatch } from "react-redux";
-import { loginUserThunk } from "@/store/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUserThunk, selectUser } from "@/store/slices/userSlice";
 
 const Authentication: React.FC = () => {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
@@ -20,8 +20,15 @@ const Authentication: React.FC = () => {
 
   const router = useRouter();
   const dispatch: any = useDispatch();
+  const user = useSelector(selectUser);
 
   useExodarFont();
+
+  useEffect(() => {
+    if (user) {
+      router.push(`/profile?userId=${user.id}`);
+    }
+  }, [user, router]);
 
   const toggleForms = () => {
     setIsLoginFormVisible(!isLoginFormVisible);
@@ -43,8 +50,7 @@ const Authentication: React.FC = () => {
         return;
       }
 
-      const user: any = await createUser(signupEmail, signupPassword);
-      localStorage.setItem("user", JSON.stringify(user));
+      const user = await createUser(signupEmail, signupPassword);
       dispatch(
         loginUserThunk({ email: signupEmail, password: signupPassword })
       );
@@ -56,11 +62,7 @@ const Authentication: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      const { user } = await loginUser(loginEmail, loginPassword);
-      const fetchedUserData = await getUserData(user.id);
-      localStorage.setItem("user", JSON.stringify(fetchedUserData));
       dispatch(loginUserThunk({ email: loginEmail, password: loginPassword }));
-      router.push("/");
     } catch (error) {
       console.error("Error logging in:", error);
     }
@@ -125,7 +127,6 @@ const Authentication: React.FC = () => {
             <p className="lost-password-link">Forgot your password?</p>
             <CustomButton text={"Log In"} onClick={handleLogin} />
           </div>
-
           <div className={`signup ${isSignupFormVisible ? "" : "hide"}`}>
             <h2>Sign Up</h2>
             <div className="inputbox">

@@ -52,7 +52,7 @@ export const loginUser = async (email: string, password: string) => {
 export const logoutUser = async () => {
   try {
     await supabase.auth.signOut();
-    window.location.href = "/login";
+    localStorage.removeItem("user");
     return "User logged out successfully.";
   } catch (error: any) {
     throw error;

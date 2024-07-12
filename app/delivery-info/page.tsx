@@ -176,17 +176,17 @@ export default function DeliveryInfoPage() {
           </div>
           <div className="actions-container">
             <CustomButton
-              text={loading ? "Processing..." : "Proceed to Payment"}
-              type="submit"
-              disabled={loading}
-              onClick={undefined}
-            />
-            <CustomButton
               text={"Back"}
               type="submit"
               disabled={loading}
               onClick={goBack}
               secondary={true}
+            />
+            <CustomButton
+              text={loading ? "Processing..." : "Proceed to Payment"}
+              type="submit"
+              disabled={loading}
+              onClick={undefined}
             />
           </div>
         </form>

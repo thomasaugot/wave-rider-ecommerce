@@ -112,7 +112,9 @@ export const Navbar: React.FC = () => {
         <div className="mobile-top-icons">
           {isMobile && (
             <>
-              <FaSearch onClick={() => handleMenuItemClick("/products")} />
+              <Link href={"/products"}>
+                <FaSearch onClick={() => handleMenuItemClick("/products")} />
+              </Link>
               <Link href="/shopping-cart">
                 <div className="cart-icon">
                   <FaShoppingCart className="nav-icon" />

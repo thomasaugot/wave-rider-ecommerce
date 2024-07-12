@@ -22,6 +22,22 @@ The app is progressive, it means that:
 - You can run it while offline
 - Essential data is cached so it loads the content faster
 
+## Functionalities
+
+As a visitor of this e-commerce website, you can:
+
+- Create an account / log in / log out
+- Complete, edit your account, upload a profile picture
+- View products, add any to your cart
+- Search products by category, brand, name...
+- Contact the owner (me) through various contact forms
+
+As an admin, you can:
+
+- Add, edit and delete products
+
+NB: since this app is for training and educational purposes only, I chose not to make access to some routes private. Only those that require admin authorization are accessible by logging in using any email address ending with "@admin.com"
+
 ## Getting Started
 
 Open a terminal, travel to you desired location on your machine using:

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import CustomButton from "@/components/CustomButton/CustomButton";
-import { createUser, loginUser, getUserData } from "@/services/apiCalls";
+import { createUser } from "@/services/apiCalls";
 import { useRouter } from "next/navigation";
 import { useExodarFont } from "@/hooks/useExodarFont";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,9 +52,11 @@ export default function Authentication() {
       }
 
       const user = await createUser(signupEmail, signupPassword);
-      dispatch(
+
+      await dispatch(
         loginUserThunk({ email: signupEmail, password: signupPassword })
       );
+
       router.push("/complete-registration");
     } catch (error) {
       console.error("Error signing up:", error);

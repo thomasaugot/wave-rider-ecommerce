@@ -6,8 +6,9 @@ import { Navigation } from "swiper/modules";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
-import "./SimilarProducts.scss";
 import { Product } from "@/types";
+
+import "./SimilarProducts.scss";
 
 interface SimilarProductsProps {
   currentProduct: Product;

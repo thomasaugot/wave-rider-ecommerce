@@ -5,9 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import { updateCart, selectCart } from "@/store/slices/cartSlice";
+
 import "./delivery-info.scss";
 
-const DeliveryInfoPage: React.FC = () => {
+export default function DeliveryInfoPage() {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -192,6 +193,4 @@ const DeliveryInfoPage: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default DeliveryInfoPage;
+}

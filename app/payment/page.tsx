@@ -9,10 +9,11 @@ import VisaLogo from "../../public/assets/img/visa.webp";
 import MasterCardLogo from "../../public/assets/img/mastercard.webp";
 import AmexLogo from "../../public/assets/img/amex.webp";
 import getStripe from "@/services/clientStripe";
-import { updateCart, selectCart } from "@/store/slices/cartSlice";
+import { selectCart } from "@/store/slices/cartSlice";
+
 import "./payment.scss";
 
-const PaymentPage = () => {
+export default function PaymentPage() {
   const dispatch = useDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -301,6 +302,4 @@ const PaymentPage = () => {
       </div>
     </div>
   );
-};
-
-export default PaymentPage;
+}

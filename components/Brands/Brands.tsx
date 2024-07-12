@@ -1,4 +1,3 @@
-import "./Brands.scss";
 import React from "react";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
@@ -6,6 +5,8 @@ import { useFramerMotion } from "@/hooks/useFramerMotion";
 import { useRouter } from "next/navigation";
 import { brands } from "@/constants/brands";
 import CustomButton from "../CustomButton/CustomButton";
+
+import "./Brands.scss";
 
 const variants = {
   hidden: { opacity: 0, y: 20 },

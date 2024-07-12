@@ -6,12 +6,12 @@ import CustomButton from "@/components/CustomButton/CustomButton";
 import { updateUser } from "@/services/apiCalls";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import "./complete-registration.scss";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
 import { selectUser } from "@/store/slices/userSlice";
 
-const CompleteRegistration: React.FC = () => {
+import "./complete-registration.scss";
+
+export default function CompleteRegistration() {
   const router = useRouter();
   const user = useSelector(selectUser);
   const [firstname, setFirstname] = useState<string>("");
@@ -145,6 +145,4 @@ const CompleteRegistration: React.FC = () => {
       </form>
     </div>
   );
-};
-
-export default CompleteRegistration;
+}

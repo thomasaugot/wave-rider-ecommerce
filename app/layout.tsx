@@ -2,11 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "swiper/swiper-bundle.css";
 import "swiper/css/pagination";
-
 import StoreProvider from "./StoreProvider";
 import { Navbar } from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { AppLoader } from "@/components/AppLoader/AppLoader";
+
 import "@/styles/globals.scss";
 
 const inter = Inter({ subsets: ["latin"] });

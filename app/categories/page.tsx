@@ -1,6 +1,7 @@
 import { categories } from "@/constants/categories";
-import "./categories.scss";
 import { CategoryCard } from "@/components/CategoryCard/CategoryCard";
+
+import "./categories.scss";
 
 export default function CategoriesPage() {
   return (

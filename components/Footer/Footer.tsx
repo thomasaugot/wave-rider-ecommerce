@@ -7,9 +7,10 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import "./Footer.scss";
 import { WavyAnimation } from "@/components/WavyAnimation/WavyAnimation";
 import { FaRegHeart } from "react-icons/fa6";
+
+import "./Footer.scss";
 
 const Footer: React.FC = () => {
   return (

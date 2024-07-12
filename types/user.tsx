@@ -1,4 +1,4 @@
-interface PastOrder {
+export interface PastOrder {
   productId: string;
   quantity: number;
   price: number;
@@ -26,4 +26,15 @@ interface UserType {
   pastOrders?: PastOrder[];
 }
 
-export type { UserType, PastOrder };
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface UserState {
+  user: UserType | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export type { UserType };

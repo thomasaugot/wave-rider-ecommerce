@@ -7,9 +7,10 @@ import { getUserData, updateUser } from "@/services/apiCalls";
 import { UserType } from "@/types/user";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+
 import "./edit-profile.scss";
 
-const EditProfile: React.FC = () => {
+export default function EditProfile() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const userId = searchParams.get("userId");
@@ -31,6 +32,10 @@ const EditProfile: React.FC = () => {
       router.push(`/profile/${userId}`);
     }
   }, [userId, router]);
+
+  const goBack = () => {
+    router.back();
+  };
 
   async function fetchUserData(id: string) {
     try {
@@ -167,10 +172,16 @@ const EditProfile: React.FC = () => {
             />
           </div>
         </div>
-        <CustomButton text="Save Changes" type="submit" onClick={undefined} />
+        <div className="actions-container">
+          <CustomButton
+            text={"Cancel"}
+            type="submit"
+            onClick={goBack}
+            secondary={true}
+          />
+          <CustomButton text="Save Changes" type="submit" onClick={undefined} />
+        </div>
       </form>
     </div>
   );
-};
-
-export default EditProfile;
+}

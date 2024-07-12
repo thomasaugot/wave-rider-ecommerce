@@ -6,12 +6,13 @@ import CustomButton from "@/components/CustomButton/CustomButton";
 import Avatar from "@/components/Avatar/Avatar";
 import { updateUser, getUserData } from "@/services/apiCalls";
 import { UserType, PastOrder } from "@/types/user";
-import "@/styles/shared-styles.scss";
 import { Loading } from "@/components/Loading/Loading";
 import { logoutUserThunk } from "@/store/slices/userSlice";
 import { useDispatch } from "react-redux";
 
-const Profile: React.FC = () => {
+import "@/styles/shared-styles.scss";
+
+export default function Profile() {
   const router = useRouter();
   const dispatch: any = useDispatch();
   const [loading, setLoading] = useState(true);
@@ -88,80 +89,80 @@ const Profile: React.FC = () => {
     try {
       dispatch(logoutUserThunk);
       localStorage.clear();
-      router.replace("/");
+      router.push("/");
     } catch (error) {
       console.error("Error clearing localStorage:", error);
-      router.replace("/");
+      router.push("/");
     }
   };
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <div className="container">
-      <div className="profile-header">
-        <h1>Welcome, {firstname}!</h1>
-        <Avatar url={profilePic} size={150} onUpload={handleAvatarUpload} />
-      </div>
-      <div className="profile-details">
-        <h2>Profile Details</h2>
-        <p>
-          <strong>First Name:</strong> {firstname}
-        </p>
-        <p>
-          <strong>Last Name:</strong> {lastname}
-        </p>
-        <p>
-          <strong>Date of Birth:</strong> {dateOfBirth}
-        </p>
-        <p>
-          <strong>Address:</strong> {address}
-        </p>
-        <p>
-          <strong>Zip Code:</strong> {zipcode}
-        </p>
-        <p>
-          <strong>City:</strong> {city}
-        </p>
-        <p>
-          <strong>Country:</strong> {country}
-        </p>
-        <p>
-          <strong>Phone:</strong> {phone}
-        </p>
-      </div>
-      <div className="past-orders">
-        <h2>Past Orders</h2>
-        {pastOrders.length > 0 ? (
-          <ul>
-            {pastOrders.map((order) => (
-              <li key={order.productId}>
-                <p>
-                  <strong>Order ID:</strong> {order.productId}
-                </p>
-                <p>
-                  <strong>Order Date:</strong> {order.date}
-                </p>
-                <p>
-                  <strong>Order Total:</strong> {order.price}
-                </p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="no-orders">No past orders found.</p>
-        )}
-      </div>
-      <CustomButton
-        text="Edit Profile"
-        onClick={() => router.push(`/edit-profile?userId=${userId}`)}
-      />
-      <br />
-      <CustomButton text="Logout" onClick={handleLogout} secondary={true} />
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <div className="profile-header">
+            <h1>Welcome, {firstname}!</h1>
+            <Avatar url={profilePic} size={150} onUpload={handleAvatarUpload} />
+          </div>
+          <div className="profile-details">
+            <h2>Profile Details</h2>
+            <p>
+              <strong>First Name:</strong> {firstname}
+            </p>
+            <p>
+              <strong>Last Name:</strong> {lastname}
+            </p>
+            <p>
+              <strong>Date of Birth:</strong> {dateOfBirth}
+            </p>
+            <p>
+              <strong>Address:</strong> {address}
+            </p>
+            <p>
+              <strong>Zip Code:</strong> {zipcode}
+            </p>
+            <p>
+              <strong>City:</strong> {city}
+            </p>
+            <p>
+              <strong>Country:</strong> {country}
+            </p>
+            <p>
+              <strong>Phone:</strong> {phone}
+            </p>
+          </div>
+          <div className="past-orders">
+            <h2>Past Orders</h2>
+            {pastOrders.length > 0 ? (
+              <ul>
+                {pastOrders.map((order) => (
+                  <li key={order.productId}>
+                    <p>
+                      <strong>Order ID:</strong> {order.productId}
+                    </p>
+                    <p>
+                      <strong>Order Date:</strong> {order.date}
+                    </p>
+                    <p>
+                      <strong>Order Total:</strong> {order.price}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="no-orders">No past orders found.</p>
+            )}
+          </div>
+          <CustomButton
+            text="Edit Profile"
+            onClick={() => router.push(`/edit-profile?userId=${userId}`)}
+          />
+          <br />
+          <CustomButton text="Logout" onClick={handleLogout} secondary={true} />
+        </>
+      )}
     </div>
   );
-};
-
-export default Profile;
+}

@@ -1,7 +1,8 @@
 import React from "react";
+
 import "@/styles/shared-styles.scss";
 
-const ConfirmEmail: React.FC = () => {
+export default function ConfirmEmail() {
   return (
     <div className="container">
       <p>
@@ -10,6 +11,4 @@ const ConfirmEmail: React.FC = () => {
       </p>
     </div>
   );
-};
-
-export default ConfirmEmail;
+}

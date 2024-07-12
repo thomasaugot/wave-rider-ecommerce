@@ -2,6 +2,7 @@ import React from "react";
 import { useFramerMotion } from "@/hooks/useFramerMotion";
 import CustomButton from "../CustomButton/CustomButton";
 import { useRouter } from "next/navigation";
+
 import "./Introdution.scss";
 
 export const Introdution: React.FC = () => {

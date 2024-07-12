@@ -5,11 +5,12 @@ import { ProductCard } from "@/components/ProductCard/ProductCard";
 import useFilterByCategory from "@/hooks/useFilterByCategory";
 import useFilterByBrand from "@/hooks/useFilterByBrand";
 import { useSearchParams } from "next/navigation";
-import "./products.scss";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { Product } from "@/types";
 
-const Products: React.FC = () => {
+import "./products.scss";
+
+export default function Products() {
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
   const brand = searchParams.get("brand")?.toLowerCase();
@@ -132,6 +133,4 @@ const Products: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default Products;
+}

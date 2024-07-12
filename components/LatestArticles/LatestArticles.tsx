@@ -1,5 +1,3 @@
-// components/LatestArticles/LatestArticles.tsx
-
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -13,8 +11,9 @@ import {
   fetchProductsThunk,
   selectProducts,
 } from "@/store/slices/productSlice";
-import "./LatestArticles.scss";
 import { Product } from "@/types";
+
+import "./LatestArticles.scss";
 
 export const LatestArticles: React.FC = () => {
   const dispatch: any = useDispatch();

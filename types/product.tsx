@@ -10,4 +10,11 @@ interface Product {
   brand: string;
 }
 
+export interface ProductState {
+  products: Product[];
+  selectedProduct: Product | null;
+  loading: boolean;
+  error: string | null;
+}
+
 export type { Product }; // so I can export it as a module

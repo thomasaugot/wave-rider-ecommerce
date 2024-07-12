@@ -3,9 +3,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "@/store/slices/cartSlice";
-import "./ProductCard.scss";
 import CustomButton from "../CustomButton/CustomButton";
 import { RootState } from "@/store/store";
+
+import "./ProductCard.scss";
 
 interface ProductCardProps {
   id: string;

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Product } from "@/types";
 import { getProducts } from "@/services/apiCalls";
 import { RootState } from "../store";
+import { ProductState } from "@/types";
 
 export const fetchProductsThunk = createAsyncThunk(
   "products/fetchProducts",
@@ -14,13 +14,6 @@ export const fetchProductsThunk = createAsyncThunk(
     }
   }
 );
-
-interface ProductState {
-  products: Product[];
-  selectedProduct: Product | null;
-  loading: boolean;
-  error: string | null;
-}
 
 const initialState: ProductState = {
   products: [],

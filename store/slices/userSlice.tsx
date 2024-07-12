@@ -1,12 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { UserType } from "@/types";
+import { UserType, LoginPayload, UserState } from "@/types";
 import { loginUser, logoutUser } from "@/services/apiCalls";
 import { RootState } from "../store";
-
-interface LoginPayload {
-  email: string;
-  password: string;
-}
 
 const getUserFromLocalStorage = (): UserType | null => {
   if (typeof window === "undefined") {
@@ -16,12 +11,6 @@ const getUserFromLocalStorage = (): UserType | null => {
   const userString = localStorage.getItem("user");
   return userString ? JSON.parse(userString) : null;
 };
-
-interface UserState {
-  user: UserType | null;
-  loading: boolean;
-  error: string | null;
-}
 
 const initialState: UserState = {
   user: getUserFromLocalStorage(),

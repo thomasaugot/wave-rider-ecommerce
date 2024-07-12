@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import "./authentication.scss";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import { createUser, loginUser, getUserData } from "@/services/apiCalls";
 import { useRouter } from "next/navigation";
@@ -9,7 +8,9 @@ import { useExodarFont } from "@/hooks/useExodarFont";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserThunk, selectUser } from "@/store/slices/userSlice";
 
-const Authentication: React.FC = () => {
+import "./authentication.scss";
+
+export default function Authentication() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const [isSignupFormVisible, setIsSignupFormVisible] = useState(true);
   const [signupEmail, setSignupEmail] = useState("");
@@ -159,6 +160,4 @@ const Authentication: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default Authentication;
+}

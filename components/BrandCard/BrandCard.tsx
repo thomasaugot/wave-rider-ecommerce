@@ -4,6 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Brand } from "@/types";
+
 import "./BrandCard.scss";
 
 interface BrandCardProps {

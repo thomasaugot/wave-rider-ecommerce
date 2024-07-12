@@ -1,6 +1,7 @@
 import React from "react";
-import "./TestimonialCard.scss";
 import Image from "next/image";
+
+import "./TestimonialCard.scss";
 
 type TestimonialCardProps = {
   name: string;

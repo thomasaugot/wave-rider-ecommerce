@@ -10,6 +10,7 @@ import paddleboard from "@/public/assets/img/paddle.webp";
 import bodyboard from "@/public/assets/img/bodyboarder.webp";
 import wingfoil from "@/public/assets/img/windfoil.webp";
 import aerialBeach from "@/public/assets/img/aerial-beach.webp";
+
 import "./CategoriesBentoGrid.scss";
 
 export const CategoriesBentoGrid: React.FC = () => {

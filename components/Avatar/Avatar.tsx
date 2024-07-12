@@ -4,8 +4,9 @@ import { useState, useEffect, ChangeEvent } from "react";
 import { supabase } from "@/services/supabase";
 import Image from "next/image";
 import { FaEdit } from "react-icons/fa";
-import "./Avatar.scss";
 import placeholder from "@/public/assets/img/profile-placeholder.png";
+
+import "./Avatar.scss";
 
 interface AvatarProps {
   url: string | null;

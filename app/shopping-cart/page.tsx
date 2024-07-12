@@ -10,9 +10,10 @@ import {
   decrementItem,
   selectCart,
 } from "@/store/slices/cartSlice";
+
 import "./shopping-cart.scss";
 
-const CartPage: React.FC = () => {
+export default function CartPage() {
   const dispatch = useDispatch();
   const router = useRouter();
   const cartState = useSelector(selectCart);
@@ -81,6 +82,4 @@ const CartPage: React.FC = () => {
       <CustomButton text="Process Order" onClick={handleProceedToDelivery} />
     </div>
   );
-};
-
-export default CartPage;
+}

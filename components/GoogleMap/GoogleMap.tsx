@@ -2,6 +2,7 @@
 
 import React, { useMemo } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+
 import "./GoogleMap.scss";
 
 export const GoogleMapComponent: React.FC = ({}) => {

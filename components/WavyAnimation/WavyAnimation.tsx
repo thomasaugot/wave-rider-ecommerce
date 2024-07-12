@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+
 import "./WavyAnimation.scss";
 
 export const WavyAnimation: React.FC = () => {

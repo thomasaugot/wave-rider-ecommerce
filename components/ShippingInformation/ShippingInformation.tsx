@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import woodenSignal from "../../public/assets/img/mobile-wooden-signal.webp";
+
 import "./ShippingInformation.scss";
 
 const shippingInfoItems = [

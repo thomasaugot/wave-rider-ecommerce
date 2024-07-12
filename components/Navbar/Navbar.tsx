@@ -12,8 +12,9 @@ import { selectUser } from "@/store/slices/userSlice";
 import { selectCart } from "@/store/slices/cartSlice";
 import { RootState } from "@/store/store";
 import logo from "../../public/assets/img/logo.png";
-import "./Navbar.scss";
 import { WavyAnimation } from "@/components/WavyAnimation/WavyAnimation";
+
+import "./Navbar.scss";
 
 interface MenuItem {
   label: string;

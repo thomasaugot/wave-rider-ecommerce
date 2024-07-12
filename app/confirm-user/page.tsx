@@ -1,7 +1,7 @@
 import React from "react";
+import Link from "next/link";
 
 import "@/styles/shared-styles.scss";
-import Link from "next/link";
 
 export default function ConfirmUser() {
   return (

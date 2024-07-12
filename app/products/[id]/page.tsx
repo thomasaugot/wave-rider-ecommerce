@@ -19,21 +19,20 @@ import {
   selectSelectedProduct,
 } from "@/store/slices/productSlice";
 import { addItem, selectCart } from "@/store/slices/cartSlice";
+
 import "./product-details.scss";
 
 interface ProductDetailsPageProps {
   params: { id: string };
 }
 
-const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ params }) => {
+export default function ProductDetails({ params }: ProductDetailsPageProps) {
   const dispatch: any = useDispatch();
   const selectedProduct = useSelector(selectSelectedProduct);
   const products: any = useSelector(selectProducts);
   const cart = useSelector(selectCart);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null);
   const router = useRouter();
-
-  console.log("selected product --->,", selectedProduct);
 
   useEffect(() => {
     dispatch(fetchProductsThunk());
@@ -141,6 +140,4 @@ const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({ params }) => {
       <SimilarProducts currentProduct={selectedProduct} />
     </div>
   );
-};
-
-export default ProductDetailsPage;
+}

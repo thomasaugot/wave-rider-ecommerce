@@ -1,7 +1,5 @@
 import React from "react";
 import { ContactForm } from "@/components/ContactForm/ContactForm";
-
-import "./contact-us.scss";
 import {
   FaFacebook,
   FaInstagram,
@@ -9,6 +7,8 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+
+import "./contact-us.scss";
 
 export default function ContactUs() {
   return (

@@ -18,6 +18,7 @@ import { GoogleMapComponent } from "@/components/GoogleMap/GoogleMap";
 import { FullPresentation } from "@/components/FullPresentation/FullPresentation";
 import { Introdution } from "@/components/Introdution/Introdution";
 import { useExodarFont } from "@/hooks/useExodarFont";
+
 import "@/styles/page.scss";
 
 export default function Home() {

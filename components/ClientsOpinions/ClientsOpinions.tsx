@@ -7,8 +7,9 @@ import "swiper/scss";
 import "swiper/scss/pagination";
 import "swiper/scss/navigation";
 import "swiper/scss/autoplay";
-import "./ClientsOpinions.scss";
 import { testimonials } from "@/constants/testimonials";
+
+import "./ClientsOpinions.scss";
 
 export const ClientsOpinions: React.FC = () => {
   const counterRef: any = useRef(null);

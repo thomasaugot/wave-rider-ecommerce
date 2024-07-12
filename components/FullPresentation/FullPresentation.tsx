@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import "./FullPresentation.scss";
 import CustomButton from "../CustomButton/CustomButton";
+
+import "./FullPresentation.scss";
 
 export const FullPresentation: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);

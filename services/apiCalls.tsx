@@ -1,7 +1,7 @@
 import { Product, UserType } from "@/types";
 import { supabase } from "./supabase";
 
-export const createUser = async (email: string, password: string) => {
+export const createUserAPI = async (email: string, password: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     throw new Error("Invalid email format");
@@ -32,7 +32,7 @@ export const createUser = async (email: string, password: string) => {
   }
 };
 
-export const loginUser = async (email: string, password: string) => {
+export const loginUserAPI = async (email: string, password: string) => {
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -49,7 +49,7 @@ export const loginUser = async (email: string, password: string) => {
   }
 };
 
-export const logoutUser = async () => {
+export const logoutUserAPI = async () => {
   try {
     await supabase.auth.signOut();
     localStorage.removeItem("user");
@@ -59,7 +59,9 @@ export const logoutUser = async () => {
   }
 };
 
-export const getUserData = async (userId: string): Promise<UserType | null> => {
+export const getUserDataAPI = async (
+  userId: string
+): Promise<UserType | null> => {
   try {
     const { data, error } = await supabase
       .from("users")
@@ -78,7 +80,7 @@ export const getUserData = async (userId: string): Promise<UserType | null> => {
   }
 };
 
-export const updateUser = async (
+export const updateUserAPI = async (
   userId: string,
   newData: Partial<UserType>
 ): Promise<UserType> => {
@@ -104,7 +106,7 @@ export const updateUser = async (
   }
 };
 
-export const deleteUser = async (userId: any) => {
+export const deleteUserAPI = async (userId: any) => {
   try {
     const { data, error } = await supabase
       .from("users")
@@ -124,7 +126,7 @@ export const deleteUser = async (userId: any) => {
   }
 };
 
-export const getProducts = async (): Promise<Product[]> => {
+export const getProductsAPI = async (): Promise<Product[]> => {
   try {
     let { data: products, error } = await supabase.from("products").select("*");
 
@@ -139,25 +141,20 @@ export const getProducts = async (): Promise<Product[]> => {
   }
 };
 
-export const addProduct = async (productData: { [key: string]: any }) => {
-  try {
-    const { data, error } = await supabase
-      .from("products")
-      .insert([productData])
-      .select();
+export const addProductAPI = async (product: Product) => {
+  const { data, error } = await supabase
+    .from("products")
+    .insert([product])
+    .select();
 
-    if (error) {
-      throw error;
-    }
-
-    return data;
-  } catch (error) {
-    console.error("Error adding product:", error);
-    return null;
+  if (error) {
+    throw new Error(error.message);
   }
+
+  return data;
 };
 
-export const getProductDetails = async (id: any) => {
+export const getProductDetailsAPI = async (id: any) => {
   try {
     let { data: productDetails, error } = await supabase
       .from("products")
@@ -173,7 +170,48 @@ export const getProductDetails = async (id: any) => {
   }
 };
 
-export const addToCart = async (
+export const updateProductAPI = async (
+  id: string,
+  productData: Partial<Product>
+) => {
+  try {
+    const { data, error } = await supabase
+      .from("products")
+      .update(productData)
+      .eq("id", id)
+      .select("*")
+      .single();
+
+    if (error) {
+      throw new Error("Error updating product: " + error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error updating product:", error);
+    throw error;
+  }
+};
+
+export const deleteProductAPI = async (id: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("products")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      throw new Error("Error deleting product: " + error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw error;
+  }
+};
+
+export const addToCartAPI = async (
   cartContent: { [key: string]: any },
   userId: string
 ) => {
@@ -194,7 +232,7 @@ export const addToCart = async (
   }
 };
 
-export const getCart = async (userId: any) => {
+export const getCartAPI = async (userId: any) => {
   try {
     let { data: cartItems, error } = await supabase
       .from("cart")
@@ -211,7 +249,7 @@ export const getCart = async (userId: any) => {
   }
 };
 
-export const fetchLastPurchases = async (
+export const fetchLastPurchasesAPI = async (
   userId: string
 ): Promise<Product[]> => {
   try {

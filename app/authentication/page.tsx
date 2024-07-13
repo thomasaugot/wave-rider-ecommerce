@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import CustomButton from "@/components/CustomButton/CustomButton";
-import { createUser } from "@/services/apiCalls";
+import { createUserAPI } from "@/services/apiCalls";
 import { useRouter } from "next/navigation";
 import { useExodarFont } from "@/hooks/useExodarFont";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,7 +51,7 @@ export default function Authentication() {
         return;
       }
 
-      const user = await createUser(signupEmail, signupPassword);
+      const user = await createUserAPI(signupEmail, signupPassword);
 
       await dispatch(
         loginUserThunk({ email: signupEmail, password: signupPassword })

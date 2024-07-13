@@ -35,6 +35,7 @@ export interface UserState {
   user: UserType | null;
   loading: boolean;
   error: string | null;
+  isAdmin: boolean;
 }
 
 export type { UserType };

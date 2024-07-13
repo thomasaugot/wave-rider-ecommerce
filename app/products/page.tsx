@@ -1,61 +1,77 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 import useFilterByCategory from "@/hooks/useFilterByCategory";
 import useFilterByBrand from "@/hooks/useFilterByBrand";
 import { useSearchParams } from "next/navigation";
 import SearchBar from "@/components/SearchBar/SearchBar";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchProductsThunk,
+  addProductThunk, // Import the new thunk
+  selectProducts,
+  selectLoading,
+} from "@/store/slices/productSlice";
 import { Product } from "@/types";
-
+import { AddProduct } from "@/components/AddProduct/AddProduct";
+import { selectUser } from "@/store/slices/userSlice";
 import "./products.scss";
+import { Loading } from "@/components/Loading/Loading";
 
 export default function Products() {
+  const dispatch: any = useDispatch();
+  const products = useSelector(selectProducts);
+  const isLoading = useSelector(selectLoading);
+  const user = useSelector(selectUser);
+  const isAdmin = user?.email?.endsWith("@admin.com");
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
   const brand = searchParams.get("brand")?.toLowerCase();
   const searchQuery = searchParams.get("search") || "";
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleAddProduct = (product: Product) => {
+    dispatch(addProductThunk(product));
+    setIsModalOpen(false);
+  };
+
+  useEffect(() => {
+    dispatch(fetchProductsThunk());
+  }, [dispatch]);
+
   const {
     searchQuery: categorySearchQuery,
     setSearchQuery: setCategorySearchQuery,
     currentProducts: categoryCurrentProducts,
-    totalPages: categoryTotalPages,
-    currentPage: categoryCurrentPage,
-    handlePageChange: handleCategoryPageChange,
   } = useFilterByCategory();
 
   const {
     searchQuery: brandSearchQuery,
     setSearchQuery: setBrandSearchQuery,
     currentProducts: brandCurrentProducts,
-    totalPages: brandTotalPages,
-    currentPage: brandCurrentPage,
-    handlePageChange: handleBrandPageChange,
   } = useFilterByBrand();
 
-  const productsPerPage = 12;
+  const productsPerPage = isAdmin ? 11 : 12;
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredProducts: Product[] = useMemo(() => {
-    let filtered: Product[] = [];
+    let filtered: Product[] = products;
 
     if (category) {
       const selectedCategories = category.split(",");
-      filtered = categoryCurrentProducts.filter((product) => {
-        return (
-          product.categories &&
-          product.categories.some((cat) =>
-            selectedCategories.includes(cat.toLowerCase())
-          )
-        );
-      });
-    } else if (brand) {
-      filtered = brandCurrentProducts.filter((product) => {
-        return product.brand.toLowerCase() === brand;
-      });
-    } else {
-      filtered = [...categoryCurrentProducts, ...brandCurrentProducts];
+      filtered = filtered.filter((product) =>
+        product.categories?.some((cat) =>
+          selectedCategories.includes(cat.toLowerCase())
+        )
+      );
+    }
+
+    if (brand) {
+      filtered = filtered.filter(
+        (product) => product.brand.toLowerCase() === brand
+      );
     }
 
     if (searchQuery) {
@@ -67,13 +83,7 @@ export default function Products() {
     }
 
     return filtered;
-  }, [
-    categoryCurrentProducts,
-    brandCurrentProducts,
-    searchQuery,
-    category,
-    brand,
-  ]);
+  }, [products, searchQuery, category, brand]);
 
   const totalFilteredPages = Math.ceil(
     filteredProducts.length / productsPerPage
@@ -103,34 +113,53 @@ export default function Products() {
 
   return (
     <div className="products-container">
-      <h1>{getTitle()}</h1>
-      <SearchBar
-        onChange={(query) => {
-          setCategorySearchQuery(query);
-          setBrandSearchQuery(query);
-        }}
-        placeholder="Search a product, a brand, a sport..."
-      />
-      <div className="products-grid">
-        {paginatedProducts.map((product) => (
-          <div key={product.id}>
-            <ProductCard {...product} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <h1>{getTitle()}</h1>
+          <SearchBar
+            onChange={(query) => {
+              setCategorySearchQuery(query);
+              setBrandSearchQuery(query);
+            }}
+            placeholder="Search a product, a brand, a sport..."
+          />
+          <div className="products-grid">
+            {isAdmin && (
+              <div
+                className="add-product-card"
+                onClick={() => setIsModalOpen(true)}
+              >
+                <div className="add-product-card__plus">+</div>
+              </div>
+            )}
+            {paginatedProducts.map((product) => (
+              <div key={product.id}>
+                <ProductCard {...product} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="pagination">
-        {Array.from({ length: totalFilteredPages }, (_, i) => i + 1).map(
-          (page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={currentPage === page ? "active" : ""}
-            >
-              {page}
-            </button>
-          )
-        )}
-      </div>
+          <div className="pagination">
+            {Array.from({ length: totalFilteredPages }, (_, i) => i + 1).map(
+              (page) => (
+                <button
+                  key={page}
+                  onClick={() => handlePageChange(page)}
+                  className={currentPage === page ? "active" : ""}
+                >
+                  {page}
+                </button>
+              )
+            )}
+          </div>
+          <AddProduct
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onAddProduct={handleAddProduct}
+          />
+        </>
+      )}
     </div>
   );
 }

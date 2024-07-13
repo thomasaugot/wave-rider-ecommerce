@@ -44,4 +44,27 @@
       }
     }
   }
+
+  .add-product-card {
+    @include flexCenter(column);
+    position: relative;
+    @include boxShadow;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+    width: 260px;
+    margin: 0 auto;
+    height: 450px;
+    background-color: color("white");
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+
+  .add-product-card__plus {
+    font-size: 3rem;
+    color: color("skyBlue");
+  }
 }

@@ -1,144 +1,155 @@
-"use client";
-
-import React, { useState } from "react";
-import { addProduct } from "@/services/apiCalls";
-
+import React, { useMemo, useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import "./AddProduct.scss";
 import CustomButton from "../CustomButton/CustomButton";
 
-export const AddProduct: React.FC = () => {
-  const [product, setProduct] = useState({
-    name: "",
-    description: "",
-    price: "",
-    images: "",
-    stock: "",
-    is_on_sale: false,
-    new_price: "",
-    categories: "",
-    brand: "",
-  });
+interface AddProductProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onAddProduct: (product: {
+    id: string;
+    stock: number;
+    name: string;
+    price: number;
+    description: string;
+    images: string[];
+    categories: string[];
+    created_at: string;
+    brand: string;
+  }) => void;
+}
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value, type, checked } = e.target as any;
-    setProduct((prevProduct) => ({
-      ...prevProduct,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
+export const AddProduct: React.FC<AddProductProps> = ({
+  isOpen,
+  onClose,
+  onAddProduct,
+}) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [stock, setStock] = useState(10);
+  const [images, setImages] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [brand, setBrand] = useState("");
+  const [createdAt] = useState(new Date().toISOString());
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await addProduct(product);
-      console.log("Product added:", response);
-      setProduct({
-        name: "",
-        description: "",
-        price: "",
-        images: "",
-        stock: "",
-        is_on_sale: false,
-        new_price: "",
-        categories: "",
-        brand: "",
-      });
-    } catch (error) {
-      console.error("Error adding product:", error);
+  useEffect(() => {
+    if (isOpen) {
+      setId(uuidv4());
     }
+  }, [isOpen]);
+
+  const [id, setId] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onAddProduct({
+      id,
+      stock,
+      name,
+      price,
+      description,
+      images,
+      categories,
+      created_at: createdAt,
+      brand,
+    });
+    onClose();
   };
+
+  if (!isOpen) return null;
 
   return (
-    <form onSubmit={handleSubmit} className="product-form">
-      <label>
-        Name:
-        <input
-          type="text"
-          name="name"
-          value={product.name}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Description:
-        <textarea
-          name="description"
-          value={product.description}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Price:
-        <input
-          type="number"
-          name="price"
-          value={product.price}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Images (comma separated URLs):
-        <input
-          type="text"
-          name="images"
-          value={product.images}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Stock:
-        <input
-          type="number"
-          name="stock"
-          value={product.stock}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Is On Sale:
-        <input
-          type="checkbox"
-          name="is_on_sale"
-          checked={product.is_on_sale}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        New Price:
-        <input
-          type="number"
-          name="new_price"
-          value={product.new_price}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        Categories (comma separated):
-        <input
-          type="text"
-          name="categories"
-          value={product.categories}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        Brand:
-        <input
-          type="text"
-          name="brand"
-          value={product.brand}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <CustomButton text={"Add Product"} onClick={undefined} type="submit" />
-    </form>
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>Add New Product</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-grid">
+            <div>
+              <label htmlFor="name">Name</label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="description">Description</label>
+              <textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="price">Price</label>
+              <input
+                id="price"
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(Number(e.target.value))}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="stock">Stock</label>
+              <input
+                id="stock"
+                type="number"
+                value={stock}
+                onChange={(e) => setStock(Number(e.target.value))}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="images">Images (comma-separated URLs)</label>
+              <input
+                id="images"
+                type="text"
+                value={images.join(",")}
+                onChange={(e) => setImages(e.target.value.split(","))}
+                placeholder="image1.jpg,image2.jpg"
+              />
+            </div>
+            <div>
+              <label htmlFor="categories">Categories (comma-separated)</label>
+              <input
+                id="categories"
+                type="text"
+                value={categories.join(",")}
+                onChange={(e) => setCategories(e.target.value.split(","))}
+                placeholder="category1,category2"
+              />
+            </div>
+            <div>
+              <label htmlFor="brand">Brand</label>
+              <input
+                id="brand"
+                type="text"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+          <div className="actions-container">
+            <CustomButton
+              type="submit"
+              text="Add Product"
+              onClick={undefined}
+            />
+            <CustomButton
+              type="button"
+              text="Cancel"
+              onClick={onClose}
+              secondary={true}
+            />
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import Avatar from "@/components/Avatar/Avatar";
-import { updateUser, getUserData } from "@/services/apiCalls";
+import { updateUserAPI, getUserDataAPI } from "@/services/apiCalls";
 import { UserType, PastOrder } from "@/types/user";
 import { Loading } from "@/components/Loading/Loading";
 import { logoutUserThunk } from "@/store/slices/userSlice";
@@ -32,7 +32,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchUserData = async (id: string) => {
       try {
-        const userData: UserType | null = await getUserData(id);
+        const userData: UserType | null = await getUserDataAPI(id);
 
         if (userData) {
           setFirstname(userData.firstname);
@@ -75,7 +75,7 @@ export default function Profile() {
   const handleAvatarUpload = async (url: string) => {
     try {
       if (userId) {
-        await updateUser(userId, { profilePic: url });
+        await updateUserAPI(userId, { profilePic: url });
         setProfilePic(url);
       } else {
         console.error("userId is null when updating profile picture");

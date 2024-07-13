@@ -3,7 +3,7 @@
 import React, { useEffect, useState, FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import CustomButton from "@/components/CustomButton/CustomButton";
-import { getUserData, updateUser } from "@/services/apiCalls";
+import { getUserDataAPI, updateUserAPI } from "@/services/apiCalls";
 import { UserType } from "@/types/user";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -39,7 +39,7 @@ export default function EditProfile() {
 
   async function fetchUserData(id: string) {
     try {
-      const userData: UserType | null = await getUserData(id);
+      const userData: UserType | null = await getUserDataAPI(id);
 
       if (userData) {
         setFirstname(userData.firstname);
@@ -61,7 +61,7 @@ export default function EditProfile() {
     event.preventDefault();
 
     try {
-      await updateUser(userId!, {
+      await updateUserAPI(userId!, {
         firstname,
         lastname,
         dateOfBirth,

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import CustomButton from "@/components/CustomButton/CustomButton";
-import { updateUser } from "@/services/apiCalls";
+import { updateUserAPI } from "@/services/apiCalls";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useSelector } from "react-redux";
@@ -38,7 +38,7 @@ export default function CompleteRegistration() {
       };
 
       if (user) {
-        await updateUser(user.id, userData);
+        await updateUserAPI(user.id, userData);
         router.push(`/profile?userId=${user.id}`);
       } else {
         console.log("Mandatory fields can't be empty");

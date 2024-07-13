@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Product } from "@/types/product";
-import { getProducts } from "@/services/apiCalls";
+import { getProductsAPI } from "@/services/apiCalls";
 
 const useFilterByBrand = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
@@ -15,7 +15,7 @@ const useFilterByBrand = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const products: Product[] = await getProducts();
+        const products: Product[] = await getProductsAPI();
         setAllProducts(products);
       } catch (error) {
         console.error("Error fetching products:", error);

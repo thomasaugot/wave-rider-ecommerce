@@ -9,7 +9,7 @@ import SearchBar from "@/components/SearchBar/SearchBar";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchProductsThunk,
-  addProductThunk, // Import the new thunk
+  addProductThunk,
   selectProducts,
   selectLoading,
 } from "@/store/slices/productSlice";

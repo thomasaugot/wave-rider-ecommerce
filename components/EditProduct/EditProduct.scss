@@ -1,16 +1,15 @@
 @import "@/styles/globals.scss";
 
-.modal-overlay {
+.modal {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: auto;
+  background: rgba(0, 0, 0, 0.5);
   z-index: 110;
 }
 
@@ -29,11 +28,11 @@
     font-family: fontName("exodar");
     font-size: fontSize("md");
     margin-bottom: 1rem;
-    text-align: center;
+    margin-top: 0;
     color: color("darkOrange");
   }
 
-  .add-form {
+  .edit-form {
     display: flex;
     flex-direction: column;
     width: 100%;

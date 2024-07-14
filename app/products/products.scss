@@ -23,7 +23,6 @@
   .products-grid {
     @include responsiveGridSystem;
     text-align: center;
-    padding: 0 2rem;
   }
 
   .pagination {
@@ -52,11 +51,19 @@
     border-radius: 1rem;
     overflow: hidden;
     transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
-    width: 260px;
     margin: 0 auto;
-    height: 450px;
     background-color: color("white");
     cursor: pointer;
+    width: 80vw;
+    height: 450px;
+
+    @include tablet {
+      width: 40vw;
+    }
+
+    @include smallDesktops {
+      width: 21vw;
+    }
 
     &:hover {
       background-color: #e0e0e0;

@@ -2,8 +2,6 @@
 
 import React, { useMemo, useState, useEffect } from "react";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
-import useFilterByCategory from "@/hooks/useFilterByCategory";
-import useFilterByBrand from "@/hooks/useFilterByBrand";
 import { useSearchParams } from "next/navigation";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { useSelector, useDispatch } from "react-redux";
@@ -28,8 +26,10 @@ export default function Products() {
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
   const brand = searchParams.get("brand")?.toLowerCase();
-  const searchQuery = searchParams.get("search") || "";
 
+  const [searchQuery, setSearchQuery] = useState(
+    searchParams.get("search") || ""
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddProduct = (product: Product) => {
@@ -40,21 +40,6 @@ export default function Products() {
   useEffect(() => {
     dispatch(fetchProductsThunk());
   }, [dispatch]);
-
-  const {
-    searchQuery: categorySearchQuery,
-    setSearchQuery: setCategorySearchQuery,
-    currentProducts: categoryCurrentProducts,
-  } = useFilterByCategory();
-
-  const {
-    searchQuery: brandSearchQuery,
-    setSearchQuery: setBrandSearchQuery,
-    currentProducts: brandCurrentProducts,
-  } = useFilterByBrand();
-
-  const productsPerPage = isAdmin ? 11 : 12;
-  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredProducts: Product[] = useMemo(() => {
     let filtered: Product[] = products;
@@ -84,6 +69,9 @@ export default function Products() {
 
     return filtered;
   }, [products, searchQuery, category, brand]);
+
+  const productsPerPage = isAdmin ? 11 : 12;
+  const [currentPage, setCurrentPage] = useState(1);
 
   const totalFilteredPages = Math.ceil(
     filteredProducts.length / productsPerPage
@@ -119,10 +107,7 @@ export default function Products() {
         <>
           <h1>{getTitle()}</h1>
           <SearchBar
-            onChange={(query) => {
-              setCategorySearchQuery(query);
-              setBrandSearchQuery(query);
-            }}
+            onChange={setSearchQuery}
             placeholder="Search a product, a brand, a sport..."
           />
           <div className="products-grid">

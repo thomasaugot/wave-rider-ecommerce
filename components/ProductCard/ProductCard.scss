@@ -6,13 +6,21 @@
   border-radius: 1rem;
   overflow: hidden;
   transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
-  max-width: 260px;
+  width: 80vw;
   margin: 0 auto;
   height: 450px;
   display: flex;
   flex-direction: column;
   background-color: color("skyBlue");
   cursor: pointer;
+
+  @include tablet {
+    width: 40vw;
+  }
+
+  @include smallDesktops {
+    width: 21vw;
+  }
 
   &:hover {
     .image-container {
@@ -92,6 +100,28 @@
     background-position: center;
     background-size: cover;
     background-position-y: 1rem;
+
+    .admin-buttons {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      top: 2rem;
+      right: 0;
+      gap: 0.5rem;
+      font-size: fontSize("sm");
+      background-color: color("white");
+      padding: 0.5rem;
+      color: color("darkGrey");
+      border-radius: 0.5rem;
+      z-index: 99;
+
+      .edit-icon,
+      .delete-icon {
+        &:hover {
+          color: #231f1f;
+        }
+      }
+    }
 
     h2 {
       font-size: 1.5em;

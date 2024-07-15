@@ -25,14 +25,14 @@ export const SimilarProducts: React.FC<SimilarProductsProps> = ({
     const fetchSimilarProducts = () => {
       const similarByName = products.filter(
         (product) =>
-          product.name
+          product?.name
             .toLowerCase()
             .includes(currentProduct.name.toLowerCase()) &&
           product.id !== currentProduct.id
       );
 
       if (similarByName.length === 0) {
-        const similarByCategory = products.filter(
+        const similarByCategory = products?.filter(
           (product) =>
             product.categories.some((category) =>
               currentProduct.categories.includes(category)
@@ -55,19 +55,19 @@ export const SimilarProducts: React.FC<SimilarProductsProps> = ({
   const updateNavigationVisibility = (swiper: any) => {
     if (!swiper) return;
     const { isBeginning, isEnd } = swiper;
-    const prevButton = swiper.navigation.prevEl;
-    const nextButton = swiper.navigation.nextEl;
+    const prevButton = swiper?.navigation?.prevEl;
+    const nextButton = swiper?.navigation?.nextEl;
     if (prevButton)
       prevButton.style.display =
-        isBeginning || similarProducts.length < 4 ? "none" : "block";
+        isBeginning || similarProducts?.length < 4 ? "none" : "block";
     if (nextButton)
       nextButton.style.display =
-        isEnd || similarProducts.length < 4 ? "none" : "block";
+        isEnd || similarProducts?.length < 4 ? "none" : "block";
   };
 
   useEffect(() => {
     if (swiperInstance) {
-      swiperInstance.update();
+      swiperInstance?.update();
       updateNavigationVisibility(swiperInstance);
     }
   }, [swiperInstance, similarProducts]);

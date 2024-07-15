@@ -69,3 +69,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Visit the production version:
 
 https://wave-riders-ecommerce.vercel.app/
+
+## Screenshots
+
+Here are a few screenshots of the app:
+
+![Home Page](https://link-to-your-image.com/homepage.png)
+![Product Page](https://link-to-your-image.com/productpage.png)
+![Cart](https://link-to-your-image.com/cart.png)

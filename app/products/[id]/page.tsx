@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import CustomButton from "@/components/CustomButton/CustomButton";
@@ -61,7 +61,7 @@ export default function ProductDetails({ params }: ProductDetailsPageProps) {
     }
   }, [params.id, products, dispatch]);
 
-  const addToCart = () => {
+  const addToCart = useCallback(() => {
     if (selectedProduct) {
       dispatch(
         addItem({
@@ -73,20 +73,12 @@ export default function ProductDetails({ params }: ProductDetailsPageProps) {
         })
       );
     }
-  };
+  }, [dispatch, selectedProduct]);
 
-  const buyNow = () => {
+  const buyNow = useCallback(() => {
     addToCart();
     router.push("/shopping-cart");
-  };
-
-  if (!selectedProduct) {
-    return (
-      <div className="product-details-page">
-        <Loading />
-      </div>
-    );
-  }
+  }, [addToCart, router]);
 
   const framerMotionProps = useFramerMotion({
     variants,
@@ -102,7 +94,7 @@ export default function ProductDetails({ params }: ProductDetailsPageProps) {
               className="carousel-swiper"
               thumbs={{ swiper: thumbsSwiper }}
             >
-              {selectedProduct.images.map((imageUrl, index) => (
+              {selectedProduct?.images.map((imageUrl, index) => (
                 <SwiperSlide key={index}>
                   <div className="main-image-wrapper">
                     <Image
@@ -126,7 +118,7 @@ export default function ProductDetails({ params }: ProductDetailsPageProps) {
               watchSlidesProgress
               className="thumbnail-swiper"
             >
-              {selectedProduct.images.map((imageUrl, index) => (
+              {selectedProduct?.images.map((imageUrl, index) => (
                 <SwiperSlide key={index}>
                   <div className="thumbnail-wrapper">
                     <Image
@@ -142,9 +134,9 @@ export default function ProductDetails({ params }: ProductDetailsPageProps) {
             </Swiper>
           </div>
           <div className="details-container">
-            <h1>{selectedProduct.name}</h1>
-            <p>{selectedProduct.description}</p>
-            <p>Price: €{selectedProduct.price.toFixed(2)}</p>
+            <h1>{selectedProduct?.name}</h1>
+            <p>{selectedProduct?.description}</p>
+            <p>Price: €{selectedProduct?.price.toFixed(2)}</p>
             <div className="actions-container">
               <CustomButton text={"Add to Cart"} onClick={addToCart} />
               <CustomButton
@@ -155,10 +147,20 @@ export default function ProductDetails({ params }: ProductDetailsPageProps) {
             </div>
           </div>
         </div>
-        <SimilarProducts currentProduct={selectedProduct} />
+        {selectedProduct && (
+          <SimilarProducts currentProduct={selectedProduct} />
+        )}
       </>
     ),
   });
+
+  if (!selectedProduct) {
+    return (
+      <div className="product-details-page">
+        <Loading />
+      </div>
+    );
+  }
 
   return <div className="product-details-page">{framerMotionProps}</div>;
 }

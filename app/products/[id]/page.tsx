@@ -19,12 +19,24 @@ import {
   selectSelectedProduct,
 } from "@/store/slices/productSlice";
 import { addItem, selectCart } from "@/store/slices/cartSlice";
+import { useFramerMotion } from "@/hooks/useFramerMotion";
 
 import "./product-details.scss";
 
 interface ProductDetailsPageProps {
   params: { id: string };
 }
+
+const variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1,
+    },
+  },
+};
 
 export default function ProductDetails({ params }: ProductDetailsPageProps) {
   const dispatch: any = useDispatch();
@@ -76,68 +88,77 @@ export default function ProductDetails({ params }: ProductDetailsPageProps) {
     );
   }
 
-  return (
-    <div className="product-details-page">
-      <div className="product-details">
-        <div className="img-container">
-          <Swiper
-            pagination={{ clickable: true }}
-            modules={[Pagination, Autoplay, Thumbs]}
-            autoplay={{ delay: 3000 }}
-            style={{ width: "100%", height: "auto" }}
-            className="carousel-swiper"
-            thumbs={{ swiper: thumbsSwiper }}
-          >
-            {selectedProduct.images.map((imageUrl, index) => (
-              <SwiperSlide key={index}>
-                <div className="main-image-wrapper">
-                  <Image
-                    src={imageUrl}
-                    alt={selectedProduct.name}
-                    layout="responsive"
-                    width={800}
-                    height={600}
-                    objectFit="contain"
-                    priority
-                    className="product-image"
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <Swiper
-            onSwiper={setThumbsSwiper}
-            slidesPerView={4}
-            spaceBetween={10}
-            watchSlidesProgress
-            className="thumbnail-swiper"
-          >
-            {selectedProduct.images.map((imageUrl, index) => (
-              <SwiperSlide key={index}>
-                <div className="thumbnail-wrapper">
-                  <Image
-                    src={imageUrl}
-                    alt={`Thumbnail ${index + 1}`}
-                    layout="fill"
-                    objectFit="cover"
-                    className="thumbnail-image"
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-        <div className="details-container">
-          <h1>{selectedProduct.name}</h1>
-          <p>{selectedProduct.description}</p>
-          <p>Price: €{selectedProduct.price.toFixed(2)}</p>
-          <div className="actions-container">
-            <CustomButton text={"Add to Cart"} onClick={addToCart} />
-            <CustomButton text={"Buy Now"} secondary={true} onClick={buyNow} />
+  const framerMotionProps = useFramerMotion({
+    variants,
+    children: (
+      <>
+        <div className="product-details">
+          <div className="img-container">
+            <Swiper
+              pagination={{ clickable: true }}
+              modules={[Pagination, Autoplay, Thumbs]}
+              autoplay={{ delay: 3000 }}
+              style={{ width: "100%", height: "auto" }}
+              className="carousel-swiper"
+              thumbs={{ swiper: thumbsSwiper }}
+            >
+              {selectedProduct.images.map((imageUrl, index) => (
+                <SwiperSlide key={index}>
+                  <div className="main-image-wrapper">
+                    <Image
+                      src={imageUrl}
+                      alt={selectedProduct.name}
+                      layout="responsive"
+                      width={800}
+                      height={600}
+                      objectFit="contain"
+                      priority
+                      className="product-image"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <Swiper
+              onSwiper={setThumbsSwiper}
+              slidesPerView={4}
+              spaceBetween={10}
+              watchSlidesProgress
+              className="thumbnail-swiper"
+            >
+              {selectedProduct.images.map((imageUrl, index) => (
+                <SwiperSlide key={index}>
+                  <div className="thumbnail-wrapper">
+                    <Image
+                      src={imageUrl}
+                      alt={`Thumbnail ${index + 1}`}
+                      layout="fill"
+                      objectFit="cover"
+                      className="thumbnail-image"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+          <div className="details-container">
+            <h1>{selectedProduct.name}</h1>
+            <p>{selectedProduct.description}</p>
+            <p>Price: €{selectedProduct.price.toFixed(2)}</p>
+            <div className="actions-container">
+              <CustomButton text={"Add to Cart"} onClick={addToCart} />
+              <CustomButton
+                text={"Buy Now"}
+                secondary={true}
+                onClick={buyNow}
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <SimilarProducts currentProduct={selectedProduct} />
-    </div>
-  );
+        <SimilarProducts currentProduct={selectedProduct} />
+      </>
+    ),
+  });
+
+  return <div className="product-details-page">{framerMotionProps}</div>;
 }

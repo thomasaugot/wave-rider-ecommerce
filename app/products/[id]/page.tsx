@@ -135,7 +135,9 @@ export default function ProductDetails({ params }: ProductDetailsPageProps) {
           </div>
           <div className="details-container">
             <h1>{selectedProduct?.name}</h1>
-            <p>{selectedProduct?.description}</p>
+            <p style={{ whiteSpace: "pre-line" }}>
+              {selectedProduct?.description}
+            </p>
             <p>Price: €{selectedProduct?.price.toFixed(2)}</p>
             <div className="actions-container">
               <CustomButton text={"Add to Cart"} onClick={addToCart} />

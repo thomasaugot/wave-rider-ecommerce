@@ -2,7 +2,6 @@
 
 .similar-products {
   margin-top: 2rem;
-  padding: 2rem;
   text-align: center;
 
   h2 {
@@ -19,10 +18,6 @@
 
   .swiper-wrapper {
     display: flex;
-
-    @include tablet {
-      justify-content: center;
-    }
   }
 
   .swiper-slide {

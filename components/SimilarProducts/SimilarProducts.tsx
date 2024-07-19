@@ -59,10 +59,10 @@ export const SimilarProducts: React.FC<SimilarProductsProps> = ({
     const nextButton = swiper?.navigation?.nextEl;
     if (prevButton)
       prevButton.style.display =
-        isBeginning || similarProducts?.length < 4 ? "none" : "block";
+        isBeginning || similarProducts?.length < 3 ? "none" : "block";
     if (nextButton)
       nextButton.style.display =
-        isEnd || similarProducts?.length < 4 ? "none" : "block";
+        isEnd || similarProducts?.length < 3 ? "none" : "block";
   };
 
   useEffect(() => {
@@ -76,18 +76,20 @@ export const SimilarProducts: React.FC<SimilarProductsProps> = ({
     <div className="similar-products">
       <h2>Similar Products</h2>
       <Swiper
+        initialSlide={0}
         slidesPerView={1}
         spaceBetween={10}
         navigation={similarProducts.length >= 4}
         breakpoints={{
           640: { slidesPerView: 2, spaceBetween: 20 },
-          768: { slidesPerView: 3, spaceBetween: 30 },
-          1024: { slidesPerView: 4, spaceBetween: 40 },
+          768: { slidesPerView: 3, spaceBetween: 20 },
         }}
         modules={[Navigation]}
         className="mySwiper"
         onSwiper={handleSwiper}
         onSlideChange={(swiper) => updateNavigationVisibility(swiper)}
+        centeredSlides={false}
+        watchOverflow={true}
       >
         {similarProducts.length > 0 ? (
           similarProducts.map((product) => (

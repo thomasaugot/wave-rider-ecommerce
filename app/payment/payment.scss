@@ -84,6 +84,7 @@
           color: #333;
           font-size: 1rem;
           font-family: fontName("roboto"), sans-serif;
+          margin-bottom: 0.5rem;
 
           &:focus {
             background-color: rgba(255, 255, 255, 0.8);
@@ -114,7 +115,7 @@
     }
   }
 
-  .payment-method {
+  .credit-card-section {
     margin-top: 2rem;
 
     h3 {
@@ -123,7 +124,7 @@
       margin-bottom: 1rem;
     }
 
-    .payment-method__logos {
+    .credit-card-logos {
       display: flex;
       gap: 1rem;
       margin-bottom: 2rem;
@@ -162,6 +163,7 @@
           color: #333;
           font-size: 1rem;
           font-family: fontName("roboto"), sans-serif;
+          margin-bottom: 0.5rem;
 
           &:focus {
             background-color: rgba(255, 255, 255, 0.8);

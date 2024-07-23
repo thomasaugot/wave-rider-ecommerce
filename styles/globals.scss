@@ -156,3 +156,12 @@
     flex-direction: row;
   }
 }
+
+.error-message {
+  color: color("warning");
+  font-family: fontName("roboto");
+  font-size: fontSize("xs");
+  margin-top: 5px;
+  text-align: center;
+  margin-bottom: 0;
+}

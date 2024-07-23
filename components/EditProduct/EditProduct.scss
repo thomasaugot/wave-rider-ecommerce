@@ -73,9 +73,13 @@
     }
 
     .right-block {
+      display: flex;
+      flex-direction: column;
+
       textarea {
-        height: 100%;
-        resize: none;
+        flex: 1;
+        min-height: 150px;
+        resize: vertical;
         background-color: rgba(color("white"), 0.6);
         border: solid 1px color("darkOrange");
         font-size: fontSize("xs");
@@ -83,6 +87,7 @@
         border-radius: 0.5rem;
         color: color("darkGrey");
         padding: 0.5rem;
+        width: 100%;
       }
     }
   }

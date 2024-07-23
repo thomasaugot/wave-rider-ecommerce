@@ -7,16 +7,13 @@ import { useRouter } from "next/navigation";
 import { useExodarFont } from "@/hooks/useExodarFont";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserThunk, selectUser } from "@/store/slices/userSlice";
+import { useForm } from "react-hook-form";
 
 import "./authentication.scss";
 
 export default function Authentication() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const [isSignupFormVisible, setIsSignupFormVisible] = useState(true);
-  const [signupEmail, setSignupEmail] = useState("");
-  const [signupPassword, setSignupPassword] = useState("");
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const router = useRouter();
@@ -36,26 +33,37 @@ export default function Authentication() {
     setIsSignupFormVisible(!isSignupFormVisible);
   };
 
-  const validatePassword = (password: string): boolean => {
+  const validatePassword = (password: string) => {
     const passwordRegex =
       /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     return passwordRegex.test(password);
   };
 
-  const handleSignup = async () => {
+  const {
+    register: registerSignup,
+    handleSubmit: handleSubmitSignup,
+    formState: { errors: errorsSignup },
+  } = useForm();
+
+  const {
+    register: registerLogin,
+    handleSubmit: handleSubmitLogin,
+    formState: { errors: errorsLogin },
+  } = useForm();
+
+  const handleSignup = async (data: any) => {
+    const { email, password } = data;
     try {
-      if (!validatePassword(signupPassword)) {
+      if (!validatePassword(password)) {
         setPasswordError(
           "Password must be at least 8 characters long, contain at least one uppercase letter, one special character, and one number."
         );
         return;
       }
 
-      const user = await createUserAPI(signupEmail, signupPassword);
+      const user = await createUserAPI(email, password);
 
-      await dispatch(
-        loginUserThunk({ email: signupEmail, password: signupPassword })
-      );
+      await dispatch(loginUserThunk({ email, password }));
 
       router.push("/complete-registration");
     } catch (error) {
@@ -63,9 +71,10 @@ export default function Authentication() {
     }
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (data: any) => {
+    const { email, password } = data;
     try {
-      dispatch(loginUserThunk({ email: loginEmail, password: loginPassword }));
+      await dispatch(loginUserThunk({ email, password }));
     } catch (error) {
       console.error("Error logging in:", error);
     }
@@ -111,52 +120,60 @@ export default function Authentication() {
         <div className={`frontbox ${isLoginFormVisible ? "" : "moving"}`}>
           <div className={`login ${isLoginFormVisible ? "" : "hide"}`}>
             <h2>Log In</h2>
-            <div className="inputbox">
-              <input
-                type="text"
-                name="email"
-                placeholder="Email"
-                value={loginEmail}
-                onChange={(e) => setLoginEmail(e.target.value)}
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={loginPassword}
-                onChange={(e) => setLoginPassword(e.target.value)}
-              />
-            </div>
-            <p className="lost-password-link">Forgot your password?</p>
-            <CustomButton text={"Log In"} onClick={handleLogin} />
+            <form onSubmit={handleSubmitLogin(handleLogin)}>
+              <div className="inputbox">
+                <input
+                  type="text"
+                  placeholder="Email"
+                  {...registerLogin("email", { required: true })}
+                />
+                {errorsLogin.email && (
+                  <p className="error-message">Email is required.</p>
+                )}
+                <input
+                  type="password"
+                  placeholder="Password"
+                  {...registerLogin("password", { required: true })}
+                />
+                {errorsLogin.password && (
+                  <p className="error-message">Password is required.</p>
+                )}
+              </div>
+              <p className="lost-password-link">Forgot your password?</p>
+              <CustomButton text={"Log In"} type="submit" onClick={undefined} />
+            </form>
           </div>
           <div className={`signup ${isSignupFormVisible ? "" : "hide"}`}>
             <h2>Sign Up</h2>
-            <div className="inputbox">
-              <input
-                type="text"
-                name="email"
-                placeholder="Email"
-                value={signupEmail}
-                onChange={(e) => setSignupEmail(e.target.value)}
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={signupPassword}
-                onChange={(e) => {
-                  setSignupPassword(e.target.value);
-                  setPasswordError("");
-                }}
-              />
-            </div>
-            <div className="error-container">
+            <form onSubmit={handleSubmitSignup(handleSignup)}>
+              <div className="inputbox">
+                <input
+                  type="text"
+                  placeholder="Email"
+                  {...registerSignup("email", { required: true })}
+                />
+                {errorsSignup.email && (
+                  <p className="error-message">Email is required.</p>
+                )}
+                <input
+                  type="password"
+                  placeholder="Password"
+                  {...registerSignup("password", { required: true })}
+                  onChange={() => setPasswordError("")}
+                />
+                {errorsSignup.password && (
+                  <p className="error-message">Password is required.</p>
+                )}
+              </div>
               {passwordError && (
-                <p className="password-error">{passwordError}</p>
+                <p className="error-message">{passwordError}</p>
               )}
-            </div>
-            <CustomButton text={"Sign Up"} onClick={handleSignup} />
+              <CustomButton
+                text={"Sign Up"}
+                type="submit"
+                onClick={undefined}
+              />
+            </form>
           </div>
         </div>
       </div>

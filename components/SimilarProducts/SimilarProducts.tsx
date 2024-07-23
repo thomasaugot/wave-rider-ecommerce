@@ -23,6 +23,8 @@ export const SimilarProducts: React.FC<SimilarProductsProps> = ({
 
   useEffect(() => {
     const fetchSimilarProducts = () => {
+      if (!currentProduct || !currentProduct.categories) return;
+
       const similarByName = products.filter(
         (product) =>
           product?.name
@@ -34,8 +36,8 @@ export const SimilarProducts: React.FC<SimilarProductsProps> = ({
       if (similarByName.length === 0) {
         const similarByCategory = products?.filter(
           (product) =>
-            product.categories.some((category) =>
-              currentProduct.categories.includes(category)
+            product.categories?.some((category) =>
+              currentProduct.categories?.includes(category)
             ) && product.id !== currentProduct.id
         );
         setSimilarProducts(similarByCategory.slice(0, 4));

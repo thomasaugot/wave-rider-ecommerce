@@ -17,7 +17,7 @@ export default function ContactUs() {
         If you need assistance selecting the right product for you then get in
         touch!
       </h2>
-      <p>
+      <p className="text">
         Our friendly staff can offer you expert advice 7 days a week over the
         phone, by email or at one of our stores. We’re here to help you get on
         board!

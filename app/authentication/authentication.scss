@@ -202,16 +202,4 @@
   .hide {
     display: none;
   }
-
-  .error-container {
-    height: 1.8rem;
-
-    .password-error {
-      color: color("warning");
-      font-size: fontSize("xxs");
-      margin-top: -10px;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-  }
 }

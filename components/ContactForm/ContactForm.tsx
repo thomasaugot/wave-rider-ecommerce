@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import emailjs from "@emailjs/browser";
 import gradientSurfBoard from "@/public/assets/img/gradient-surfboard.webp";
 import CustomButton from "../CustomButton/CustomButton";
@@ -8,36 +9,31 @@ import Image from "next/image";
 
 import "./ContactForm.scss";
 
+interface FormInputs {
+  name: string;
+  email: string;
+  message: string;
+}
+
 export const ContactForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stateMessage, setStateMessage] = useState<string | null>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const nameRef = useRef<HTMLInputElement>(null);
-  const messageRef = useRef<HTMLTextAreaElement>(null);
 
-  const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormInputs>();
 
+  const onSubmit: SubmitHandler<FormInputs> = (data) => {
     setIsSubmitting(true);
-
-    if (
-      !nameRef.current?.value ||
-      !emailRef.current?.value ||
-      !messageRef.current?.value
-    ) {
-      setStateMessage("Some fields are empty");
-      setIsSubmitting(false);
-      setTimeout(() => {
-        setStateMessage(null);
-      }, 5000);
-      return;
-    }
 
     const templateParams = {
       to_name: "Thomas",
-      from_name: nameRef.current.value,
-      message: messageRef.current.value,
-      email: emailRef.current.value,
+      from_name: data.name,
+      message: data.message,
+      email: data.email,
     };
 
     emailjs
@@ -48,49 +44,65 @@ export const ContactForm: React.FC = () => {
         process.env.NEXT_PUBLIC_PUBLIC_KEY!
       )
       .then(
-        function (response) {
+        () => {
           setStateMessage("Message sent!");
           setIsSubmitting(false);
-          setTimeout(() => {
-            setStateMessage(null);
-          }, 5000);
+          reset();
+          setTimeout(() => setStateMessage(null), 5000);
         },
-        function (error) {
+        () => {
           setStateMessage("Sending failed, please try again later");
           setIsSubmitting(false);
-          setTimeout(() => {
-            setStateMessage(null);
-          }, 5000);
+          setTimeout(() => setStateMessage(null), 5000);
         }
       );
-
-    nameRef.current.value = "";
-    emailRef.current.value = "";
-    messageRef.current.value = "";
   };
 
   return (
     <div className="form-container">
-      <form className="contact_form" onSubmit={sendMessage}>
+      <form className="contact_form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form_group">
-          <input type="text" ref={nameRef} placeholder="Your name" />
+          <input
+            type="text"
+            placeholder="Your name"
+            {...register("name", { required: "Name is required" })}
+          />
+          {errors.name && (
+            <p className="error-message">{errors.name.message}</p>
+          )}
         </div>
         <div className="form_group">
-          <input type="email" ref={emailRef} placeholder="Your email" />
+          <input
+            type="email"
+            placeholder="Your email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[^@]+@[^@]+\.[^@]+$/,
+                message: "Invalid email address",
+              },
+            })}
+          />
+          {errors.email && (
+            <p className="error-message">{errors.email.message}</p>
+          )}
         </div>
         <div className="form_group">
           <textarea
-            ref={messageRef}
             rows={6}
             placeholder="Your message"
-          ></textarea>
+            {...register("message", { required: "Message is required" })}
+          />
+          {errors.message && (
+            <p className="error-message">{errors.message.message}</p>
+          )}
         </div>
         <div className="button-container">
           <CustomButton
             text={"Send"}
             disabled={isSubmitting}
             type="submit"
-            onClick={function (): void {}}
+            onClick={undefined}
           />
         </div>
 

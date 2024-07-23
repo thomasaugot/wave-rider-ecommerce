@@ -57,26 +57,12 @@
     .input-item {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      margin-bottom: 1rem;
+      position: relative;
 
-      input {
-        height: 40px;
-        width: 100%;
-        background-color: rgba(color("white"), 0.6);
-        border: solid 1px color("darkOrange");
-        margin-bottom: 0.5rem;
-        font-size: fontSize("xs");
-        font-family: fontName("roboto");
-        border-radius: 0.5rem;
-        color: color("darkGrey");
-        padding-left: 0.5rem;
-      }
-    }
-
-    .right-block {
+      input,
       textarea {
-        height: 100%;
-        resize: none;
+        width: 100%;
         background-color: rgba(color("white"), 0.6);
         border: solid 1px color("darkOrange");
         font-size: fontSize("xs");
@@ -84,6 +70,16 @@
         border-radius: 0.5rem;
         color: color("darkGrey");
         padding: 0.5rem;
+        box-sizing: border-box;
+      }
+
+      textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .input-error {
+        border-color: color("warning");
       }
     }
   }
@@ -94,13 +90,4 @@
     gap: 1rem;
     margin-top: 1rem;
   }
-}
-
-label {
-  margin-bottom: 3px;
-  font-family: fontName("roboto");
-  font-size: fontSize("xs");
-  font-weight: fontWeight("bold");
-  color: color("darkGrey");
-  text-align: center;
 }

@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect, useState, FormEvent } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import { getUserDataAPI, updateUserAPI } from "@/services/apiCalls";
 import { UserType } from "@/types/user";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { useForm } from "react-hook-form";
 
 import "./edit-profile.scss";
 
@@ -16,14 +17,13 @@ export default function EditProfile() {
   const userId = searchParams.get("userId");
 
   const [profilePic, setProfilePic] = useState<string | null>(null);
-  const [firstname, setFirstname] = useState<string>("");
-  const [lastname, setLastname] = useState<string>("");
-  const [dateOfBirth, setDateOfBirth] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
-  const [zipcode, setZipcode] = useState<string>("");
-  const [city, setCity] = useState<string>("");
-  const [country, setCountry] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
   useEffect(() => {
     if (userId) {
@@ -42,14 +42,14 @@ export default function EditProfile() {
       const userData: UserType | null = await getUserDataAPI(id);
 
       if (userData) {
-        setFirstname(userData.firstname);
-        setLastname(userData.lastname);
-        setDateOfBirth(userData.dateOfBirth);
-        setAddress(userData.address);
-        setZipcode(userData.zipcode);
-        setCity(userData.city);
-        setCountry(userData.country);
-        setPhone(userData.phone);
+        setValue("firstname", userData.firstname);
+        setValue("lastname", userData.lastname);
+        setValue("dateOfBirth", userData.dateOfBirth);
+        setValue("address", userData.address);
+        setValue("zipcode", userData.zipcode);
+        setValue("city", userData.city);
+        setValue("country", userData.country);
+        setValue("phone", userData.phone);
         setProfilePic(userData.profilePic || null);
       }
     } catch (error) {
@@ -57,19 +57,10 @@ export default function EditProfile() {
     }
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
+  async function onSubmit(formData: any) {
     try {
       await updateUserAPI(userId!, {
-        firstname,
-        lastname,
-        dateOfBirth,
-        address,
-        zipcode,
-        city,
-        country,
-        phone,
+        ...formData,
         profilePic,
       });
       router.push("/profile");
@@ -78,108 +69,139 @@ export default function EditProfile() {
     }
   }
 
+  const getErrorMessage = (error: any) => {
+    if (!error) return null;
+    if (typeof error === "string") return error;
+    if ("message" in error) return error.message;
+    return "Invalid input";
+  };
+
   return (
     <div className="edit-profile-container">
       <h2>Edit Your Profile</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-items-container">
           <div className="form-group">
             <label htmlFor="firstname">First Name*</label>
             <input
               type="text"
               id="firstname"
-              value={firstname}
-              onChange={(e) => setFirstname(e.target.value)}
               placeholder="Enter your first name"
-              required
+              {...register("firstname", { required: "First name is required" })}
             />
+            {errors.firstname && (
+              <p className="error-message">
+                {getErrorMessage(errors.firstname)}
+              </p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="lastname">Last Name*</label>
             <input
               type="text"
               id="lastname"
-              value={lastname}
-              onChange={(e) => setLastname(e.target.value)}
               placeholder="Enter your last name"
-              required
+              {...register("lastname", { required: "Last name is required" })}
             />
+            {errors.lastname && (
+              <p className="error-message">
+                {getErrorMessage(errors.lastname)}
+              </p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="dateOfBirth">Date of Birth*</label>
             <input
               type="date"
               id="dateOfBirth"
-              value={dateOfBirth}
-              onChange={(e) => setDateOfBirth(e.target.value)}
               placeholder="Enter your date of birth"
-              required
+              {...register("dateOfBirth", {
+                required: "Date of birth is required",
+              })}
             />
+            {errors.dateOfBirth && (
+              <p className="error-message">
+                {getErrorMessage(errors.dateOfBirth)}
+              </p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="address">Address</label>
             <input
               type="text"
               id="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
               placeholder="Enter your address"
-              required
+              {...register("address", { required: "Address is required" })}
             />
+            {errors.address && (
+              <p className="error-message">{getErrorMessage(errors.address)}</p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="zipcode">Zip Code</label>
             <input
               type="text"
               id="zipcode"
-              value={zipcode}
-              onChange={(e) => setZipcode(e.target.value)}
               placeholder="Enter your zip code"
-              required
+              {...register("zipcode", { required: "Zip code is required" })}
             />
+            {errors.zipcode && (
+              <p className="error-message">{getErrorMessage(errors.zipcode)}</p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="city">City</label>
             <input
               type="text"
               id="city"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
               placeholder="Enter your city"
-              required
+              {...register("city", { required: "City is required" })}
             />
+            {errors.city && (
+              <p className="error-message">{getErrorMessage(errors.city)}</p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="country">Country</label>
             <input
               type="text"
               id="country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
               placeholder="Enter your country"
-              required
+              {...register("country", { required: "Country is required" })}
             />
+            {errors.country && (
+              <p className="error-message">{getErrorMessage(errors.country)}</p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="phone">Phone</label>
             <PhoneInput
               country={"es"}
-              value={phone}
-              onChange={setPhone}
+              value=""
               placeholder="Enter your phone number"
               inputClass="phone-input"
               specialLabel=""
+              {...register("phone", { required: "Phone number is required" })}
+              onChange={(value) => setValue("phone", value)}
             />
+            {errors.phone && (
+              <p className="error-message">{getErrorMessage(errors.phone)}</p>
+            )}
           </div>
         </div>
         <div className="actions-container">
           <CustomButton
             text={"Cancel"}
-            type="submit"
+            type="button"
             onClick={goBack}
             secondary={true}
           />
-          <CustomButton text="Save Changes" type="submit" onClick={undefined} />
+          <CustomButton
+            text="Save Changes"
+            type="submit"
+            disabled={isSubmitting}
+            onClick={undefined}
+          />
         </div>
       </form>
     </div>

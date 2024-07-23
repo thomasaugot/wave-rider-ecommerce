@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useForm, Controller } from "react-hook-form";
 import {
   editProductThunk,
   selectSelectedProduct,
@@ -13,6 +14,13 @@ interface EditProductProps {
   onClose: () => void;
 }
 
+interface FormValues {
+  name: string;
+  description: string;
+  price?: number;
+  images: string;
+}
+
 export const EditProduct: React.FC<EditProductProps> = ({
   isOpen,
   onClose,
@@ -20,41 +28,53 @@ export const EditProduct: React.FC<EditProductProps> = ({
   const dispatch: any = useDispatch();
   const selectedProduct = useSelector(selectSelectedProduct);
 
-  const [formData, setFormData] = useState({
-    id: "",
-    name: "",
-    description: "",
-    price: 0,
-    images: [""],
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    setError,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues: {
+      name: "",
+      description: "",
+      price: undefined,
+      images: "",
+    },
   });
 
   useEffect(() => {
     if (selectedProduct) {
-      setFormData({
-        id: selectedProduct.id || "",
-        name: selectedProduct.name || "",
-        description: selectedProduct.description || "",
-        price: selectedProduct.price || 0,
-        images: selectedProduct.images || [""],
-      });
+      setValue("name", selectedProduct.name || "");
+      setValue("description", selectedProduct.description || "");
+      setValue("price", selectedProduct.price || 0);
+      setValue("images", selectedProduct.images.join(",") || "");
     }
-  }, [selectedProduct]);
+  }, [selectedProduct, setValue]);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const onSubmit = (data: FormValues) => {
+    if (!data.images.trim()) {
+      setError("images", {
+        type: "manual",
+        message: "Images are required",
+      });
+      return;
+    }
+    if (data.price === undefined || data.price <= 0) {
+      setError("price", {
+        type: "manual",
+        message: "Price must be greater than 0",
+      });
+      return;
+    }
 
-  const handleArrayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value.split(",") }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    dispatch(editProductThunk(formData));
+    dispatch(
+      editProductThunk({
+        ...selectedProduct,
+        ...data,
+        images: data.images.split(","),
+      })
+    );
     onClose();
   };
 
@@ -65,58 +85,94 @@ export const EditProduct: React.FC<EditProductProps> = ({
       <div className="modal-overlay">
         <div className="modal-content">
           <h2>Edit Product</h2>
-          <form onSubmit={handleSubmit} className="edit-form">
+          <form onSubmit={handleSubmit(onSubmit)} className="edit-form">
             <div className="left-block">
               <div className="input-item">
-                <label htmlFor="name">Name</label>
-                <input
-                  id="name"
-                  type="text"
+                <Controller
                   name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
+                  control={control}
+                  rules={{ required: "Name is required" }}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      type="text"
+                      placeholder="Name"
+                      className={errors.name ? "input-error" : ""}
+                    />
+                  )}
                 />
+                {errors.name && (
+                  <p className="error-message">{errors.name.message}</p>
+                )}
               </div>
               <div className="input-item">
-                <label htmlFor="price">Price</label>
-                <input
-                  id="price"
-                  type="number"
+                <Controller
                   name="price"
-                  value={formData.price}
-                  onChange={handleInputChange}
-                  required
+                  control={control}
+                  rules={{
+                    required: "Price is required",
+                    min: {
+                      value: 0.01,
+                      message: "Price must be greater than 0",
+                    },
+                  }}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      type="number"
+                      placeholder="Price, ex: 109.99"
+                      className={errors.price ? "input-error" : ""}
+                    />
+                  )}
                 />
+                {errors.price && (
+                  <p className="error-message">{errors.price.message}</p>
+                )}
               </div>
               <div className="input-item">
-                <label htmlFor="images">Images (comma-separated URLs)</label>
-                <input
-                  id="images"
-                  type="text"
+                <Controller
                   name="images"
-                  value={formData.images.join(",")}
-                  onChange={handleArrayChange}
-                  placeholder="image1.jpg,image2.jpg"
+                  control={control}
+                  rules={{ required: "Images are required" }}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      type="text"
+                      placeholder="Images (comma-separated URLs)"
+                      className={errors.images ? "input-error" : ""}
+                    />
+                  )}
                 />
+                {errors.images && (
+                  <p className="error-message">{errors.images.message}</p>
+                )}
               </div>
             </div>
             <div className="right-block">
-              <label htmlFor="description">Description</label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                required
-              />
+              <div className="input-item">
+                <Controller
+                  name="description"
+                  control={control}
+                  rules={{ required: "Description is required" }}
+                  render={({ field }) => (
+                    <textarea
+                      {...field}
+                      placeholder="Description"
+                      className={errors.description ? "input-error" : ""}
+                    />
+                  )}
+                />
+                {errors.description && (
+                  <p className="error-message">{errors.description.message}</p>
+                )}
+              </div>
             </div>
           </form>
           <div className="actions-container">
             <CustomButton
               type="submit"
               text="Save Changes"
-              onClick={handleSubmit}
+              onClick={handleSubmit(onSubmit)}
             />
             <CustomButton
               type="button"

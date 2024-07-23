@@ -31,6 +31,6 @@ const withPWA = withPWAInit({
 export default withPWA({
   reactStrictMode: false,
   images: {
-    domains: ["raw.githubusercontent.com", "i.pravatar.cc"],
+    domains: ["github.com", "raw.githubusercontent.com", "i.pravatar.cc"],
   },
 });

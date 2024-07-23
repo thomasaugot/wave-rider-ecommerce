@@ -168,6 +168,7 @@ export default function Authentication() {
               {passwordError && (
                 <p className="error-message">{passwordError}</p>
               )}
+              <br />
               <CustomButton
                 text={"Sign Up"}
                 type="submit"

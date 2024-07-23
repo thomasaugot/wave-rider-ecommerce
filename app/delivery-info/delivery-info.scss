@@ -37,7 +37,7 @@
 
     .delivery-form {
       @include flexCenter(column);
-      gap: 1.5rem;
+      gap: 1rem;
 
       .form-group {
         width: 100%;
@@ -54,7 +54,6 @@
           height: 40px;
           background-color: rgba(color("white"), 0.6);
           border: solid 1px color("darkOrange");
-          margin-bottom: 1rem;
           font-size: fontSize("xs");
           font-family: fontName("roboto");
           border-radius: 0.5rem;

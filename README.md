@@ -15,6 +15,7 @@ A website I built to practice a bunch of technologies:
 - Supabase (hosting my database)
 - EmailJS
 - Framer Motion
+- react-hook-form package (handling form errors)
 
 The app is progressive, it means that:
 

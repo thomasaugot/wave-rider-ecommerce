@@ -1,22 +1,5 @@
-/**
- * Copyright 2018 Google Inc. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-// If the loader is already loaded, just stop.
 if (!self.define) {
   let registry = {};
-
-  // Used for `eval` and `importScripts` where we can't get script URL by other means.
-  // In both cases, it's safe to use a global var because those functions are synchronous.
   let nextDefineUri;
 
   const singleRequire = (uri, parentUri) => {
@@ -33,8 +16,7 @@ if (!self.define) {
           importScripts(uri);
           resolve();
         }
-      })
-      .then(() => {
+      }).then(() => {
         let promise = registry[uri];
         if (!promise) {
           throw new Error(`Module ${uri} didn’t register its module`);
@@ -47,7 +29,6 @@ if (!self.define) {
   self.define = (depsNames, factory) => {
     const uri = nextDefineUri || ("document" in self ? document.currentScript.src : "") || location.href;
     if (registry[uri]) {
-      // Module is already loading or loaded.
       return;
     }
     let exports = {};
@@ -55,24 +36,24 @@ if (!self.define) {
     const specialDeps = {
       module: { uri },
       exports,
-      require
+      require,
     };
-    registry[uri] = Promise.all(depsNames.map(
-      depName => specialDeps[depName] || require(depName)
-    )).then(deps => {
-      factory(...deps);
-      return exports;
-    });
+    registry[uri] = Promise.all(depsNames.map(depName => specialDeps[depName] || require(depName)))
+      .then(deps => {
+        factory(...deps);
+        return exports;
+      });
   };
 }
 
-define(['./workbox-631a4576'], (function (workbox) { 'use strict';
+define(['./workbox-631a4576'], (function (workbox) {
+  'use strict';
 
   importScripts();
   self.skipWaiting();
   workbox.clientsClaim();
 
-  // Register a route for the main URL with NetworkFirst strategy
+  // Cache the start URL
   workbox.registerRoute("/", new workbox.NetworkFirst({
     cacheName: "start-url",
     plugins: [{
@@ -80,13 +61,13 @@ define(['./workbox-631a4576'], (function (workbox) { 'use strict';
         ? new Response(response.body, {
             status: 200,
             statusText: "OK",
-            headers: response.headers
+            headers: response.headers,
           })
-        : response
-    }]
+        : response,
+    }],
   }), 'GET');
 
-  // Cache all other routes with NetworkFirst strategy
+  // Cache all other pages with a NetworkFirst strategy
   workbox.registerRoute(/.*/i, new workbox.NetworkFirst({
     cacheName: "default-cache",
     plugins: []
@@ -96,7 +77,7 @@ define(['./workbox-631a4576'], (function (workbox) { 'use strict';
   workbox.routing.setCatchHandler(async ({ event }) => {
     switch (event.request.destination) {
       case 'document':
-        return caches.match('/offline.html'); // Serve offline.html when offline
+        return caches.match('./offline.html'); // Serve offline.html when offline
       default:
         return Response.error();
     }

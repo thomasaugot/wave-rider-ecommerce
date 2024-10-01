@@ -1,3 +1,10 @@
+import withPWAInit from "@ducanh2912/next-pwa";
+
+/** @type {import("next").NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+};
+
 const withPWA = withPWAInit({
   dest: "public",
   register: true,
@@ -5,52 +12,42 @@ const withPWA = withPWAInit({
   extendDefaultRuntimeCaching: true,
   workboxOptions: {
     runtimeCaching: [
-      // Cache the main JS bundle
       {
         urlPattern: /\/static\/js\/main\.chunk\.js/,
         handler: "CacheFirst",
       },
-      // Cache the main HTML file
       {
         urlPattern: /\/index\.html/,
         handler: "StaleWhileRevalidate",
       },
-      // Cache critical icons
       {
         urlPattern: /\/images\/icons\/.*/,
         handler: "CacheFirst",
       },
-      // Cache the /products page
       {
         urlPattern: /\/products/,
-        handler: "NetworkFirst", // Change to NetworkFirst
+        handler: "NetworkFirst",
       },
-      // Cache all the dynamic /products/[id] pages
       {
         urlPattern: /\/products\/.*/,
-        handler: "NetworkFirst", // Change to NetworkFirst
+        handler: "NetworkFirst",
       },
-      // Cache the /categories page
       {
         urlPattern: /\/categories/,
-        handler: "NetworkFirst", // Change to NetworkFirst
+        handler: "NetworkFirst",
       },
-      // Cache the /brands page
       {
         urlPattern: /\/brands/,
-        handler: "NetworkFirst", // Change to NetworkFirst
+        handler: "NetworkFirst",
       },
-      // Cache the /authentication page
       {
         urlPattern: /\/authentication/,
-        handler: "NetworkFirst", // Change to NetworkFirst
+        handler: "NetworkFirst",
       },
-      // Cache the /shopping-cart page
       {
         urlPattern: /\/shopping-cart/,
-        handler: "NetworkFirst", // Change to NetworkFirst
+        handler: "NetworkFirst",
       },
-      // Cache the API requests from Supabase using the NEXT_PUBLIC_SUPABASE_URL env variable
       {
         urlPattern: new RegExp(process.env.NEXT_PUBLIC_SUPABASE_URL),
         handler: "NetworkFirst",
@@ -66,3 +63,5 @@ const withPWA = withPWAInit({
     ignoreURLParametersMatching: [/__WB_REVISION__/],
   },
 });
+
+export default withPWA(nextConfig);

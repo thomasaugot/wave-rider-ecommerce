@@ -26,7 +26,7 @@ export const Introdution: React.FC = () => {
         children: (
           <>
             <h2 className="presentation__title">
-              The specialist in surf and water sports gear
+              The specialist in surf and water sports gear teeeeeest
             </h2>
             <p className="presentation__description">
               Your one-stop shop for all water sports needs

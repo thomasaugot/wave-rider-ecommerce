@@ -62,6 +62,9 @@ export default function RootLayout({
           <AppLoader>
             <Navbar />
             {children}
+            <h1>
+              Hello
+            </h1>
             <Footer />
           </AppLoader>
         </StoreProvider>

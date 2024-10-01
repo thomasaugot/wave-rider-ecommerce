@@ -1,10 +1,10 @@
 import { precacheAndRoute } from 'workbox-precaching';
-import { registerRoute } from 'workbox-routing';
+import { registerRoute, setCatchHandler } from 'workbox-routing';
 import { NetworkFirst, CacheFirst } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
 
 // Precache important routes
-precacheAndRoute([
+precacheAndRoute(self.__WB_MANIFEST || [
   { url: '/', revision: null },
   { url: '/products', revision: null },
   { url: '/categories', revision: null },
@@ -14,14 +14,14 @@ precacheAndRoute([
   { url: '/offline.html', revision: null }, // Ensure this file exists and is cached
 ]);
 
-// Cache dynamic product pages with a NetworkFirst strategy
+// Cache dynamic product pages like /products/[id] with a NetworkFirst strategy
 registerRoute(
-  new RegExp('/products/.*'),
+  new RegExp('/products/\\d+'), // This regex matches routes like /products/[id]
   new NetworkFirst({
     cacheName: 'products-cache',
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 50,
+        maxEntries: 50, // Cache up to 50 product pages
         maxAgeSeconds: 24 * 60 * 60, // Cache for 1 day
       }),
     ],
@@ -70,7 +70,7 @@ registerRoute(
 );
 
 // Fallback for uncached requests when offline
-workbox.routing.setCatchHandler(async ({ event }) => {
+setCatchHandler(async ({ event }) => {
   console.log("Handling fallback for: ", event.request.url);
   switch (event.request.destination) {
     case 'document':

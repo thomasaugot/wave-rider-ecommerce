@@ -9,6 +9,9 @@ const withPWA = withPWAInit({
   dest: "public",
   register: true,
   skipWaiting: true,
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
   extendDefaultRuntimeCaching: true,
   workboxOptions: {
     runtimeCaching: [

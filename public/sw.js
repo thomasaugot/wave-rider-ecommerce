@@ -1,97 +1,88 @@
-if (!self.define) {
-  let registry = {};
-  let nextDefineUri;
+import { precacheAndRoute } from 'workbox-precaching';
+import { registerRoute } from 'workbox-routing';
+import { NetworkFirst, CacheFirst } from 'workbox-strategies';
+import { ExpirationPlugin } from 'workbox-expiration';
 
-  const singleRequire = (uri, parentUri) => {
-    uri = new URL(uri + ".js", parentUri).href;
-    return registry[uri] || (
-      new Promise(resolve => {
-        if ("document" in self) {
-          const script = document.createElement("script");
-          script.src = uri;
-          script.onload = resolve;
-          document.head.appendChild(script);
-        } else {
-          nextDefineUri = uri;
-          importScripts(uri);
-          resolve();
-        }
-      }).then(() => {
-        let promise = registry[uri];
-        if (!promise) {
-          throw new Error(`Module ${uri} didn’t register its module`);
-        }
-        return promise;
-      })
-    );
-  };
+// Precache important routes
+precacheAndRoute([
+  { url: '/', revision: null },
+  { url: '/products', revision: null },
+  { url: '/categories', revision: null },
+  { url: '/brands', revision: null },
+  { url: '/shopping-cart', revision: null },
+  { url: '/authentication', revision: null },
+  { url: '/offline.html', revision: null }, // Ensure this file exists and is cached
+]);
 
-  self.define = (depsNames, factory) => {
-    const uri = nextDefineUri || ("document" in self ? document.currentScript.src : "") || location.href;
-    if (registry[uri]) {
-      return;
-    }
-    let exports = {};
-    const require = depUri => singleRequire(depUri, uri);
-    const specialDeps = {
-      module: { uri },
-      exports,
-      require,
-    };
-    registry[uri] = Promise.all(depsNames.map(depName => specialDeps[depName] || require(depName)))
-      .then(deps => {
-        factory(...deps);
-        return exports;
-      });
-  };
-}
+// Cache dynamic product pages with a NetworkFirst strategy
+registerRoute(
+  new RegExp('/products/.*'),
+  new NetworkFirst({
+    cacheName: 'products-cache',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 24 * 60 * 60, // Cache for 1 day
+      }),
+    ],
+  })
+);
 
-define(['./workbox-631a4576'], (function (workbox) {
-  'use strict';
+// Cache categories, brands, and other routes with NetworkFirst strategy
+registerRoute(
+  new RegExp('/categories'),
+  new NetworkFirst({
+    cacheName: 'categories-cache',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 24 * 60 * 60,
+      }),
+    ],
+  })
+);
 
-  importScripts();
-  self.skipWaiting();
-  workbox.clientsClaim();
+registerRoute(
+  new RegExp('/brands'),
+  new NetworkFirst({
+    cacheName: 'brands-cache',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 24 * 60 * 60,
+      }),
+    ],
+  })
+);
 
-  // Cache the start URL
-  workbox.registerRoute("/", new workbox.NetworkFirst({
-    cacheName: "start-url",
-    plugins: [{
-      cacheWillUpdate: async ({ response }) => response && response.type === "opaqueredirect"
-        ? new Response(response.body, {
-            status: 200,
-            statusText: "OK",
-            headers: response.headers,
-          })
-        : response,
-    }],
-  }), 'GET');
+// Cache static resources (JS, images, etc.) with CacheFirst strategy
+registerRoute(
+  new RegExp('/_next/static/.*'),
+  new CacheFirst({
+    cacheName: 'static-resources',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60, // Cache for 30 days
+      }),
+    ],
+  })
+);
 
-  // Cache all other pages with a NetworkFirst strategy
-  workbox.registerRoute(/.*/i, new workbox.NetworkFirst({
-    cacheName: "default-cache",
-    plugins: [],
-    fetchOptions: {
-      mode: 'cors',
-      credentials: 'same-origin',
-    },
-  }), 'GET');
-
-  // Offline fallback handling
-  workbox.routing.setCatchHandler(async ({ event }) => {
-    console.log("Handling fallback for: ", event.request.url);
-    switch (event.request.destination) {
-      case 'document':
-        // Serve offline.html when offline
-        return caches.match('/offline.html');
-      case 'image':
-        // Optionally, serve a placeholder image when offline
-        return caches.match('/images/offline-placeholder.png');
-      case 'font':
-        return caches.match('/fonts/fallback-font.woff2');
-      default:
-        return Response.error();
-    }
-  });
-
-}));
+// Fallback for uncached requests when offline
+workbox.routing.setCatchHandler(async ({ event }) => {
+  console.log("Handling fallback for: ", event.request.url);
+  switch (event.request.destination) {
+    case 'document':
+      // Serve offline.html when offline
+      return caches.match('/offline.html');
+    case 'image':
+      // Serve a placeholder image when offline (optional)
+      return caches.match('/images/offline-placeholder.png');
+    case 'font':
+      // Serve fallback font if offline
+      return caches.match('/fonts/fallback-font.woff2');
+    default:
+      return Response.error();
+  }
+});

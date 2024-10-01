@@ -76,16 +76,22 @@ define(['./workbox-631a4576'], (function (workbox) {
       credentials: 'same-origin',
     },
   }), 'GET');
-  
+
+  // Offline fallback handling
   workbox.routing.setCatchHandler(async ({ event }) => {
     console.log("Handling fallback for: ", event.request.url);
     switch (event.request.destination) {
       case 'document':
-        return caches.match('/offline.html'); // Serve offline.html when offline
+        // Serve offline.html when offline
+        return caches.match('/offline.html');
+      case 'image':
+        // Optionally, serve a placeholder image when offline
+        return caches.match('/images/offline-placeholder.png');
+      case 'font':
+        return caches.match('/fonts/fallback-font.woff2');
       default:
         return Response.error();
     }
   });
-  
 
 }));

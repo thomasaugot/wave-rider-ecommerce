@@ -12,24 +12,23 @@ const withPWA = withPWAInit({
   extendDefaultRuntimeCaching: true,
   workboxOptions: {
     runtimeCaching: [
+      // Cache JS bundles and static assets
       {
-        urlPattern: /\/static\/js\/main\.chunk\.js/,
+        urlPattern: /\/_next\/static\/.*/,
         handler: "CacheFirst",
       },
+      // Cache the index page
       {
-        urlPattern: /\/index\.html/,
+        urlPattern: /\/$/,
         handler: "StaleWhileRevalidate",
       },
-      {
-        urlPattern: /\/images\/icons\/.*/,
-        handler: "CacheFirst",
-      },
+      // Cache other specific pages
       {
         urlPattern: /\/products/,
         handler: "NetworkFirst",
       },
       {
-        urlPattern: /\/products\/.*/,
+        urlPattern: /\/products\/\d+/,
         handler: "NetworkFirst",
       },
       {
@@ -41,13 +40,10 @@ const withPWA = withPWAInit({
         handler: "NetworkFirst",
       },
       {
-        urlPattern: /\/authentication/,
-        handler: "NetworkFirst",
-      },
-      {
         urlPattern: /\/shopping-cart/,
         handler: "NetworkFirst",
       },
+      // Cache API requests (replace with Supabase URL via environment variable)
       {
         urlPattern: new RegExp(process.env.NEXT_PUBLIC_SUPABASE_URL),
         handler: "NetworkFirst",
@@ -60,6 +56,7 @@ const withPWA = withPWAInit({
         },
       },
     ],
+    // Ignore URL parameters to prevent caching conflicts
     ignoreURLParametersMatching: [/__WB_REVISION__/],
   },
 });

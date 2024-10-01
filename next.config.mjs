@@ -1,4 +1,4 @@
-import withPWAInit from "@ducanh2912/next-pwa";
+import withPWAInit from 'next-pwa';
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
@@ -6,62 +6,68 @@ const nextConfig = {
 };
 
 const withPWA = withPWAInit({
-  dest: "public",
+  dest: 'public',
   register: true,
   skipWaiting: true,
   cacheOnFrontEndNav: true,
-  aggressiveFrontEndNavCaching: true,
-  reloadOnOnline: true,
-  extendDefaultRuntimeCaching: true,
-  workboxOptions: {
-    runtimeCaching: [
-      // Cache JS bundles and static assets
-      {
-        urlPattern: /\/_next\/static\/.*/,
-        handler: "CacheFirst",
-      },
-      // Cache the index page
-      {
-        urlPattern: /\/$/,
-        handler: "StaleWhileRevalidate",
-      },
-      // Cache other specific pages
-      {
-        urlPattern: /\/products/,
-        handler: "NetworkFirst",
-      },
-      {
-        urlPattern: /\/products\/\d+/,
-        handler: "NetworkFirst",
-      },
-      {
-        urlPattern: /\/categories/,
-        handler: "NetworkFirst",
-      },
-      {
-        urlPattern: /\/brands/,
-        handler: "NetworkFirst",
-      },
-      {
-        urlPattern: /\/shopping-cart/,
-        handler: "NetworkFirst",
-      },
-      // Cache API requests (replace with Supabase URL via environment variable)
-      {
-        urlPattern: new RegExp(process.env.NEXT_PUBLIC_SUPABASE_URL),
-        handler: "NetworkFirst",
-        options: {
-          cacheName: "supabase-api-cache",
-          expiration: {
-            maxEntries: 50,
-            maxAgeSeconds: 60 * 60 * 24, // Cache for 1 day
-          },
+  runtimeCaching: [
+    // Cache static files from _next/static
+    {
+      urlPattern: /\/_next\/static\/.*/,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'static-resources',
+        expiration: {
+          maxEntries: 60,
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
         },
       },
-    ],
-    // Ignore URL parameters to prevent caching conflicts
-    ignoreURLParametersMatching: [/__WB_REVISION__/],
-  },
+    },
+    // Cache the main app routes
+    {
+      urlPattern: new RegExp('^/products$'),
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'products-cache',
+      },
+    },
+    {
+      urlPattern: new RegExp('^/products/.*'),
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'product-detail-cache',
+      },
+    },
+    {
+      urlPattern: new RegExp('^/categories$'),
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'categories-cache',
+      },
+    },
+    {
+      urlPattern: new RegExp('^/brands$'),
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'brands-cache',
+      },
+    },
+    {
+      urlPattern: new RegExp('^/authentication$'),
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'auth-cache',
+      },
+    },
+    {
+      urlPattern: new RegExp('^/profile$'),
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'profile-cache',
+      },
+    },
+  ],
+  ignoreURLParametersMatching: [/__WB_REVISION__/],
 });
 
 export default withPWA(nextConfig);

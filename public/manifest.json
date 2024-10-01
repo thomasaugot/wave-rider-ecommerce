@@ -2,7 +2,6 @@
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone",
-  "scope": "/",
   "start_url": "/",
   "name": "Surf Rider Surf Shop",
   "orientation": "portrait",

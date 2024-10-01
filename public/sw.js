@@ -18,7 +18,7 @@ precacheAndRoute(self.__WB_MANIFEST || [
 registerRoute(
   new RegExp('/products/\\d+'), // This regex matches routes like /products/[id]
   new NetworkFirst({
-    cacheName: 'products-cache',
+    cacheName: 'product-details-cache',
     plugins: [
       new ExpirationPlugin({
         maxEntries: 50, // Cache up to 50 product pages
@@ -43,9 +43,48 @@ registerRoute(
 );
 
 registerRoute(
+  new RegExp('/products'),
+  new NetworkFirst({
+    cacheName: 'products-cache',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 24 * 60 * 60,
+      }),
+    ],
+  })
+);
+
+registerRoute(
   new RegExp('/brands'),
   new NetworkFirst({
     cacheName: 'brands-cache',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 24 * 60 * 60,
+      }),
+    ],
+  })
+);
+
+registerRoute(
+  new RegExp('/authentication'),
+  new NetworkFirst({
+    cacheName: 'authentication-cache',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 24 * 60 * 60,
+      }),
+    ],
+  })
+);
+
+registerRoute(
+  new RegExp('/shopping-cart'),
+  new NetworkFirst({
+    cacheName: 'shopping-cart-cache',
     plugins: [
       new ExpirationPlugin({
         maxEntries: 50,

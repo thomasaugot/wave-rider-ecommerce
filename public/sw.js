@@ -70,17 +70,22 @@ define(['./workbox-631a4576'], (function (workbox) {
   // Cache all other pages with a NetworkFirst strategy
   workbox.registerRoute(/.*/i, new workbox.NetworkFirst({
     cacheName: "default-cache",
-    plugins: []
+    plugins: [],
+    fetchOptions: {
+      mode: 'cors',
+      credentials: 'same-origin',
+    },
   }), 'GET');
-
-  // Add offline fallback handler
+  
   workbox.routing.setCatchHandler(async ({ event }) => {
+    console.log("Handling fallback for: ", event.request.url);
     switch (event.request.destination) {
       case 'document':
-        return caches.match('./offline.html'); // Serve offline.html when offline
+        return caches.match('/offline.html'); // Serve offline.html when offline
       default:
         return Response.error();
     }
   });
+  
 
 }));

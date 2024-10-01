@@ -1,10 +1,3 @@
-import withPWAInit from "@ducanh2912/next-pwa";
-
-/** @type {import("next").NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-};
-
 const withPWA = withPWAInit({
   dest: "public",
   register: true,
@@ -30,32 +23,32 @@ const withPWA = withPWAInit({
       // Cache the /products page
       {
         urlPattern: /\/products/,
-        handler: "StaleWhileRevalidate",
+        handler: "NetworkFirst", // Change to NetworkFirst
       },
       // Cache all the dynamic /products/[id] pages
       {
         urlPattern: /\/products\/.*/,
-        handler: "StaleWhileRevalidate",
+        handler: "NetworkFirst", // Change to NetworkFirst
       },
       // Cache the /categories page
       {
         urlPattern: /\/categories/,
-        handler: "StaleWhileRevalidate",
+        handler: "NetworkFirst", // Change to NetworkFirst
       },
       // Cache the /brands page
       {
         urlPattern: /\/brands/,
-        handler: "StaleWhileRevalidate",
+        handler: "NetworkFirst", // Change to NetworkFirst
       },
       // Cache the /authentication page
       {
         urlPattern: /\/authentication/,
-        handler: "StaleWhileRevalidate",
+        handler: "NetworkFirst", // Change to NetworkFirst
       },
       // Cache the /shopping-cart page
       {
         urlPattern: /\/shopping-cart/,
-        handler: "StaleWhileRevalidate",
+        handler: "NetworkFirst", // Change to NetworkFirst
       },
       // Cache the API requests from Supabase using the NEXT_PUBLIC_SUPABASE_URL env variable
       {
@@ -73,5 +66,3 @@ const withPWA = withPWAInit({
     ignoreURLParametersMatching: [/__WB_REVISION__/],
   },
 });
-
-export default withPWA(nextConfig);

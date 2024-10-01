@@ -84,7 +84,7 @@ define(['./workbox-631a4576'], (function (workbox) { 'use strict';
       }) : e
     }]
   }), 'GET');
-  workbox.registerRoute(/.*/i, new workbox.NetworkOnly({
+  workbox.registerRoute(/.*/i, new workbox.NetworkFirst({
     "cacheName": "dev",
     plugins: []
   }), 'GET');

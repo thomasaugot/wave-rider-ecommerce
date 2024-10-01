@@ -64,12 +64,14 @@ const withPWA = withPWAInit({
         options: {
           cacheName: "supabase-api-cache",
           expiration: {
-            maxEntries: 50, // You can adjust this based on your needs
+            maxEntries: 50,
             maxAgeSeconds: 60 * 60 * 24, // Cache for 1 day
           },
         },
       },
     ],
+    // Ignore URL parameters like __WB_REVISION__ to avoid conflicts in cache
+    ignoreURLParametersMatching: [/__WB_REVISION__/],
   },
 });
 

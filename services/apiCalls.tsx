@@ -264,7 +264,7 @@ export const fetchLastPurchasesAPI = async (
       throw new Error("Error fetching last purchases: " + error.message);
     }
 
-    const productIds = purchases.map((purchase) => purchase.product_id);
+    const productIds = purchases.map((purchase: any) => purchase.product_id);
 
     const { data: products, error: productError } = await supabase
       .from("products")

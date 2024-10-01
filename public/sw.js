@@ -22,20 +22,18 @@ if (!self.define) {
   const singleRequire = (uri, parentUri) => {
     uri = new URL(uri + ".js", parentUri).href;
     return registry[uri] || (
-      
-        new Promise(resolve => {
-          if ("document" in self) {
-            const script = document.createElement("script");
-            script.src = uri;
-            script.onload = resolve;
-            document.head.appendChild(script);
-          } else {
-            nextDefineUri = uri;
-            importScripts(uri);
-            resolve();
-          }
-        })
-      
+      new Promise(resolve => {
+        if ("document" in self) {
+          const script = document.createElement("script");
+          script.src = uri;
+          script.onload = resolve;
+          document.head.appendChild(script);
+        } else {
+          nextDefineUri = uri;
+          importScripts(uri);
+          resolve();
+        }
+      })
       .then(() => {
         let promise = registry[uri];
         if (!promise) {
@@ -67,27 +65,41 @@ if (!self.define) {
     });
   };
 }
+
 define(['./workbox-631a4576'], (function (workbox) { 'use strict';
 
   importScripts();
   self.skipWaiting();
   workbox.clientsClaim();
+
+  // Register a route for the main URL with NetworkFirst strategy
   workbox.registerRoute("/", new workbox.NetworkFirst({
-    "cacheName": "start-url",
+    cacheName: "start-url",
     plugins: [{
-      cacheWillUpdate: async ({
-        response: e
-      }) => e && "opaqueredirect" === e.type ? new Response(e.body, {
-        status: 200,
-        statusText: "OK",
-        headers: e.headers
-      }) : e
+      cacheWillUpdate: async ({ response }) => response && response.type === "opaqueredirect"
+        ? new Response(response.body, {
+            status: 200,
+            statusText: "OK",
+            headers: response.headers
+          })
+        : response
     }]
   }), 'GET');
+
+  // Cache all other routes with NetworkFirst strategy
   workbox.registerRoute(/.*/i, new workbox.NetworkFirst({
-    "cacheName": "dev",
+    cacheName: "default-cache",
     plugins: []
   }), 'GET');
 
+  // Add offline fallback handler
+  workbox.routing.setCatchHandler(async ({ event }) => {
+    switch (event.request.destination) {
+      case 'document':
+        return caches.match('/offline.html'); // Serve offline.html when offline
+      default:
+        return Response.error();
+    }
+  });
+
 }));
-//# sourceMappingURL=sw.js.map

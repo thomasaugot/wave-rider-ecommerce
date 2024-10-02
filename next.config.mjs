@@ -80,8 +80,6 @@ const withPWA = withPWAInit({
       },
     },
   ],
-  // Disable custom service worker for now to isolate the issue
-  disable: process.env.NODE_ENV === 'development',
 });
 
 export default withPWA(nextConfig);

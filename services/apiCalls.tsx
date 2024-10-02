@@ -1,5 +1,6 @@
 import { Product, UserType } from "@/types";
 import { supabase } from "./supabase";
+import { saveProductsToDB, getCachedProducts } from './indexedDB';
 
 export const createUserAPI = async (email: string, password: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -128,16 +129,32 @@ export const deleteUserAPI = async (userId: any) => {
 
 export const getProductsAPI = async (): Promise<Product[]> => {
   try {
-    let { data: products, error } = await supabase.from("products").select("*");
+    if (navigator.onLine) {
+      let { data: products, error } = await supabase.from('products').select('*');
 
-    if (!error) {
-      console.log("my products: ", products);
+      if (error) {
+        throw new Error('Error fetching products: ' + error.message);
+      }
+
+      // Cache the fetched products in IndexedDB
+      if (products) {
+        await saveProductsToDB(products);
+      }
+
       return products || [];
     } else {
-      throw new Error("Error fetching all products: " + error.message);
+      // If offline, retrieve products from IndexedDB
+      const cachedProducts = await getCachedProducts();
+      if (cachedProducts.length > 0) {
+        return cachedProducts;
+      } else {
+        throw new Error('No products available in cache.');
+      }
     }
   } catch (error) {
-    throw error;
+    console.error('Failed to fetch products, using cache if available:', error);
+    const cachedProducts = await getCachedProducts();
+    return cachedProducts.length > 0 ? cachedProducts : [];
   }
 };
 

@@ -4,7 +4,7 @@ import withPWAInit from 'next-pwa';
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["github.com", "raw.githubusercontent.com", "i.pravatar.cc", "lecccphducqpixznxmzt.supabase.co"],
+    domains: ["github.com", "raw.githubusercontent.com", "i.pravatar.cc", "lecccphducqpixznxmzt.supabase.co"], // Include Supabase domain
   },
 };
 
@@ -13,8 +13,8 @@ const withPWA = withPWAInit({
   register: true,
   skipWaiting: true,
   cacheOnFrontEndNav: true,
+  // Remove custom service worker logic for now if it conflicts
   runtimeCaching: [
-    // Cache static files from _next/static (including CSS and JS)
     {
       urlPattern: /\/_next\/static\/.*/,
       handler: 'CacheFirst',
@@ -26,81 +26,62 @@ const withPWA = withPWAInit({
         },
       },
     },
-    // Cache other static assets (CSS, images, etc.)
-    {
-      urlPattern: /.*\.(?:css|js|png|jpg|jpeg|svg|gif|webp)/,
-      handler: 'CacheFirst',
-      options: {
-        cacheName: 'static-assets',
-        expiration: {
-          maxEntries: 100,
-          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
-        },
-      },
-    },
-    // Cache the main app routes
     {
       urlPattern: new RegExp('^/$'),
-      handler: 'StaleWhileRevalidate',
+      handler: 'NetworkFirst',
       options: {
         cacheName: 'home-cache',
       },
     },
     {
       urlPattern: new RegExp('^/about$'),
-      handler: 'StaleWhileRevalidate',
+      handler: 'NetworkFirst',
       options: {
         cacheName: 'about-cache',
       },
     },
     {
       urlPattern: new RegExp('^/authentication$'),
-      handler: 'StaleWhileRevalidate',
+      handler: 'NetworkFirst',
       options: {
         cacheName: 'auth-cache',
       },
     },
     {
       urlPattern: new RegExp('^/brands$'),
-      handler: 'StaleWhileRevalidate',
+      handler: 'NetworkFirst',
       options: {
         cacheName: 'brands-cache',
       },
     },
     {
       urlPattern: new RegExp('^/categories$'),
-      handler: 'StaleWhileRevalidate',
+      handler: 'NetworkFirst',
       options: {
         cacheName: 'categories-cache',
       },
     },
     {
       urlPattern: new RegExp('^/products$'),
-      handler: 'StaleWhileRevalidate',
+      handler: 'NetworkFirst',
       options: {
         cacheName: 'products-cache',
       },
     },
-    // Cache dynamic product pages (/products/[id])
     {
-      urlPattern: new RegExp('^/products/.*'),
-      handler: 'StaleWhileRevalidate',
+      urlPattern: /.*\.(?:png|jpg|jpeg|svg|gif|webp)/,
+      handler: 'CacheFirst',
       options: {
-        cacheName: 'product-detail-cache',
-      },
-    },
-    // Offline fallback for uncached routes
-    {
-      urlPattern: /.*/,
-      handler: 'NetworkOnly',
-      options: {
-        cacheName: 'fallback-cache',
-        fallback: {
-          document: 'public/offline.html',
+        cacheName: 'image-cache',
+        expiration: {
+          maxEntries: 100,
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
         },
       },
     },
   ],
+  // // Disable custom service worker for now to isolate the issue
+  // disable: process.env.NODE_ENV === 'development',
 });
 
 export default withPWA(nextConfig);

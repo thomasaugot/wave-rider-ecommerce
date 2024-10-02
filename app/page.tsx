@@ -36,7 +36,7 @@ export default function Home() {
     }
   }, [dispatch, emailJSPublicKey]);
 
-  useEffect(() => {
+
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       navigator.serviceWorker
         .register("/sw.js")
@@ -45,7 +45,6 @@ export default function Home() {
           console.error("Service Worker registration failed", err)
         );
     }
-  }, []);
 
   return (
     <main className="homepage">

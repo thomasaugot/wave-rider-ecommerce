@@ -4,7 +4,7 @@ import withPWAInit from 'next-pwa';
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["github.com", "raw.githubusercontent.com", "i.pravatar.cc"],
+    domains: ["github.com", "raw.githubusercontent.com", "i.pravatar.cc", "lecccphducqpixznxmzt.supabase.co"], // Include Supabase domain
   },
 };
 
@@ -13,8 +13,8 @@ const withPWA = withPWAInit({
   register: true,
   skipWaiting: true,
   cacheOnFrontEndNav: true,
+  // Remove custom service worker logic for now if it conflicts
   runtimeCaching: [
-    // Cache static files from _next/static
     {
       urlPattern: /\/_next\/static\/.*/,
       handler: 'CacheFirst',
@@ -26,33 +26,18 @@ const withPWA = withPWAInit({
         },
       },
     },
-    // Cache the main app routes
     {
-      urlPattern: new RegExp('^/products$'),
+      urlPattern: new RegExp('^/$'),
       handler: 'NetworkFirst',
       options: {
-        cacheName: 'products-cache',
+        cacheName: 'home-cache',
       },
     },
     {
-      urlPattern: new RegExp('^/products/.*'),
+      urlPattern: new RegExp('^/about$'),
       handler: 'NetworkFirst',
       options: {
-        cacheName: 'product-detail-cache',
-      },
-    },
-    {
-      urlPattern: new RegExp('^/categories$'),
-      handler: 'NetworkFirst',
-      options: {
-        cacheName: 'categories-cache',
-      },
-    },
-    {
-      urlPattern: new RegExp('^/brands$'),
-      handler: 'NetworkFirst',
-      options: {
-        cacheName: 'brands-cache',
+        cacheName: 'about-cache',
       },
     },
     {
@@ -63,14 +48,40 @@ const withPWA = withPWAInit({
       },
     },
     {
-      urlPattern: new RegExp('^/profile$'),
+      urlPattern: new RegExp('^/brands$'),
       handler: 'NetworkFirst',
       options: {
-        cacheName: 'profile-cache',
+        cacheName: 'brands-cache',
+      },
+    },
+    {
+      urlPattern: new RegExp('^/categories$'),
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'categories-cache',
+      },
+    },
+    {
+      urlPattern: new RegExp('^/products$'),
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'products-cache',
+      },
+    },
+    {
+      urlPattern: /.*\.(?:png|jpg|jpeg|svg|gif|webp)/,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'image-cache',
+        expiration: {
+          maxEntries: 100,
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+        },
       },
     },
   ],
-  ignoreURLParametersMatching: [/__WB_REVISION__/],
+  // Disable custom service worker for now to isolate the issue
+  disable: process.env.NODE_ENV === 'development',
 });
 
 export default withPWA(nextConfig);

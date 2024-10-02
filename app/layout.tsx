@@ -6,8 +6,11 @@ import StoreProvider from "./StoreProvider";
 import { Navbar } from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { AppLoader } from "@/components/AppLoader/AppLoader";
+import * as dotenv from "dotenv";
 
 import "@/styles/globals.scss";
+
+dotenv.config();
 
 const inter = Inter({ subsets: ["latin"] });
 
